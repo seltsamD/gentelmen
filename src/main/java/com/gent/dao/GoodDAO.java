@@ -1,5 +1,6 @@
 package com.gent.dao;
 
+import com.gent.model.Category;
 import com.gent.model.Good;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,16 @@ public class GoodDAO implements IGoodDAO {
         Good g = getGoodById(id);
         g.setStatus(status);
         sessionFactory.getCurrentSession().update(g);
+    }
+
+    @Override
+    public List<Good> getGoodsByCategorie(int catId) {
+
+        List<Good> list = sessionFactory.getCurrentSession().createQuery("FROM Good as p where p.status = 1 and p.Category.id = :id ORDER BY p.id ")
+                .setParameter("id", catId)
+                .list();
+
+        return list;
     }
 
 

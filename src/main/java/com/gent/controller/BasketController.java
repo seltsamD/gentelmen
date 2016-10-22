@@ -4,6 +4,7 @@ import com.gent.model.Good;
 import com.gent.model.Orders;
 import com.gent.service.IGoodService;
 import com.gent.service.IOrdersService;
+import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -122,31 +123,36 @@ public class BasketController {
 
 
     static String getCountBasket(HttpServletRequest request) {
-
+        int count = 0;
         Cookie[] cookies = request.getCookies();
-        Cookie myCookie = null;
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("backetGentl")) {
-                myCookie = cookie;
-                break;
+        if(cookies != null)
+        {
+            Cookie myCookie = null;
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("backetGentl")) {
+                    myCookie = cookie;
+                    break;
+                }
+
             }
+
+
+            if (myCookie != null) {
+                String cook = null;
+                try {
+                    cook = URLDecoder.decode(myCookie.getValue(), "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+
+                    e.printStackTrace();
+                }
+
+                if (cook.length() > 0)
+                    count = StringUtils.countOccurrencesOf(cook, ",") + 1;
+                else count = 0;
+            } else count = 0;
 
         }
 
-        int count = 0;
-        if (myCookie != null) {
-            String cook = null;
-            try {
-                cook = URLDecoder.decode(myCookie.getValue(), "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-
-                e.printStackTrace();
-            }
-
-            if (cook.length() > 0)
-                count = StringUtils.countOccurrencesOf(cook, ",") + 1;
-            else count = 0;
-        } else count = 0;
         return String.valueOf(count);
 
     }
@@ -163,7 +169,7 @@ public class BasketController {
             }
 
         }
-
+        int count = 0;
         if (myCookie != null) {
             String cook = null;
             try {
@@ -172,7 +178,7 @@ public class BasketController {
 
                 e.printStackTrace();
             }
-            int count = 0;
+
             List<Integer> listBasket = new ArrayList<Integer>();
             if (cook != null && cook.length() > 0) {
                 for (char ch : cook.toCharArray()) {
@@ -187,11 +193,11 @@ public class BasketController {
 
                 count = StringUtils.countOccurrencesOf(cook, ",") + 1;
             } else count = 0;
-            model.addAttribute("countInBasket", count);
+
 
         }
 
-
+        model.addAttribute("countInBasket", count);
         Locale locale = LocaleContextHolder.getLocale();
         if (locale.getLanguage().equals("uk"))
             model.addAttribute("lang_code", "uaText");

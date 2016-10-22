@@ -19,4 +19,5 @@ public interface IGoodService {
     List<Good> getRandomGoods();
     List<Good> getListGoods(List list);
     void changeStatus(int id, int status);
+    List<Good> getGoodsByCategorie(int catId);
 }

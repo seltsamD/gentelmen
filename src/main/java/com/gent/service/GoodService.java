@@ -62,4 +62,9 @@ public class GoodService implements IGoodService {
     public void changeStatus(int id, int status) {
         goodDAO.changeStatus(id, status);
     }
+
+    @Override
+    public List<Good> getGoodsByCategorie(int catId) {
+        return goodDAO.getGoodsByCategorie(catId);
+    }
 }

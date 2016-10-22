@@ -11,8 +11,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="header.jsp" />
 <jsp:include page="footer.jsp" />
-<script src="<c:url value="${pageContext.request.contextPath}/resources/js/app.js" />" type="text/javascript"></script>
-
 
     <div class="container">
     <div class="main">
@@ -114,9 +112,10 @@
 
 
 
-            <table id="box-table-b">
+            <table id="box-table-b" class="good-info">
+                <thead>
                 <tr> <th>  </th>
-                    <th> ID </th>
+                    <th> <spring:message code="good.id"/> </th>
                     <th> <spring:message code="good.firm"/> </th>
                     <th> <spring:message code="good.color"/> </th>
                     <th> <spring:message code="good.type"/> </th>
@@ -124,10 +123,10 @@
                     <th> <spring:message code="good.size"/> </th>
                     <th> <spring:message code="good.about"/> </th>
                     <th></th>
-                </tr>
+                </tr></thead>
                 <%--<c:set var="uk_lang" scope="session" value="uk"/>--%>
                 <%--<c:set var="ru_lang" scope="session" value="ru"/>--%>
-
+            <tbody>
                 <c:forEach var="obj" items="${allData}">
                     <tr>
                         <td>  <img class="miniImg" src = "<c:url value="images/${obj.id}_0.jpg"/>" alt = "${obj.firm} ${obj.category.uaText} ${obj.color.uaText}"/></td>
@@ -162,6 +161,7 @@
                     </tr>
                     <tr><td colspan="9"><hr></td> </tr>
                 </c:forEach>
+            </tbody>
             </table>
 
     </div>
@@ -177,3 +177,13 @@
 
 
 </script>
+<style>
+    .good-info td:nth-of-type(1):before { content: ""; }
+    .good-info td:nth-of-type(2):before { content: "<spring:message code="good.id"/>"; }
+    .good-info td:nth-of-type(3):before { content: "<spring:message code="good.firm"/>"; }
+    .good-info td:nth-of-type(4):before { content: "<spring:message code="good.color"/>"; }
+    .good-info td:nth-of-type(5):before { content: "<spring:message code="good.type"/>"; }
+    .good-info td:nth-of-type(6):before { content: "<spring:message code="good.price"/>"; }
+    .good-info td:nth-of-type(7):before { content: "<spring:message code="good.size"/>";
+    .good-info td:nth-of-type(8):before { content: "<spring:message code="good.about"/>"; }
+</style>
