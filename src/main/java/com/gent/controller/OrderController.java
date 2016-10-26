@@ -99,7 +99,7 @@ public class OrderController {
         return "redirect:orders";
     }
 
-    @RequestMapping(value="orders")
+    @RequestMapping(value="admin/orders")
     public String good(ModelMap model, HttpServletResponse response){
 
         List<Orders> listOrders = orderService.getAllOrders();

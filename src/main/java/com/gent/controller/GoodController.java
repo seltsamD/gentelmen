@@ -43,6 +43,7 @@ import java.util.Map;
 @Controller
 @ComponentScan("com.gent")
 public class GoodController {
+
     @Autowired
     private IGoodService goodService;
     @Autowired
@@ -57,21 +58,17 @@ public class GoodController {
     private IDescriptionService descriptionService;
     @Autowired
     ServletContext servletContext;
-    @RequestMapping(value="goodform")
+    @RequestMapping(value="/admin/goodform")
     public String good(ModelMap model){
 
         model.addAttribute(new Good());
         List<Color> listC = colorService.getAllColor();
-
-
-
-
         setPageData(model);
       return "goodform";
 
     }
 
-    @RequestMapping(value="addGood", method = RequestMethod.POST)
+    @RequestMapping(value="/admin/addGood", method = RequestMethod.POST)
     public String addGood(@ModelAttribute("good") @Valid Good good, BindingResult result,
                             ModelMap model, HttpServletRequest request,  @RequestParam("file") MultipartFile[] files) {
         if(!result.hasErrors()) {
@@ -85,6 +82,7 @@ public class GoodController {
             good.setDescription(desc);
             good.setColor(colorService.getColorById(good.getColor().getId()));
             good.setCategory(categoryService.getCategoryById(good.getCategory().getId()));
+            good.setStatus(1);
             boolean flag = goodService.addGood(good);
             model.addAttribute(new Good());
             String fileName = null;
@@ -103,6 +101,8 @@ public class GoodController {
                         buffStream.write(bytes);
                         buffStream.close();
 
+                        System.out.println(path + good.getId()+"_"+i+".jpg");
+
 
                     } catch (Exception e) {
 
@@ -117,7 +117,7 @@ public class GoodController {
         return "goodform";
 
     }
-    @RequestMapping(value="goodInfo")
+    @RequestMapping(value="/admin/goodInfo")
     public String getInfo(ModelMap model, HttpServletRequest request) {
         int pid = Integer.parseInt(request.getParameter("id"));
         Good good = goodService.getGoodById(pid);
@@ -126,7 +126,7 @@ public class GoodController {
         setPageData(model);
         return "goodInfo";
     }
-    @RequestMapping(value="goodById")
+    @RequestMapping(value="/admin/goodById")
     public String getGoodById(ModelMap model, HttpServletRequest request) {
         int pid = Integer.parseInt(request.getParameter("id"));
         Good good = goodService.getGoodById(pid);
@@ -134,7 +134,7 @@ public class GoodController {
         model.addAttribute(good);
         return "goodform";
     }
-    @RequestMapping(value="updateGood", method = RequestMethod.POST)
+    @RequestMapping(value="/admin/updateGood", method = RequestMethod.POST)
     public String updateGood(@ModelAttribute("good") @Valid Good good, BindingResult result,
                                ModelMap model, HttpServletRequest request,  @RequestParam("file") MultipartFile[] files, @RequestParam("flagImg") String flag) {
 
@@ -164,7 +164,7 @@ public class GoodController {
                                     new BufferedOutputStream(new FileOutputStream(new File(path + good.getId()+"_"+i+".jpg")));
                             buffStream.write(bytes);
                             buffStream.close();
-
+                            System.out.println(path + good.getId()+"_"+i+".jpg");
 
                         } catch (Exception e) {
 
@@ -183,9 +183,13 @@ public class GoodController {
         setPageData(model);
         return "goodform";
     }
-    @RequestMapping(value="deleteGood")
+    @RequestMapping(value="/admin/deleteGood")
     public String deleteGood(ModelMap model, HttpServletRequest request) {
         int pid = Integer.parseInt(request.getParameter("id"));
+
+        int descId = goodService.getGoodById(pid).getDescription().getId();
+
+
 
         String path = "C:/jav/i18n/goods/";
         for(int i=0; i<goodService.getGoodById(pid).getCountImg(); i++)
@@ -196,6 +200,7 @@ public class GoodController {
         }
 
         goodService.deleteGood(pid);
+        descriptionService.deleteDescription(descId);
         model.addAttribute(new Good());
         model.addAttribute("msg", getMsg("deleted", request));
         setPageData(model);

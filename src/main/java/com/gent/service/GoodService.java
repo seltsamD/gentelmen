@@ -67,4 +67,9 @@ public class GoodService implements IGoodService {
     public List<Good> getGoodsByCategorie(int catId) {
         return goodDAO.getGoodsByCategorie(catId);
     }
+
+    @Override
+    public List<Good> getGoodsByColor(int colorId) {
+        return goodDAO.getGoodsByColor(colorId);
+    }
 }

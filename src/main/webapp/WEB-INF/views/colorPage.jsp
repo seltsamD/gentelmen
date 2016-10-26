@@ -27,7 +27,7 @@
                     <h3><spring:message code="color.update"/> <c:out value="${good.id}"/></h3>
                 </c:if>
             </div>
-            <form:form cssClass="form-horizontal" id="formColor" action="addColor" method="POST" commandName="color" enctype="multipart/form-data">
+            <form:form cssClass="form-horizontal" id="formColor" action="/admin/addColor" method="POST" commandName="color" enctype="multipart/form-data">
             <form:hidden path="id"/>
                 <div class="form-group">
                     <label for="uaText" class="col-sm-2 control-label">Українською</label>
@@ -110,8 +110,8 @@
                     <td> <c:out value="${obj.ruText}"/> </td>
 
                     <td>
-                        <a href="${pageContext.request.contextPath}/deleteColor?id=${obj.id}"><spring:message code="form.delete"/></a> |
-                        <a href="${pageContext.request.contextPath}/colorById?id=${obj.id}"><spring:message code="form.edit"/></a>
+                        <a href="${pageContext.request.contextPath}/admin/deleteColor?id=${obj.id}"><spring:message code="form.delete"/></a> |
+                        <a href="${pageContext.request.contextPath}/admin/colorById?id=${obj.id}"><spring:message code="form.edit"/></a>
                     </td>
                 </tr>
                 <tr><td colspan="4"><hr></td> </tr>

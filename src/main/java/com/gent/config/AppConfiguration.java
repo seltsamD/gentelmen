@@ -24,7 +24,7 @@ import javax.servlet.Filter;
 
 @Configuration
 @ComponentScan("com.gent")
-@Import(DBConfig.class)
+@Import({DBConfig.class, SecurityConfig.class})
 @EnableWebMvc
 public class AppConfiguration extends WebMvcConfigurerAdapter {
     @Bean

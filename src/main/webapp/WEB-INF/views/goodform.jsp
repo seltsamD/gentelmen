@@ -27,7 +27,7 @@
                 </c:if>
             </div>
 
-            <form:form cssClass="form-horizontal" id="myform" action="addGood" method="POST" commandName="good" enctype="multipart/form-data">
+            <form:form cssClass="form-horizontal"  accept-charset="UTF-8"  id="myform" action="/admin/addGood" method="POST" commandName="good" enctype="multipart/form-data">
                 <form:hidden path="id"/>
                 <div class="form-group">
                     <label for="firm" class="col-sm-2 control-label"><spring:message code="good.firm"/></label>
@@ -129,7 +129,8 @@
             <tbody>
                 <c:forEach var="obj" items="${allData}">
                     <tr>
-                        <td>  <img class="miniImg" src = "<c:url value="images/${obj.id}_0.jpg"/>" alt = "${obj.firm} ${obj.category.uaText} ${obj.color.uaText}"/></td>
+                        <td> <a class="single_image" href="<c:url value="/images/${obj.id}_0.jpg"/>"><img class="miniImg" src="<c:url value="/images/${obj.id}_0.jpg"/>" alt="${obj.firm} ${obj.category.uaText} "${obj.color.uaText}"/></a>
+                        </td>
                         <td> <c:out value="${obj.id}"/> </td>
                         <td> <c:out value="${obj.firm}"/> </td>
 
@@ -154,9 +155,9 @@
                         </c:if>
 
 
-                        <td class="right_table"> <a href="${pageContext.request.contextPath}/deleteGood?id=${obj.id}"><spring:message code="form.delete"/> </a> |
-                            <a href="${pageContext.request.contextPath}/goodById?id=${obj.id}"><spring:message code="form.edit"/></a> |
-                            <a href="${pageContext.request.contextPath}/goodInfo?id=${obj.id}"><spring:message code="form.info"/></a>
+                        <td class="right_table"> <a href="${pageContext.request.contextPath}/admin/deleteGood?id=${obj.id}"><spring:message code="form.delete"/> </a> |
+                            <a href="${pageContext.request.contextPath}/admin/goodById?id=${obj.id}"><spring:message code="form.edit"/></a> |
+                            <a href="${pageContext.request.contextPath}/admin/goodInfo?id=${obj.id}"><spring:message code="form.info"/></a>
                         </td>
                     </tr>
                     <tr><td colspan="9"><hr></td> </tr>
@@ -172,18 +173,46 @@
         if(numFiles > 0)
                 flagImg.setAttribute("value", "1");
         img.setAttribute("value", numFiles);
+        alert(numFiles);
 
     }
 
 
 </script>
 <style>
-    .good-info td:nth-of-type(1):before { content: ""; }
-    .good-info td:nth-of-type(2):before { content: "<spring:message code="good.id"/>"; }
-    .good-info td:nth-of-type(3):before { content: "<spring:message code="good.firm"/>"; }
-    .good-info td:nth-of-type(4):before { content: "<spring:message code="good.color"/>"; }
-    .good-info td:nth-of-type(5):before { content: "<spring:message code="good.type"/>"; }
-    .good-info td:nth-of-type(6):before { content: "<spring:message code="good.price"/>"; }
-    .good-info td:nth-of-type(7):before { content: "<spring:message code="good.size"/>";
-    .good-info td:nth-of-type(8):before { content: "<spring:message code="good.about"/>"; }
+    @media
+    only screen and (max-width: 760px),
+    (min-device-width: 768px) and (max-device-width: 1024px) {
+        .good-info td:nth-of-type(1):before {
+            content: "";
+        }
+
+        .good-info td:nth-of-type(2):before {
+            content: "<spring:message code="good.id"/>";
+        }
+
+        .good-info td:nth-of-type(3):before {
+            content: "<spring:message code="good.firm"/>";
+        }
+
+        .good-info td:nth-of-type(4):before {
+            content: "<spring:message code="good.color"/>";
+        }
+
+        .good-info td:nth-of-type(5):before {
+            content: "<spring:message code="good.type"/>";
+        }
+
+        .good-info td:nth-of-type(6):before {
+            content: "<spring:message code="good.price"/>";
+        }
+
+        .good-info td:nth-of-type(7):before {
+            content: "<spring:message code="good.size"/>";
+        }
+
+        .good-info td:nth-of-type(8):before {
+            content: "<spring:message code="good.about"/>";
+        }
+    }
 </style>

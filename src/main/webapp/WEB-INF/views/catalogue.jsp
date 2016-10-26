@@ -13,10 +13,21 @@
 <jsp:include page="footer.jsp" />
 
 <div class="container">
+    <div class="main">
     <div class="topBox">
         <div class="row">
             <div class="col-sm-3">
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingNull">
+                            <h4 class="panel-title">
+                                <a href="${pageContext.request.contextPath}/catalogue">   <spring:message code="good.all"/>
+                                    </a>
+
+                            </h4>
+                        </div>
+
+                    </div>
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h4 class="panel-title">
@@ -57,33 +68,20 @@
                             <div class="panel-body">
                                 <ul>
                                     <c:forEach var="color" items="${colors}">
-                                        <li>
+                                        <li><a href="${pageContext.request.contextPath}/color?id=${color.id}">
                                             <c:if test="${lang_code == 'uaText'}">
                                                 <c:out value="${color.uaText}"/>
                                             </c:if>
                                             <c:if test="${lang_code == 'ruText'}">
                                                 <c:out value="${color.ruText}"/>
                                             </c:if>
-                                        </li>
+                                       </a> </li>
                                     </c:forEach>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingThree">
-                            <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Collapsible Group Item #3
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                            <div class="panel-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
                 <%--<div class="sidebar-nav">--%>
                     <%--<div class="navbar navbar-default" role="navigation">--%>
@@ -125,6 +123,10 @@
                         <h1><spring:message code="catalog"/></h1>
 
                     </div>
+            <c:if test="${count <= 0}">
+                <h3><spring:message code="good.notFound"/></h3>
+            </c:if>
+            <c:if test="${count > 0}">
                 <table id="box-table-b" class="good-info">
                     <thead>
                     <tr> <th>  </th>
@@ -142,7 +144,15 @@
                     <tbody>
                     <c:forEach var="obj" items="${allData}">
                         <tr>
-                            <td>  <img class="miniImg" src = "<c:url value="images/${obj.id}_0.jpg"/>" alt = "${obj.firm} ${obj.category.uaText} ${obj.color.uaText}"/></td>
+                            <td> <a class="single_image" href="<c:url value="/images/${obj.id}_0.jpg"/>"><img  class="miniImg"  src="<c:url value="/images/${obj.id}_0.jpg"/>" alt="${obj.firm} ${obj.category.uaText} "${obj.color.uaText}"/></a>
+
+                            <%--<td class="right_table">--%>
+                                <form:form id="baskForm${obj.id}" action="addToBasket" method="POST">
+                                    <input type="hidden" name="goodId" value="${obj.id}">
+                                    <input type="button" onclick="tobasket(${obj.id})" value="<spring:message code="basket.add"/>" id="btn-basket-add" class="btn btn-success">
+                                </form:form>
+                            <%--</td>--%>
+                            </td>
                             <td> <c:out value="${obj.id}"/> </td>
                             <td> <c:out value="${obj.firm}"/> </td>
 
@@ -167,29 +177,30 @@
                             </c:if>
 
 
-                            <td class="right_table">
-                                <form:form id="baskForm${obj.id}" action="addToBasket" method="POST">
-                                    <input type="hidden" name="goodId" value="${obj.id}">
-                                    <input type="button" onclick="tobasket(${obj.id})" value="<spring:message code="basket.add"/>" id="btn-basket-add" class="btn btn-success">
-                                </form:form>
-                            </td>
+
                         </tr>
                         <tr><td colspan="9"><hr></td> </tr>
                     </c:forEach>
                     </tbody>
+                </table>
+                </c:if>
             </div>
         </div>
 
     </div>
 </div>
-
+</div>
 <style>
+    @media
+    only screen and (max-width: 760px),
+    (min-device-width: 768px) and (max-device-width: 1024px) {
     .good-info td:nth-of-type(1):before { content: ""; }
     .good-info td:nth-of-type(2):before { content: "<spring:message code="good.id"/>"; }
     .good-info td:nth-of-type(3):before { content: "<spring:message code="good.firm"/>"; }
     .good-info td:nth-of-type(4):before { content: "<spring:message code="good.color"/>"; }
     .good-info td:nth-of-type(5):before { content: "<spring:message code="good.type"/>"; }
     .good-info td:nth-of-type(6):before { content: "<spring:message code="good.price"/>"; }
-    .good-info td:nth-of-type(7):before { content: "<spring:message code="good.size"/>";
-    .good-info td:nth-of-type(8):before { content: "<spring:message code="good.about"/>"; }
+    .good-info td:nth-of-type(7):before { content: "<spring:message code="good.size"/>"; }
+     .good-info td:nth-of-type(8):before { content: "<spring:message code="good.about"/>"; }
+    }
 </style>

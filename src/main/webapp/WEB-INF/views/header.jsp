@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%--<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>--%>
 <%--
   Created by IntelliJ IDEA.
   User: daria
@@ -45,16 +46,27 @@
                 <li><div id="msg"></div></li>
                 <li class="active"><a href="<c:url value="/index"/>"><spring:message code="page.title"/></a></li>
                 <li class="active"><a href="<c:url value="/catalogue"/>"><spring:message code="page.catalogue"/></a></li>
-                <li class="active"><a href="<c:url value="/goodform"/>"><spring:message code="page.good"/></a></li>
-                <li class="active"><a href="<c:url value="/colors"/>"><spring:message code="text.color"/></a></li>
-                <li class="active"><a href="<c:url value="/categories"/>"><spring:message code="text.category"/></a></li>
+
+
+                <c:if test="${pageContext.request.userPrincipal.name != null}">
+                    <li class="active"><a href="<c:url value="/admin/goodform"/>"><spring:message code="page.good"/></a></li>
+                    <li class="active"><a href="<c:url value="/admin/colors"/>"><spring:message code="text.color"/></a></li>
+                    <li class="active"><a href="<c:url value="/admin/categories"/>"><spring:message code="text.category"/></a></li>
+                    <li class="active"><a href="<c:url value="/admin/orders"/>"><spring:message code="text.orders"/></a></li>
+                </c:if>
+                <c:if test="${pageContext.request.userPrincipal.name == null}">
                 <li class="active">
                    <a href="<c:url value="/shopping-cart"/>"><span  id="cartDiv" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                 </li>
-                <li><a href="?mylocale=uk"><img height="35px" width="35px" src="<c:url value="resources/images/ukraine-flag.png"/>" ></a></li>
-                <li><a href="?mylocale=ru"><img height="35px" width="35px" src="<c:url value="resources/images/rus-flag.png"/>" ></a></li>
+                </c:if>
+                <li><a href="?mylocale=uk"><img height="35px" width="35px" src="<c:url value="/resources/images/ukraine-flag.png"/>" ></a></li>
+                <li><a href="?mylocale=ru"><img height="35px" width="35px" src="<c:url value="/resources/images/rus-flag.png"/>" ></a></li>
+                <c:if test="${pageContext.request.userPrincipal.name != null}">
+                <li class="active"><a href="<c:url value="/logout"/>"><spring:message code="logout"/>, ${pageContext.request.userPrincipal.name}</a></li>
+                </c:if>
             </ul>
         </div>
     </div>
 </div>
 
+<div id="snackbar"><spring:message code="basket.IsAdded"/></div>

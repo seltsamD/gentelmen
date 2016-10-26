@@ -2,33 +2,33 @@ $(document).ready(function() {
 
 
     $("#btn-add").click(function () {
-        $("#myform").attr("action", "addGood");
+        $("#myform").attr("action", "/admin/addGood");
         $("#myform").submit();
     });
 
     $("#btn-update").click(function () {
         
-        $("#myform").attr("action", "updateGood");
+        $("#myform").attr("action", "/admin/updateGood");
         $("#myform").submit();
     });
 
     $("#btn-add-color").click(function () {
-        $("#formColor").attr("action", "addColor");
+        $("#formColor").attr("action", "/admin/addColor");
         $("#formColor").submit();
     });
 
     $("#btn-update-color").click(function () {
-        $("#formColor").attr("action", "updateColor");
+        $("#formColor").attr("action", "/admin/updateColor");
         $("#formColor").submit();
     });
 
     $("#btn-add-category").click(function () {
-        $("#formCategory").attr("action", "addCategory");
+        $("#formCategory").attr("action", "/admin/addCategory");
         $("#formCategory").submit();
     });
 
     $("#btn-update-category").click(function () {
-        $("#formCategory").attr("action", "updateCategory");
+        $("#formCategory").attr("action", "/admin/updateCategory");
         $("#formCategory").submit();
     });
 

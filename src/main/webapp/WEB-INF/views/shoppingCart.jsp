@@ -11,6 +11,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="header.jsp" />
 <jsp:include page="footer.jsp" />
+<script src="<c:url value="${pageContext.request.contextPath}/resources/js/jquery.maskedinput.min.js" />" type="text/javascript"></script>
+
 
 <body>
 
@@ -35,7 +37,8 @@
                 <div class="form-group">
                     <label for="phone" class="col-sm-2 control-label"><spring:message code="order.phone"/></label>
                     <div class="col-sm-10">
-                        <form:input path="phone" cssClass="form-control"/><form:errors path="phone" cssClass="error-msg"/>
+                        <input class="form-control" type="text" id="phone" name="phone" placeholder="<spring:message code="order.phone"/>">
+                       <form:errors path="phone" cssClass="error-msg"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -61,14 +64,14 @@
         <th> <spring:message code="good.about"/> </th>
         <th></th>
     </tr>
-    <%--<c:set var="uk_lang" scope="session" value="uk"/>--%>
-    <%--<c:set var="ru_lang" scope="session" value="ru"/>--%>
-
-    </thead>
+     </thead>
     <tbody>
     <c:forEach var="obj" items="${listBasket}">
         <tr>
-            <td>  <img class="miniImg" src = "<c:url value="images/${obj.id}_0.jpg"/>" alt = "${obj.firm} ${obj.category.uaText} ${obj.color.uaText}"/></td>
+            <td>
+                <a class="single_image" href="<c:url value="images/${obj.id}_0.jpg"/>"><img  class="miniImg"  src="<c:url value="images/${obj.id}_0.jpg"/>" alt="${obj.firm} ${obj.category.uaText} "${obj.color.uaText}"/></a>
+
+            </td>
             <td> <c:out value="${obj.id}"/> </td>
             <td> <c:out value="${obj.firm}"/> </td>
             <c:if test="${lang_code == 'uaText'}">
@@ -100,14 +103,45 @@
 </div>
 </div>
 <style>
-    .cart-info td:nth-of-type(1):before { content: ""; }
-    .cart-info td:nth-of-type(2):before { content: "<spring:message code="good.id"/>"; }
-    .cart-info td:nth-of-type(3):before { content: "<spring:message code="good.firm"/>"; }
-    .cart-info td:nth-of-type(4):before { content: "<spring:message code="good.color"/>"; }
-    .cart-info td:nth-of-type(5):before { content: "<spring:message code="good.type"/>"; }
-    .cart-info td:nth-of-type(6):before { content: "<spring:message code="good.price"/>"; }
-    .cart-info td:nth-of-type(7):before { content: "<spring:message code="good.size"/>"; }
-    .cart-info td:nth-of-type(8):before { content: "<spring:message code="good.about"/>"; }
+    @media
+    only screen and (max-width: 760px),
+    (min-device-width: 768px) and (max-device-width: 1024px) {
+        .cart-info td:nth-of-type(1):before {
+            content: "";
+        }
+
+        .cart-info td:nth-of-type(2):before {
+            content: "<spring:message code="good.id"/>";
+        }
+
+        .cart-info td:nth-of-type(3):before {
+            content: "<spring:message code="good.firm"/>";
+        }
+
+        .cart-info td:nth-of-type(4):before {
+            content: "<spring:message code="good.color"/>";
+        }
+
+        .cart-info td:nth-of-type(5):before {
+            content: "<spring:message code="good.type"/>";
+        }
+
+        .cart-info td:nth-of-type(6):before {
+            content: "<spring:message code="good.price"/>";
+        }
+
+        .cart-info td:nth-of-type(7):before {
+            content: "<spring:message code="good.size"/>";
+        }
+
+        .cart-info td:nth-of-type(8):before {
+            content: "<spring:message code="good.about"/>";
+        }
+    }
 </style>
 </body>
-
+<script type="text/javascript">
+    jQuery(function($){
+        $("#phone").mask("(999) 999-9999");
+    });
+</script>

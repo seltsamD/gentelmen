@@ -84,8 +84,17 @@ public class GoodDAO implements IGoodDAO {
     @Override
     public List<Good> getGoodsByCategorie(int catId) {
 
-        List<Good> list = sessionFactory.getCurrentSession().createQuery("FROM Good as p where p.status = 1 and p.Category.id = :id ORDER BY p.id ")
+        List<Good> list = sessionFactory.getCurrentSession().createQuery("select p FROM Good  p where p.status = 1 and p.category.id = :id ORDER BY p.id ")
                 .setParameter("id", catId)
+                .list();
+
+        return list;
+    }
+
+    @Override
+    public List<Good> getGoodsByColor(int colorId) {
+        List<Good> list = sessionFactory.getCurrentSession().createQuery("select p FROM Good  p where p.status = 1 and p.color.id = :id ORDER BY p.id ")
+                .setParameter("id", colorId)
                 .list();
 
         return list;

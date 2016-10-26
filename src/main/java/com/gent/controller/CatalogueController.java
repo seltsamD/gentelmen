@@ -2,6 +2,7 @@ package com.gent.controller;
 
 import com.gent.model.Category;
 import com.gent.model.Color;
+import com.gent.model.Good;
 import com.gent.service.ICategoryService;
 import com.gent.service.IColorService;
 import com.gent.service.IGoodService;
@@ -32,17 +33,35 @@ public class CatalogueController {
 
     @RequestMapping(value="catalogue")
     public String gullCatalogue(ModelMap model, HttpServletRequest request) {
-         setPageData(model);
-        model.addAttribute("allData", goodService.getAllGoods());
+
+        setPageData(model);
+        List<Good> listGood = goodService.getAllGoods();
+        model.addAttribute("count", listGood.size());
+        model.addAttribute("allData", listGood);
         return "catalogue";
     }
 
     @RequestMapping(value="category")
     public String getCategoryById(ModelMap model, HttpServletRequest request) {
-        int catId = Integer.parseInt(request.getParameter("id"));
 
-        model.addAttribute("allData", goodService.getGoodsByCategorie(catId));
-       setPageData(model);
+        int catId = Integer.parseInt(request.getParameter("id"));
+        List<Good> listGood = goodService.getGoodsByCategorie(catId);
+        model.addAttribute("count", listGood.size());
+        model.addAttribute("allData", listGood);
+        setPageData(model);
+
+        return "catalogue";
+    }
+
+    @RequestMapping(value="color")
+    public String getColorById(ModelMap model, HttpServletRequest request) {
+
+        int catId = Integer.parseInt(request.getParameter("id"));
+        List<Good> listGood = goodService.getGoodsByColor(catId);
+        model.addAttribute("count", listGood.size());
+        model.addAttribute("allData", listGood);
+        setPageData(model);
+
         return "catalogue";
     }
 

@@ -71,7 +71,7 @@
         </div>
     </section>
 </div>
-<div id="snackbar"><spring:message code="basket.IsAdded"/></div>
+
 <script type="text/javascript">
     $(function() {
 

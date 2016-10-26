@@ -29,7 +29,7 @@
                     <h3><spring:message code="category.update"/> <c:out value="${good.id}"/></h3>
                 </c:if>
             </div>
-            <form:form cssClass="form-horizontal" id="formCategory" action="addCategory" method="POST" commandName="category" enctype="multipart/form-data">
+            <form:form cssClass="form-horizontal" id="formCategory" action="/admin/addCategory" method="POST" commandName="category" enctype="multipart/form-data">
                 <form:hidden path="id"/>
                 <div class="form-group">
                     <label for="uaText" class="col-sm-2 control-label">Українською</label>
@@ -77,8 +77,8 @@
                     <td> <c:out value="${obj.ruText}"/> </td>
 
                     <td>
-                        <a href="${pageContext.request.contextPath}/deleteCategory?id=${obj.id}"><spring:message code="form.delete"/></a> |
-                        <a href="${pageContext.request.contextPath}/categoryById?id=${obj.id}"><spring:message code="form.edit"/></a>
+                        <a href="${pageContext.request.contextPath}/admin/deleteCategory?id=${obj.id}"><spring:message code="form.delete"/></a> |
+                        <a href="${pageContext.request.contextPath}/admin/categoryById?id=${obj.id}"><spring:message code="form.edit"/></a>
                     </td>
                 </tr>
                 <tr><td colspan="4"><hr></td> </tr>
