@@ -5,8 +5,7 @@ import com.gent.model.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.Date;
 import java.util.List;
 
@@ -33,8 +32,8 @@ public class OrderssService implements IOrdersService {
 
     @Override
     public boolean addOrders(Orders order) {
-        //для вывода даты dateTime.format(DateTimeFormatter.ofPattern("d::MMM::uuuu HH::mm::ss"))
-        order.setDate(LocalDateTime.now());
+        Date now = new Date();
+        order.setDate(now);
         orderDAO.addOrders(order);
         return true;
     }

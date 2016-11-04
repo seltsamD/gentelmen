@@ -87,6 +87,7 @@ public class GoodController {
             model.addAttribute(new Good());
             String fileName = null;
             String msg = "";
+            System.out.println("%%%%%"+files.length);
 
             if (files != null && files.length >0) {
                 for(int i =0 ;i< files.length; i++){
@@ -173,9 +174,17 @@ public class GoodController {
 
                 }
             }
+            int descId = goodService.getGoodById(good.getId()).getDescription().getId();
 
-           goodService.updateGood(good);
-            model.addAttribute(new Good());
+            Description desc = descriptionService.getDescriptionById(descId);
+            desc.setRuText(good.getDescription().getRuText());
+            desc.setUaText(good.getDescription().getUaText());
+
+
+            descriptionService.updateDescription(desc);
+           good.setDescription(desc);
+            goodService.updateGood(good);
+             model.addAttribute(new Good());
             model.addAttribute("msg", getMsg("updated", request));
         }
         else
@@ -207,7 +216,7 @@ public class GoodController {
         return "goodform";
     }
     private void setPageData(ModelMap model) {
-        model.addAttribute("allData", goodService.getAllGoods());
+//        model.addAttribute("allData", goodService.getAllGoods());
         Locale locale = LocaleContextHolder.getLocale();
         if(locale.getLanguage().equals("uk"))
             model.addAttribute("lang_code", "uaText");
@@ -220,5 +229,12 @@ public class GoodController {
     }
     private String getMsg(String key, HttpServletRequest request) {
         return messageSource.getMessage(key, null, localeResolver.resolveLocale(request));
+    }
+
+    @RequestMapping(value="search", method = RequestMethod.POST)
+    public String search(ModelMap model, HttpServletRequest request){
+
+
+        return "search";
     }
 }

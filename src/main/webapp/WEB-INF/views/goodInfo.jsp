@@ -34,11 +34,11 @@
                 </ol>
                 <div class="carousel-inner" role="listbox">
                     <div class="item active">
-                        <a class="single_image" href="<c:url value="images/${info.id}_0.jpg"/>"><img  class="maxiImg " src="<c:url value="images/${info.id}_0.jpg"/>" alt="${info.firm} ${info.category.uaText} "${info.color.uaText}"/></a>
+                        <a class="single_image" href="<c:url value="/images/${info.id}_0.jpg"/>"><img  class="maxiImg " src="<c:url value="/images/${info.id}_0.jpg"/>" alt="${info.firm} ${info.category.uaText} "${info.color.uaText}"/></a>
                     </div>
                     <c:forEach var="i" begin="1" end="${info.countImg -1}">
                         <div class="item">
-                            <a class="single_image" href="<c:url value="images/${info.id}_${i}.jpg"/>"><img  class="maxiImg " src="<c:url value="images/${info.id}_${i}.jpg"/>" alt="${info.firm} ${info.category.uaText} "${info.color.uaText}"/></a></td>
+                            <a class="single_image" href="<c:url value="/images/${info.id}_${i}.jpg"/>"><img  class="maxiImg " src="<c:url value="/images/${info.id}_${i}.jpg"/>" alt="${info.firm} ${info.category.uaText} "${info.color.uaText}"/></a></td>
                         </div>
                     </c:forEach>
 

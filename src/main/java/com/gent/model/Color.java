@@ -1,6 +1,13 @@
 package com.gent.model;
 
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
+import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
+
 import javax.persistence.*;
+import javax.persistence.Parameter;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -16,9 +23,11 @@ public class Color implements Serializable{
     @Column(name="id")
     private int id;
 
+
     @Size(min=2, max=255)
     @Column(name = "ruText")
     private String ruText;
+
 
     @Size(min=2, max=255)
     @Column(name = "uaText")

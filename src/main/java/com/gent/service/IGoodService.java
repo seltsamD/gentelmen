@@ -10,8 +10,8 @@ import java.util.List;
  */
 public interface IGoodService {
 
-    List<Integer> listGood = new ArrayList<Integer>();
-    List<Good> getAllGoods();
+//    List<Integer> listGood = new ArrayList<Integer>();
+    List<Good> getAllGoods(int page);
     Good getGoodById(int id);
     boolean addGood(Good good);
     void updateGood(Good good);
@@ -21,4 +21,8 @@ public interface IGoodService {
     void changeStatus(int id, int status);
     List<Good> getGoodsByCategorie(int catId);
     List<Good> getGoodsByColor(int colorId);
+    int getMinPrice();
+    int getMaxPrice();
+    List<Good> getGoodBetweenPrice(int price1, int price2);
+    List search(String text);
 }

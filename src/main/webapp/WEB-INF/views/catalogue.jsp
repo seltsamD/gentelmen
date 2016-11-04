@@ -11,6 +11,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="header.jsp" />
 <jsp:include page="footer.jsp" />
+<link href="<c:url value="${pageContext.request.contextPath}/resources/css/jquery-ui.css" />" rel="stylesheet">
+<script src="<c:url value="${pageContext.request.contextPath}/resources/js/jquery-ui.js" />" type="text/javascript"></script>
 
 <div class="container">
     <div class="main">
@@ -81,41 +83,32 @@
                             </div>
                         </div>
                     </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    <spring:message code="price_range"/>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                <p id="amount"></p>
+                                <div id="slider-range"></div>
 
+                                <form:form id="priceRange" action="/priceRange" method="POST">
+                                    <input type="hidden" id="amount1" name="amount1" />
+                                    <input type="hidden" id="amount2" name="amount2" />
+                                    <%--<form:hidden path="amount1"/>--%>
+                                    <%--<form:hidden path="amount2"/>--%>
+                                    <input type="submit" name="submit_range" value="<spring:message code="search"/>"/>
+                               </form:form>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <%--<div class="sidebar-nav">--%>
-                    <%--<div class="navbar navbar-default" role="navigation">--%>
-                        <%--<div class="navbar-header">--%>
-                            <%--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">--%>
-                                <%--<span class="sr-only">Toggle navigation</span>--%>
-                                <%--<span class="icon-bar"></span>--%>
-                                <%--<span class="icon-bar"></span>--%>
-                                <%--<span class="icon-bar"></span>--%>
-                            <%--</button>--%>
-                            <%--<span class="visible-xs navbar-brand">Sidebar menu</span>--%>
-                        <%--</div>--%>
-                        <%--<div class="navbar-collapse collapse sidebar-navbar-collapse">--%>
-                            <%--<ul class="nav navbar-nav">--%>
-                                <%--<li class="active"><a href="#">Menu Item 1</a></li>--%>
-                                <%--<li><a href="#">Menu Item 2</a></li>--%>
-                                <%--<li class="dropdown">--%>
-                                    <%--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>--%>
-                                    <%--<ul class="dropdown-menu">--%>
-                                        <%--<li><a href="#">Action</a></li>--%>
-                                        <%--<li><a href="#">Another action</a></li>--%>
-                                        <%--<li><a href="#">Something else here</a></li>--%>
-                                        <%--<li class="divider"></li>--%>
-                                        <%--<li class="dropdown-header">Nav header</li>--%>
-                                        <%--<li><a href="#">Separated link</a></li>--%>
-                                        <%--<li><a href="#">One more separated link</a></li>--%>
-                                    <%--</ul>--%>
-                                <%--</li>--%>
-                                <%--<li><a href="#">Menu Item 4</a></li>--%>
-                                <%--<li><a href="#">Reviews <span class="badge">1,118</span></a></li>--%>
-                            <%--</ul>--%>
-                        <%--</div><!--/.nav-collapse -->--%>
-                    <%--</div>--%>
-                <%--</div>--%>
+
             </div>
             <div class="col-sm-9">
 
@@ -137,7 +130,7 @@
                         <th> <spring:message code="good.price"/> </th>
                         <th> <spring:message code="good.size"/> </th>
                         <th> <spring:message code="good.about"/> </th>
-                        <th></th>
+
                     </tr></thead>
                     <%--<c:set var="uk_lang" scope="session" value="uk"/>--%>
                     <%--<c:set var="ru_lang" scope="session" value="ru"/>--%>
@@ -146,11 +139,12 @@
                         <tr>
                             <td> <a class="single_image" href="<c:url value="/images/${obj.id}_0.jpg"/>"><img  class="miniImg"  src="<c:url value="/images/${obj.id}_0.jpg"/>" alt="${obj.firm} ${obj.category.uaText} "${obj.color.uaText}"/></a>
 
-                            <%--<td class="right_table">--%>
-                                <form:form id="baskForm${obj.id}" action="addToBasket" method="POST">
-                                    <input type="hidden" name="goodId" value="${obj.id}">
-                                    <input type="button" onclick="tobasket(${obj.id})" value="<spring:message code="basket.add"/>" id="btn-basket-add" class="btn btn-success">
-                                </form:form>
+                                <c:if test="${pageContext.request.userPrincipal.name == null}">
+                                    <form:form id="baskForm${obj.id}" action="addToBasket" method="POST">
+                                        <input type="hidden" name="goodId" value="${obj.id}">
+                                        <input type="button" onclick="tobasket(${obj.id})" value="<spring:message code="basket.add"/>" id="btn-basket-add" class="btn btn-success">
+                                    </form:form>
+                                </c:if>
                             <%--</td>--%>
                             </td>
                             <td> <c:out value="${obj.id}"/> </td>
@@ -175,14 +169,54 @@
                             <c:if test="${lang_code == 'ruText'}">
                                 <td> <c:out value="${obj.description.ruText}"/> </td>
                             </c:if>
-
-
-
+                            <c:if test="${pageContext.request.userPrincipal.name != null}">
+                            <td class="right_table"> <a href="${pageContext.request.contextPath}/admin/deleteGood?id=${obj.id}"><spring:message code="form.delete"/> </a> |
+                                <a href="${pageContext.request.contextPath}/admin/goodById?id=${obj.id}"><spring:message code="form.edit"/></a> |
+                                <a href="${pageContext.request.contextPath}/admin/goodInfo?id=${obj.id}"><spring:message code="form.info"/></a>
+                            </td>
+                            </c:if>
                         </tr>
                         <tr><td colspan="9"><hr></td> </tr>
                     </c:forEach>
+                    <tr>
+                        <td colspan="9">
+                            <ul class="pagination modal-5">
+                                <c:if test="${page > 1}">
+                                    <li><a href="${pageContext.request.contextPath}/catalogue?page=${page-1}" class="prev fa fa-arrow-left"> </a></li>
+                                </c:if>
+                                <c:if test="${page <= 3}">
+                                    <c:forEach var="i" begin="1" end="5">
+                                        <c:if test="${page == i}">
+                                            <li><a href="${pageContext.request.contextPath}/catalogue?page=${i}" class="active">${i}</a></li>
+                                        </c:if>
+                                        <c:if test="${page != i}">
+                                            <li><a href="${pageContext.request.contextPath}/catalogue?page=${i}">${i}</a></li>
+                                        </c:if>
+                                    </c:forEach>
+                                </c:if>
+
+                                <c:if test="${count > 6}">
+                                    <li><a href="">...</a></li>
+                                </c:if>
+
+                                <c:forEach var="i" begin="${count - 3}" end="${count}" >
+                                    <c:if test="${page == i}">
+                                        <li><a href="${pageContext.request.contextPath}/catalogue?page=${i}" class="active">${i}</a></li>
+                                    </c:if>
+                                    <c:if test="${page != i}">
+                                        <li><a href="${pageContext.request.contextPath}/catalogue?page=${i}">${i}</a></li>
+                                    </c:if>
+                                </c:forEach>
+                                <c:if test="${page < count}">
+                                    <li><a href="${pageContext.request.contextPath}/catalogue?page=${page+1}" class="prev fa fa-arrow-right"> </a></li>
+                                </c:if>
+
+                            </ul>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
+
                 </c:if>
             </div>
         </div>
@@ -204,3 +238,21 @@
      .good-info td:nth-of-type(8):before { content: "<spring:message code="good.about"/>"; }
     }
 </style>
+<script type="text/javascript">
+
+    $(function() {
+        $( "#slider-range" ).slider({
+            range: true,
+            min: ${minPrice},
+            max: ${maxPrice},
+            values: [ ${minPrice}, ${maxPrice} ],
+            slide: function( event, ui ) {
+                $( "#amount" ).html(ui.values[ 0 ] + "грн. - " + ui.values[ 1 ]+ "грн." );
+                $( "#amount1" ).val(ui.values[ 0 ]);
+                $( "#amount2" ).val(ui.values[ 1 ]);
+            }
+        });
+        $( "#amount" ).html( $( "#slider-range" ).slider( "values", 0 ) +
+                "грн. - " + $( "#slider-range" ).slider( "values", 1 ) )+"грн.";
+    });
+</script>

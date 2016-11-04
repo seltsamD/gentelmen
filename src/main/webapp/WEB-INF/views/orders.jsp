@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib uri="http://sargue.net/jsptags/time" prefix="javatime" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: daria
@@ -25,7 +27,7 @@
                         <%--<a class="accordion-toggle">--%>
                             <table id="box-table-b">
                                 <tr>
-                                        <th> <spring:message code="order.id"/> </th>
+                                <th> <spring:message code="order.id"/> </th>
                                 <th> <spring:message code="order.date"/>  </th>
                                 <th> <spring:message code="order.name"/> </th>
                                 <th> <spring:message code="order.phone"/>  </th>
@@ -33,7 +35,8 @@
                                 </tr>
                                 <tr>
                                     <td>${order.id}</td>
-                                    <td>${order.date}</td>
+                                   <td><fmt:formatDate type="both"  value="${order.date}" /></td>
+                                    <%--<td>${order.date}</td>--%>
                                         <%--<td><javatime:parseLocalDateTime value="${order.date}" style="MS" /></td>--%>
                                     <td>${order.name}</td>
                                     <td>${order.phone}</td>

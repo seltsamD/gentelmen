@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,18 +47,15 @@ public class Orders implements Serializable{
     private int status;
 
     @Column(name = "date")
-    private LocalDateTime date;
+    private Date date;
 
-
-
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
-
 
     public int getId() {
         return id;

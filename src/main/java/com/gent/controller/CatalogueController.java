@@ -12,6 +12,8 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -31,17 +33,21 @@ public class CatalogueController {
     @Autowired
     private IGoodService goodService;
 
-    @RequestMapping(value="catalogue")
+    @RequestMapping(value="/catalogue" , method = RequestMethod.GET )
     public String gullCatalogue(ModelMap model, HttpServletRequest request) {
-
+        List<Good> listGood;
+        if(request.getParameter("page") != null)
+            listGood = goodService.getAllGoods(Integer.parseInt(request.getParameter("page"))-1);
+        else listGood = goodService.getAllGoods(0);
         setPageData(model);
-        List<Good> listGood = goodService.getAllGoods();
+        System.out.println(listGood.toString());
+        model.addAttribute("page",request.getParameter("page"));
         model.addAttribute("count", listGood.size());
         model.addAttribute("allData", listGood);
         return "catalogue";
     }
 
-    @RequestMapping(value="category")
+    @RequestMapping(value="/category")
     public String getCategoryById(ModelMap model, HttpServletRequest request) {
 
         int catId = Integer.parseInt(request.getParameter("id"));
@@ -53,11 +59,22 @@ public class CatalogueController {
         return "catalogue";
     }
 
-    @RequestMapping(value="color")
+    @RequestMapping(value="/color")
     public String getColorById(ModelMap model, HttpServletRequest request) {
 
         int catId = Integer.parseInt(request.getParameter("id"));
         List<Good> listGood = goodService.getGoodsByColor(catId);
+        model.addAttribute("count", listGood.size());
+        model.addAttribute("allData", listGood);
+        setPageData(model);
+
+        return "catalogue";
+    }
+    @RequestMapping(value="/priceRange" , method = RequestMethod.POST)
+    public String getBetweenPrice(ModelMap model, @RequestParam("amount1") String price1,  @RequestParam("amount2") String price2) {
+
+        List<Good> listGood = goodService.getGoodBetweenPrice(Integer.valueOf(price1),Integer.valueOf(price2));
+
         model.addAttribute("count", listGood.size());
         model.addAttribute("allData", listGood);
         setPageData(model);
@@ -73,6 +90,9 @@ public class CatalogueController {
         else
         if(locale.getLanguage().equals( "ru"))
             model.addAttribute("lang_code", "ruText");
+
+        model.addAttribute("maxPrice", goodService.getMaxPrice());
+        model.addAttribute("minPrice", goodService.getMinPrice());
 
         model.addAttribute("colors", colorService.getAllColor());
         model.addAttribute("categories", categoryService.getAllCategory());

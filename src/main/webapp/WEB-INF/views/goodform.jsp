@@ -8,7 +8,7 @@
   Time: 22:20
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <jsp:include page="header.jsp" />
 <jsp:include page="footer.jsp" />
 
@@ -27,7 +27,7 @@
                 </c:if>
             </div>
 
-            <form:form cssClass="form-horizontal"  accept-charset="UTF-8"  id="myform" action="/admin/addGood" method="POST" commandName="good" enctype="multipart/form-data">
+            <form:form cssClass="form-horizontal"  id="myform" action="/admin/addGood**?${_csrf.parameterName}=${_csrf.token}**" method="POST" commandName="good" enctype="multipart/form-data">
                 <form:hidden path="id"/>
                 <div class="form-group">
                     <label for="firm" class="col-sm-2 control-label"><spring:message code="good.firm"/></label>
@@ -173,7 +173,7 @@
         if(numFiles > 0)
                 flagImg.setAttribute("value", "1");
         img.setAttribute("value", numFiles);
-        alert(numFiles);
+
 
     }
 

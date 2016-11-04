@@ -81,6 +81,7 @@ $(document).ready(function() {
 
 
 function tobasket(id) {
+
     $.ajax({
         contentType : 'application/json; charset=utf-8',
         type : "GET",
@@ -89,8 +90,10 @@ function tobasket(id) {
         dataType : 'json',
 
         success : function(data) {
+           
             var jsonData = jQuery.parseJSON(data); // $.parseJSON(data);
             $('#cartDiv').text(data);
+            
             var x = document.getElementById("snackbar")
 
             // Add the "show" class to DIV

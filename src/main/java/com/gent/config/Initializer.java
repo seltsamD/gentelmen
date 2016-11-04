@@ -61,12 +61,17 @@ public class  Initializer implements WebApplicationInitializer{
         dynamic.setLoadOnStartup(1);
         dynamic.setMultipartConfig(ctx.getBean(MultipartConfigElement.class));
 
+//        FilterRegistration.Dynamic encodingFilter = servletContext.addFilter("encoding-filter", new CharacterEncodingFilter());
+//        encodingFilter.setInitParameter("encoding", "UTF-8");
+//        encodingFilter.setInitParameter("forceEncoding", "true");
+//        encodingFilter.addMappingForUrlPatterns(null, true, "/*");
 
-        FilterRegistration.Dynamic fr = servletContext.addFilter("encodingFilter",
-                new CharacterEncodingFilter());
-        fr.setInitParameter("encoding", "UTF-8");
-        fr.setInitParameter("forceEncoding", "true");
-        fr.addMappingForUrlPatterns(null, true, "/*");
+
+//        FilterRegistration.Dynamic fr = servletContext.addFilter("encodingFilter",
+//                new CharacterEncodingFilter());
+//        fr.setInitParameter("encoding", "UTF-8");
+//        fr.setInitParameter("forceEncoding", "true");
+//        fr.addMappingForUrlPatterns(null, true, "/*");
 
 
     }

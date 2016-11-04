@@ -52,6 +52,8 @@ public class DBConfig {
         dataSource.setUsername(env.getProperty("database.root"));
         dataSource.setPassword(env.getProperty("database.password"));
 
+
+
         return dataSource;
     }
     @Bean
@@ -66,8 +68,11 @@ public class DBConfig {
         properties.put("hibernate.connection.CharSet", "UTF-8");
         properties.put("hibernate.connection.useUnicode", true);
         properties.put("hibernate.connection.characterEncoding", "UTF-8");
+
+
         properties.put("mapping.class", "com.gent.model.Orders");
         properties.put("mapping.class", "com.gent.model.Good");
+
 //        properties.put("hibernate.connection.CharSet", env.getProperty("hibernate.connection.CharSet"));
 //        properties.put("hibernate.connection.characterEncoding", env.getProperty("hibernate.connection.characterEncoding"));
 //        properties.put("hibernate.connection.useUnicode", env.getProperty("hibernate.connection.useUnicode"));

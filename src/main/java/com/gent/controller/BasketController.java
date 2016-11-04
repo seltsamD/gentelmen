@@ -60,7 +60,11 @@ public class BasketController {
                 if (cook.length() == 3)
                     strCook = cook.substring(0, 2) + ',' + request.getParameter("goodId") + ']';
                 else
+                {
+                    if(!cook.contains(request.getParameter("goodId")))
                     strCook = cook.substring(0, cook.lastIndexOf(',') + 2) + ',' + request.getParameter("goodId") + ']';
+                }
+
 
                 System.out.println(strCook);
 

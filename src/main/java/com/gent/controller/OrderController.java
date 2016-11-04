@@ -27,6 +27,7 @@ import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -86,7 +87,7 @@ public class OrderController {
                     newOrder.setListGood(outList);
 
                     newOrder.setStatus(0);
-                    newOrder.setDate(LocalDateTime.now());
+                    newOrder.setDate(new Date());
                     System.out.println(newOrder.toString());
 
                     orderService.addOrders(newOrder);
@@ -96,7 +97,8 @@ public class OrderController {
 
         }
 
-        return "redirect:orders";
+        String referer = request.getHeader("Referer");
+        return "redirect:"+ referer;
     }
 
     @RequestMapping(value="admin/orders")

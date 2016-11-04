@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>--%>
 <%--
   Created by IntelliJ IDEA.
@@ -59,10 +60,18 @@
                    <a href="<c:url value="/shopping-cart"/>"><span  id="cartDiv" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
                 </li>
                 </c:if>
-                <li><a href="?mylocale=uk"><img height="35px" width="35px" src="<c:url value="/resources/images/ukraine-flag.png"/>" ></a></li>
-                <li><a href="?mylocale=ru"><img height="35px" width="35px" src="<c:url value="/resources/images/rus-flag.png"/>" ></a></li>
+                <form class="navbar-form navbar-left" role="search">
+                    <form:form  action="/search" id="formSearch" method="post" commandName="search">
+                        <div class="form-group">
+                            <input id="search_str" name="search_str" type="text" class="form-control" placeholder="<spring:message code="search"/>">
+                        </div>
+                        <button type="submit" class="btn btn-default"><spring:message code="search"/></button>
+                    </form:form>
+                </form>
+                <li><a href="?mylocale=uk"><img class="flag" src="<c:url value="/resources/images/ukraine-flag.png"/>" ></a></li>
+                <li><a href="?mylocale=ru"><img class="flag" src="<c:url value="/resources/images/rus-flag.png"/>" ></a></li>
                 <c:if test="${pageContext.request.userPrincipal.name != null}">
-                <li class="active"><a href="<c:url value="/logout"/>"><spring:message code="logout"/>, ${pageContext.request.userPrincipal.name}</a></li>
+                    <li class="active"><a href="<c:url value="/logout"/>"><spring:message code="logout"/>, ${pageContext.request.userPrincipal.name}</a></li>
                 </c:if>
             </ul>
         </div>
