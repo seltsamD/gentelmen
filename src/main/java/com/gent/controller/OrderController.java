@@ -48,8 +48,7 @@ public class OrderController {
     @RequestMapping(value="addToBasket", method = RequestMethod.POST)
     public void addToBasket(ModelMap model, HttpServletResponse response,HttpServletRequest request, @RequestParam("goodId") String goodId) throws UnsupportedEncodingException {
 
-//        String referer = request.getHeader("Referer");
-//        return "redirect:"+ referer;
+
 
     }
 
@@ -75,7 +74,7 @@ public class OrderController {
                     e.printStackTrace();
                 }
                 int count = 0;
-                List<Integer> listBasket = new ArrayList<Integer>();
+                ArrayList<Integer> listBasket = new ArrayList<Integer>();
                 if (cook != null && cook.length() > 0) {
                     for (char ch : cook.toCharArray()) {
                         if (Character.isDigit(ch))
@@ -83,12 +82,11 @@ public class OrderController {
                     }
                     List<Good> outList = goodService.getListGoods(listBasket);
 
-                    System.out.println(outList.toString());
+
                     newOrder.setListGood(outList);
 
                     newOrder.setStatus(0);
                     newOrder.setDate(new Date());
-                    System.out.println(newOrder.toString());
 
                     orderService.addOrders(newOrder);
                 }
@@ -130,5 +128,39 @@ public class OrderController {
 
     }
 
+    @RequestMapping(value="myorders")
+    public String order(ModelMap model, HttpServletRequest request) {
 
+
+        Locale locale = LocaleContextHolder.getLocale();
+        if(locale.getLanguage().equals("uk"))
+            model.addAttribute("lang_code", "uaText");
+        else
+        if(locale.getLanguage().equals( "ru"))
+            model.addAttribute("lang_code", "ruText");
+
+        return "myorders";
+
+    }
+
+    @RequestMapping(value="getByPhone", method = RequestMethod.POST)
+    public String orderByPhone(ModelMap model, HttpServletRequest request) {
+
+
+        String phone = request.getParameter("phone");
+        List<Orders> listOrders = orderService.getOrdersByPhone(phone);
+
+
+        model.addAttribute("count", listOrders.size());
+        model.addAttribute("ordersData",listOrders );
+        Locale locale = LocaleContextHolder.getLocale();
+        if(locale.getLanguage().equals("uk"))
+            model.addAttribute("lang_code", "uaText");
+        else
+        if(locale.getLanguage().equals( "ru"))
+            model.addAttribute("lang_code", "ruText");
+
+        return "myorders";
+
+    }
 }

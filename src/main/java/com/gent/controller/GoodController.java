@@ -7,12 +7,6 @@ import com.gent.service.ICategoryService;
 import com.gent.service.IColorService;
 import com.gent.service.IDescriptionService;
 import com.gent.service.IGoodService;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import com.mysql.jdbc.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.ComponentScan;
@@ -26,15 +20,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * Created by daria on 30.09.2016.
@@ -231,10 +225,5 @@ public class GoodController {
         return messageSource.getMessage(key, null, localeResolver.resolveLocale(request));
     }
 
-    @RequestMapping(value="search", method = RequestMethod.POST)
-    public String search(ModelMap model, HttpServletRequest request){
 
-
-        return "search";
-    }
 }

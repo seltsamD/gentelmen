@@ -1,5 +1,6 @@
 package com.gent.dao;
 
+import com.gent.model.Good;
 import com.gent.model.Orders;
 
 import java.util.Date;
@@ -14,4 +15,5 @@ public interface IOrdersDAO {
     boolean addOrders(Orders order);
     boolean changeStatus(int status, int orderId);
     List<Orders> getOrdersByDate(Date date1, Date date2);
+    List<Orders> getOrdersByPhone(String phone);
 }

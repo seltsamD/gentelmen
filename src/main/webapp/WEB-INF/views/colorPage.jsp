@@ -62,40 +62,6 @@
 
 
 
-
-            <%--<h1><spring:message code="color"/></h1>--%>
-        <%--<form:form  id="formColor" action="addColor" method="POST" commandName="color">--%>
-
-            <%--<table id="top_box">--%>
-                <%--<tr><td colspan="2">--%>
-                    <%--<h3>--%>
-                        <%--<c:if test="${color.id==0}">--%>
-                            <%--<spring:message code="color.add"/>--%>
-                        <%--</c:if>--%>
-                        <%--<c:if test="${color.id!=0}">--%>
-                            <%--<spring:message code="color.update"/> <c:out value="${color.id}"/>--%>
-                            <%--<form:hidden path="id"/>--%>
-                        <%--</c:if>--%>
-                    <%--</h3>--%>
-                <%--</td></tr>--%>
-
-                <%--<tr> <th>Українською:</th> <th><form:input path="uaText"/><form:errors path="uaText" cssClass="error-msg"/> </th> </tr>--%>
-                <%--<tr> <th>На русском:</th> <th><form:input path="ruText"/><form:errors path="ruText" cssClass="error-msg"/> </th> </tr>--%>
-                    <%--<tr> <th colspan="2">--%>
-                    <%--<c:if test="${color.id==0}">--%>
-                        <%--<input type="button" value="<spring:message code="form.add"/>" id="btn-add-color">--%>
-                    <%--</c:if>--%>
-                    <%--<c:if test="${color.id!=0}">--%>
-                        <%--<input type="button" value="<spring:message code="form.edit"/>" id="btn-update-color">--%>
-                    <%--</c:if>--%>
-                <%--</th> </tr>--%>
-                <%--<tr> <th colspan="2" class="success-msg">--%>
-                    <%--<c:out value="${msg}"/>--%>
-                <%--</th> </tr>--%>
-            <%--</table>--%>
-        <%--</form:form>--%>
-
-
         <table id="box-table-b">
             <tr>
                 <th> ID </th>

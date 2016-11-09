@@ -1,13 +1,8 @@
 package com.gent.model;
 
-import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
-import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
-import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
-import org.hibernate.search.annotations.*;
-import org.hibernate.search.annotations.Index;
+
 
 import javax.persistence.*;
-import javax.persistence.Parameter;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 

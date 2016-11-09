@@ -15,4 +15,5 @@ public interface IOrdersService {
     boolean addOrders(Orders order);
     boolean changeStatus(int status, int orderId);
     List<Orders> getOrdersByDate(Date date1, Date date2);
+    List<Orders> getOrdersByPhone(String phone);
 }

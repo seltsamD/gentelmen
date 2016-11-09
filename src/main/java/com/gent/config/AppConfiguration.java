@@ -1,7 +1,5 @@
 package com.gent.config;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.embedded.MultipartConfigFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -9,17 +7,18 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.servlet.MultipartConfigElement;
 import java.util.Locale;
-import javax.servlet.Filter;
 /**
  * Created by daria on 30.09.2016.
  */
@@ -80,8 +79,8 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
-        registry.addResourceHandler("/images/**").addResourceLocations("file:///C:/jav/i18n/goods/");
-
+            registry.addResourceHandler("/images/**").addResourceLocations("file:///home/daria/gent/goods/");
+        //      registry.addResourceHandler("/images/**").addResourceLocations("file:///C:/jav/i18n/goods/");
     }
 
 

@@ -4,17 +4,17 @@ import com.gent.model.Good;
 import com.gent.model.Orders;
 import com.gent.service.IGoodService;
 import com.gent.service.IOrdersService;
-import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +24,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * Created by daria on 19.10.2016.
@@ -61,12 +60,10 @@ public class BasketController {
                     strCook = cook.substring(0, 2) + ',' + request.getParameter("goodId") + ']';
                 else
                 {
-                    if(!cook.contains(request.getParameter("goodId")))
-                    strCook = cook.substring(0, cook.lastIndexOf(',') + 2) + ',' + request.getParameter("goodId") + ']';
+
+                    strCook = cook.substring(0, cook.length()-1) + ',' + request.getParameter("goodId") + ']';
                 }
 
-
-                System.out.println(strCook);
 
                 Cookie cookie = null;
                 try {
@@ -90,10 +87,10 @@ public class BasketController {
                 e.printStackTrace();
             }
             cookie.setMaxAge(365 * 24 * 60 * 60);
-            cookie.setPath("/");
+           cookie.setPath("/");
             response.addCookie(cookie);
             count = 1;
-            System.out.println(strCook);
+
         }
 
 
@@ -117,7 +114,7 @@ public class BasketController {
                 e.printStackTrace();
             }
 
-            if (cook.length() > 0)
+            if (cook.length() > 2)
                 count = StringUtils.countOccurrencesOf(cook, ",") + 1;
             else count = 0;
         } else count = 0;
@@ -150,7 +147,7 @@ public class BasketController {
                     e.printStackTrace();
                 }
 
-                if (cook.length() > 0)
+                if (cook.length() > 2)
                     count = StringUtils.countOccurrencesOf(cook, ",") + 1;
                 else count = 0;
             } else count = 0;
@@ -183,18 +180,20 @@ public class BasketController {
                 e.printStackTrace();
             }
 
-            List<Integer> listBasket = new ArrayList<Integer>();
+            ArrayList<Integer>listBasket = new ArrayList<Integer>();
             if (cook != null && cook.length() > 0) {
-                for (char ch : cook.toCharArray()) {
-                    if (Character.isDigit(ch))
-                        listBasket.add(Character.getNumericValue(ch));
+
+                String str = cook.substring(1,cook.length()-1);
+                str = str.replaceAll(" ","");
+               String []ar = str.split(",");
+                for (String ch: ar) {
+                    listBasket.add( Integer.parseInt(ch));
                 }
 
-                System.out.println(listBasket.toString());
-                List<Good> outList = goodService.getListGoods(listBasket);
-                model.addAttribute("listBasket", outList);
-                System.out.println(outList.toString());
 
+                List<Good> outList = goodService.getListGoods(listBasket);
+
+                model.addAttribute("listBasket", outList);
                 count = StringUtils.countOccurrencesOf(cook, ",") + 1;
             } else count = 0;
 
@@ -223,8 +222,9 @@ public class BasketController {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            if (cook.length() == 3 || cook.length() <= 0 )
-             { //remove cookie
+            if (cook.length() <= 3 )
+             {
+                 //remove cookie
                 Cookie cookie = new Cookie("backetGentl", "");
                 cookie.setMaxAge(-1);
                 cookie.setPath("/");
@@ -232,35 +232,36 @@ public class BasketController {
             } else {
                 String strCook = null;
                 String id = request.getParameter("id");
-                System.out.println(cook);
-                if (cook.lastIndexOf(id) == cook.length() - 1) {
-                    strCook = cook.substring(0, cook.lastIndexOf(id) - 1) + ']';
+                ArrayList<Integer> listBasket = new ArrayList<Integer>();
+                if (cook != null && cook.length() > 0) {
+                    String str = cook.substring(1, cook.length() - 1);
+                    str = str.replaceAll(" ", "");
+                    String[] ar = str.split(",");
+                    for (String ch : ar)
+                        listBasket.add(Integer.valueOf(ch));
 
-                    System.out.println("&&&&&&&&&& "+strCook);
-                }
-                else
-                {
-                    strCook = cook.substring(0, cook.lastIndexOf(id) - 1) + cook.substring(cook.lastIndexOf(id)+1, cook.length());
-                    System.out.println("---------- "+strCook);
+                    listBasket.remove(listBasket.indexOf(Integer.valueOf(id)));
+                    strCook = listBasket.toString();
                 }
 
                 Cookie cookie = null;
-                try {
-                    cookie = new Cookie("backetGentl", URLEncoder.encode(strCook, "UTF-8"));
-                    cookie.setMaxAge(365 * 24 * 60 * 60);
+                if (listBasket.size() > 0) {
+                    try {
+                        cookie = new Cookie("backetGentl", URLEncoder.encode(strCook, "UTF-8"));
+                        cookie.setMaxAge(365 * 24 * 60 * 60);
+                        cookie.setPath("/");
+                        response.addCookie(cookie);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    cookie = new Cookie("backetGentl", "");
+                    cookie.setMaxAge(-1);
                     cookie.setPath("/");
                     response.addCookie(cookie);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
                 }
-
-
             }
-
-
-
         }
-
         return "redirect:shopping-cart";
     }
 }

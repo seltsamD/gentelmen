@@ -3,7 +3,6 @@
   User: daria
   Date: 30.09.2016
   Time: 11:28
-  To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -13,35 +12,6 @@
 <jsp:include page="footer.jsp" />
 
 
-    <%--<div id = "myCarousel" class = "carousel slide">--%>
-
-        <%--<!-- Carousel indicators -->--%>
-        <%--<ol class = "carousel-indicators">--%>
-            <%--<li data-target = "#myCarousel" data-slide-to = "0" class = "active"></li>--%>
-            <%--<li data-target = "#myCarousel" data-slide-to = "1"></li>--%>
-            <%--<li data-target = "#myCarousel" data-slide-to = "2"></li>--%>
-        <%--</ol>--%>
-
-        <%--<!-- Carousel items -->--%>
-        <%--<div class = "carousel-inner">--%>
-            <%--<div class = "item active">--%>
-                <%--<img src = "<c:url value="resources/images/pic1.jpg"/>" alt = "First slide">--%>
-            <%--</div>--%>
-
-            <%--<div class = "item">--%>
-                <%--<img src = "<c:url value="resources/images/pic2.jpg"/>" alt = "Second slide">--%>
-            <%--</div>--%>
-
-            <%--<div class = "item">--%>
-                <%--<img src = "<c:url value="resources/images/pic3.jpg"/>" alt = "Third slide">--%>
-            <%--</div>--%>
-        <%--</div>--%>
-
-        <%--<!-- Carousel nav -->--%>
-        <%--<a class = "carousel-control left" href = "#myCarousel" data-slide = "prev">&lsaquo;</a>--%>
-        <%--<a class = "carousel-control right" href = "#myCarousel" data-slide = "next">&rsaquo;</a>--%>
-
-    <%--</div>--%>
 <div class="container">
     <section>
         <div class="row catalogue">

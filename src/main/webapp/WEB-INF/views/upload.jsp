@@ -5,7 +5,6 @@
   User: daria
   Date: 01.10.2016
   Time: 16:50
-  To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,8 +16,6 @@
 
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
-    <%--<script src="${pageContext.request.contextPath}/resources/js/app.js" type="text/javascript"></script>--%>
-    <%--<script src="<c:url value="/js/app.js"/>"  type="application/javascript"></script>--%>
     <script src="<c:url value="${pageContext.request.contextPath}/resources/js/app.js" />" type="text/javascript"></script>
 
     <title><spring:message code="page.title"/></title></head>

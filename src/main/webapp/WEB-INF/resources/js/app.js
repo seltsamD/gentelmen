@@ -70,6 +70,7 @@ $(document).ready(function() {
         success : function(data) {
           var jsonData = jQuery.parseJSON(data); // $.parseJSON(data);
           $('#cartDiv').text(data);
+           
         },
         error: function (xhr, ajaxOptions, thrownError) {alert("ERROR:" + xhr.responseText+" - "+thrownError)},
     

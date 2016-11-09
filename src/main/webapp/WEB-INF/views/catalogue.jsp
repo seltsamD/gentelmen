@@ -1,6 +1,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 <%--
   Created by IntelliJ IDEA.
   User: daria
@@ -99,8 +100,6 @@
                                 <form:form id="priceRange" action="/priceRange" method="POST">
                                     <input type="hidden" id="amount1" name="amount1" />
                                     <input type="hidden" id="amount2" name="amount2" />
-                                    <%--<form:hidden path="amount1"/>--%>
-                                    <%--<form:hidden path="amount2"/>--%>
                                     <input type="submit" name="submit_range" value="<spring:message code="search"/>"/>
                                </form:form>
 
@@ -120,6 +119,7 @@
                 <h3><spring:message code="good.notFound"/></h3>
             </c:if>
             <c:if test="${count > 0}">
+
                 <table id="box-table-b" class="good-info">
                     <thead>
                     <tr> <th>  </th>
@@ -132,8 +132,7 @@
                         <th> <spring:message code="good.about"/> </th>
 
                     </tr></thead>
-                    <%--<c:set var="uk_lang" scope="session" value="uk"/>--%>
-                    <%--<c:set var="ru_lang" scope="session" value="ru"/>--%>
+
                     <tbody>
                     <c:forEach var="obj" items="${allData}">
                         <tr>
@@ -178,42 +177,6 @@
                         </tr>
                         <tr><td colspan="9"><hr></td> </tr>
                     </c:forEach>
-                    <tr>
-                        <td colspan="9">
-                            <ul class="pagination modal-5">
-                                <c:if test="${page > 1}">
-                                    <li><a href="${pageContext.request.contextPath}/catalogue?page=${page-1}" class="prev fa fa-arrow-left"> </a></li>
-                                </c:if>
-                                <c:if test="${page <= 3}">
-                                    <c:forEach var="i" begin="1" end="5">
-                                        <c:if test="${page == i}">
-                                            <li><a href="${pageContext.request.contextPath}/catalogue?page=${i}" class="active">${i}</a></li>
-                                        </c:if>
-                                        <c:if test="${page != i}">
-                                            <li><a href="${pageContext.request.contextPath}/catalogue?page=${i}">${i}</a></li>
-                                        </c:if>
-                                    </c:forEach>
-                                </c:if>
-
-                                <c:if test="${count > 6}">
-                                    <li><a href="">...</a></li>
-                                </c:if>
-
-                                <c:forEach var="i" begin="${count - 3}" end="${count}" >
-                                    <c:if test="${page == i}">
-                                        <li><a href="${pageContext.request.contextPath}/catalogue?page=${i}" class="active">${i}</a></li>
-                                    </c:if>
-                                    <c:if test="${page != i}">
-                                        <li><a href="${pageContext.request.contextPath}/catalogue?page=${i}">${i}</a></li>
-                                    </c:if>
-                                </c:forEach>
-                                <c:if test="${page < count}">
-                                    <li><a href="${pageContext.request.contextPath}/catalogue?page=${page+1}" class="prev fa fa-arrow-right"> </a></li>
-                                </c:if>
-
-                            </ul>
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
 

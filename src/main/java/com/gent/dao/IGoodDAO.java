@@ -10,19 +10,19 @@ import java.util.List;
  */
 
 public interface IGoodDAO {
-    List<Good> getAllGoods(int page);
+    List<Good> getAllGoods();
     Good getGoodById(int id);
     boolean addGood(Good good);
     void updateGood(Good good);
     void deleteGood(int id);
     List<Good> getRandomGoods();
-    List<Good> getListGoods(List list);
+    List<Good> getListGoods(ArrayList<Integer> list);
     void changeStatus(int id, int status);
     List<Good> getGoodsByCategorie(int catId);
     List<Good> getGoodsByColor(int colorId);
     int getMinPrice();
     int getMaxPrice();
     List<Good> getGoodBetweenPrice(int price1, int price2);
-    List search(String text);
+
 
 }

@@ -1,7 +1,5 @@
 package com.gent.controller;
 
-import com.gent.model.Category;
-import com.gent.model.Color;
 import com.gent.model.Good;
 import com.gent.service.ICategoryService;
 import com.gent.service.IColorService;
@@ -37,11 +35,16 @@ public class CatalogueController {
     public String gullCatalogue(ModelMap model, HttpServletRequest request) {
         List<Good> listGood;
         if(request.getParameter("page") != null)
-            listGood = goodService.getAllGoods(Integer.parseInt(request.getParameter("page"))-1);
-        else listGood = goodService.getAllGoods(0);
+            listGood = goodService.getAllGoods();
+        else listGood = goodService.getAllGoods();
         setPageData(model);
-        System.out.println(listGood.toString());
-        model.addAttribute("page",request.getParameter("page"));
+
+        int page = 0;
+        if(request.getParameter("page") != null)
+            page = Integer.valueOf(request.getParameter("page"));
+
+
+        model.addAttribute("page",page);
         model.addAttribute("count", listGood.size());
         model.addAttribute("allData", listGood);
         return "catalogue";

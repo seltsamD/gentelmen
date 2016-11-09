@@ -46,6 +46,11 @@ public class OrderssService implements IOrdersService {
 
     @Override
     public List<Orders> getOrdersByDate(Date date1, Date date2) {
-        return getOrdersByDate(date1, date2);
+        return orderDAO.getOrdersByDate(date1, date2);
+    }
+
+    @Override
+    public List<Orders> getOrdersByPhone(String phone) {
+        return orderDAO.getOrdersByPhone(phone);
     }
 }

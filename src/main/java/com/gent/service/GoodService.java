@@ -20,8 +20,8 @@ public class GoodService implements IGoodService {
 
 
     @Override
-    public List<Good> getAllGoods(int page) {
-       return goodDAO.getAllGoods(page);
+    public List<Good> getAllGoods() {
+       return goodDAO.getAllGoods();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class GoodService implements IGoodService {
     }
 
     @Override
-    public List<Good> getListGoods(List list)
+    public List<Good> getListGoods(ArrayList<Integer> list)
     {
         return goodDAO.getListGoods(list);
     }
@@ -88,8 +88,6 @@ public class GoodService implements IGoodService {
         return goodDAO.getGoodBetweenPrice(price1, price2);
     }
 
-    @Override
-    public List search(String text) {
-        return goodDAO.search(text);
-    }
+
+
 }

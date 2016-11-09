@@ -1,6 +1,5 @@
 package com.gent.controller;
 
-import com.gent.model.Good;
 import com.gent.service.IGoodService;
 import com.gent.service.IOrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.Locale;
 
 import static com.gent.controller.BasketController.getCountBasket;
@@ -76,6 +72,19 @@ public class HomeController {
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+        return "redirect:/login?logout";
+    }
+
+
+    @RequestMapping(value = "/about", method = RequestMethod.GET)
+    public String aboutPage (HttpServletRequest request, ModelMap model) {
+        Locale locale = LocaleContextHolder.getLocale();
+        if (locale.getLanguage() == "uk")
+            model.addAttribute("lang_code", "uaText");
+        else if (locale.getLanguage() == "ru")
+            model.addAttribute("lang_code", "ruText");
+
+        return "about";
+
     }
 }

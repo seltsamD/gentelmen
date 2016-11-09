@@ -229,7 +229,7 @@ hr{
 }
 body{
 
-    background: url("background.jpg");
+    background: url("background.jpg")center fixed;
     background-size: cover;
 }
 

@@ -6,7 +6,6 @@
   User: daria
   Date: 30.09.2016
   Time: 22:20
-  To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="header.jsp" />
@@ -120,15 +119,7 @@
                 </table>
             </div>
                 </div>
-        <%--<table>--%>
-            <%--<tr>--%>
 
-                <%--<c:forEach var="i" begin="1" end="${info.countImg -1}">--%>
-                  <%--<td><a id="single_image2" href="<c:url value="images/${info.id}_${i}.jpg"/>"><img  class="maxiImg " src="<c:url value="images/${info.id}_${i}.jpg"/>" alt="${info.firm} ${info.category.uaText} "${info.color.uaText}"/></a></td>--%>
-                <%--</c:forEach>--%>
-            <%--</tr>--%>
-        <%--</table>--%>
-    <%--</div>--%>
     </div>
 </div>
 </div>

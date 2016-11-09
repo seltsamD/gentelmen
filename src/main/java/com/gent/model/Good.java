@@ -2,8 +2,6 @@ package com.gent.model;
 
 
 
-import org.hibernate.search.annotations.*;
-
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -13,7 +11,6 @@ import java.io.Serializable;
  * Created by daria on 30.09.2016.
  */
 @Entity
-@Indexed
 @Table(name= "tbGood")
 public class Good implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -22,19 +19,18 @@ public class Good implements Serializable{
     @Column(name="id")
     private int id;
 
-    @Field(index= org.hibernate.search.annotations.Index.YES, analyze=Analyze.YES, store=Store.NO)
     @Size(min=2, max=255)
     @Column(name = "Firm")
     private String firm;
 
-    @IndexedEmbedded
+//    @IndexedEmbedded
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "color_id", nullable = false)
     private Color color;
 //    @Column(name = "Color")
 //    private int color;
 
-    @IndexedEmbedded
+//    @IndexedEmbedded
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
@@ -132,5 +128,20 @@ public class Good implements Serializable{
 
     public void setDescription(Description description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Good{" +
+                "id=" + id +
+                ", firm='" + firm + '\'' +
+                ", color=" + color.getRuText() +
+                ", category=" + category.getRuText() +
+                ", price=" + price +
+                ", size='" + size + '\'' +
+                ", countImg=" + countImg +
+                ", status=" + status +
+                ", description=" + description.getRuText() +
+                '}';
     }
 }
