@@ -69,5 +69,6 @@ public class DBConfig {
         properties.put("mapping.class", "com.gent.model.Orders");
         properties.put("mapping.class", "com.gent.model.Good");
         return properties;
+
     }
 }

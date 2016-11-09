@@ -79,8 +79,8 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
-            registry.addResourceHandler("/images/**").addResourceLocations("file:///home/daria/gent/goods/");
-        //      registry.addResourceHandler("/images/**").addResourceLocations("file:///C:/jav/i18n/goods/");
+        registry.addResourceHandler("/images/**").addResourceLocations("file:///home/daria/gent/goods/");
+        //  registry.addResourceHandler("/images/**").addResourceLocations("file:///C:/jav/i18n/goods/");
     }
 
 
