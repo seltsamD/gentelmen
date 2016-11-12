@@ -37,14 +37,14 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Джентельмен.in.ua</span>
             </button>
-            <a class="navbar-brand" href="Джентльмен.in.ua">Джентльмен.in.ua</a>
+            <a class="navbar-brand" href="/index">Джентльмен.in.ua</a>
         </div>
         <div class="navbar-collapse collapse navbar-right">
             <ul class="nav navbar-nav">
                 <li><div id="msg"></div></li>
                 <li class="active"><a href="<c:url value="/index"/>"><spring:message code="page.title"/></a></li>
                 <li class="active"><a href="<c:url value="/catalogue"/>"><spring:message code="page.catalogue"/></a></li>
-                <li class="active"><a href="<c:url value="/myorders"/>"><spring:message code="page.myorder"/></a></li>
+
 
                 <c:if test="${pageContext.request.userPrincipal.name != null}">
                     <li class="active"><a href="<c:url value="/admin/goodform"/>"><spring:message code="page.good"/></a></li>
@@ -53,14 +53,21 @@
                     <li class="active"><a href="<c:url value="/admin/orders"/>"><spring:message code="text.orders"/></a></li>
                 </c:if>
                 <c:if test="${pageContext.request.userPrincipal.name == null}">
-                <li class="active">
-                   <a href="<c:url value="/shopping-cart"/>"><span  id="cartDiv" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
-                </li>
+                <li class="active"><a href="<c:url value="/shopping-cart"/>"><span  id="cartDiv" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
+                    <li class="active"><a href="<c:url value="/myorders"/>"><spring:message code="page.myorder"/></a></li>
                 </c:if>
 
+                <c:if test="${pageContext.request.getParameter('id') == null}">
                 <li><a href="?mylocale=uk"><img class="flag" src="<c:url value="/resources/images/ukraine-flag.png"/>" ></a></li>
-                <li><a href="?mylocale=ru"><img class="flag" src="<c:url value="/resources/images/rus-flag.png"/>" ></a></li>
-                <c:if test="${pageContext.request.userPrincipal.name != null}">
+                    <li><a href="?mylocale=ru"><img class="flag" src="<c:url value="/resources/images/rus-flag.png"/>" ></a></li>
+
+                </c:if>
+                <c:if test="${pageContext.request.getParameter('id') != null}">
+                    <li><a href="${pageContext.request.contextPath}?mylocale=uk&${pageContext.request.queryString}"><img class="flag" src="<c:url value="/resources/images/ukraine-flag.png"/>" ></a></li>
+                    <li><a href="${pageContext.request.contextPath}?mylocale=ru&${pageContext.request.queryString}"><img class="flag" src="<c:url value="/resources/images/rus-flag.png"/>" ></a></li>
+
+                </c:if>
+                 <c:if test="${pageContext.request.userPrincipal.name != null}">
                     <li class="active"><a href="<c:url value="/logout"/>"><spring:message code="logout"/>, ${pageContext.request.userPrincipal.name}</a></li>
                 </c:if>
             </ul>

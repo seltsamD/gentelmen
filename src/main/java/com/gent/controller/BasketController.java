@@ -114,9 +114,12 @@ public class BasketController {
                 e.printStackTrace();
             }
 
-            if (cook.length() > 2)
+
+            if (cook != null && cook.length() > 2 && (cook.contains("[")) && (cook.contains("]")))
+            {
                 count = StringUtils.countOccurrencesOf(cook, ",") + 1;
-            else count = 0;
+            } else count = 0;
+
         } else count = 0;
         return String.valueOf(count);
 
@@ -147,9 +150,11 @@ public class BasketController {
                     e.printStackTrace();
                 }
 
-                if (cook.length() > 2)
+                if (cook != null && cook.length() > 2 && (cook.contains("[")) && (cook.contains("]")))
+                {
                     count = StringUtils.countOccurrencesOf(cook, ",") + 1;
-                else count = 0;
+                } else count = 0;
+
             } else count = 0;
 
         }
@@ -194,7 +199,7 @@ public class BasketController {
                 List<Good> outList = goodService.getListGoods(listBasket);
 
                 model.addAttribute("listBasket", outList);
-                count = StringUtils.countOccurrencesOf(cook, ",") + 1;
+                count = listBasket.size();
             } else count = 0;
 
 
