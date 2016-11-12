@@ -56,7 +56,8 @@ public class GoodController {
     public String good(ModelMap model){
 
         model.addAttribute(new Good());
-        List<Color> listC = colorService.getAllColor();
+        model.addAttribute("allData", goodService.getAllGoods());
+
         setPageData(model);
       return "goodform";
 
@@ -89,8 +90,8 @@ public class GoodController {
                         fileName = files[i].getOriginalFilename();
                         byte[] bytes = files[i].getBytes();
 
-                        String path = "C:/jav/i18n/goods/";
-
+//                        String path = "C:/jav/i18n/goods/";
+                        String path = "/home/daria/gent/goods/";
                         BufferedOutputStream buffStream =
                                 new BufferedOutputStream(new FileOutputStream(new File(path + good.getId()+"_"+i+".jpg")));
                         buffStream.write(bytes);
@@ -138,7 +139,8 @@ public class GoodController {
 
             if(flag.equals("1"))
             {
-                String path = "C:/jav/i18n/goods/";
+                String path = "/home/daria/gent/goods/";
+//                String path = "C:/jav/i18n/goods/";
                 for(int i=0; i<goodService.getGoodById(good.getId()).getCountImg(); i++)
                 {
 
@@ -184,7 +186,7 @@ public class GoodController {
         else
         System.out.println(result.getAllErrors().toString());
         setPageData(model);
-        return "goodform";
+        return "redirect:goodform";
     }
     @RequestMapping(value="/admin/deleteGood")
     public String deleteGood(ModelMap model, HttpServletRequest request) {
@@ -193,8 +195,8 @@ public class GoodController {
         int descId = goodService.getGoodById(pid).getDescription().getId();
 
 
-
-        String path = "C:/jav/i18n/goods/";
+        String path = "/home/daria/gent/goods/";
+//        String path = "C:/jav/i18n/goods/";
         for(int i=0; i<goodService.getGoodById(pid).getCountImg(); i++)
         {
 
@@ -207,10 +209,10 @@ public class GoodController {
         model.addAttribute(new Good());
         model.addAttribute("msg", getMsg("deleted", request));
         setPageData(model);
-        return "goodform";
+        return "redirect:goodform";
     }
     private void setPageData(ModelMap model) {
-//        model.addAttribute("allData", goodService.getAllGoods());
+        model.addAttribute("allData", goodService.getAllGoods());
         Locale locale = LocaleContextHolder.getLocale();
         if(locale.getLanguage().equals("uk"))
             model.addAttribute("lang_code", "uaText");

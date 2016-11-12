@@ -53,7 +53,8 @@ public class OrderController {
     }
 
     @RequestMapping(value="newOrder", method = RequestMethod.POST)
-    public String addColor( @ModelAttribute("order") @Valid Orders newOrder, BindingResult result, ModelMap model, HttpServletRequest request) {
+    public String addColor( @ModelAttribute("order") @Valid Orders newOrder, BindingResult result,
+                            ModelMap model, HttpServletRequest request, HttpServletResponse response) {
         if(!result.hasErrors()) {
             Cookie[] cookies = request.getCookies();
             Cookie myCookie = null;
@@ -74,11 +75,15 @@ public class OrderController {
                     e.printStackTrace();
                 }
                 int count = 0;
-                ArrayList<Integer> listBasket = new ArrayList<Integer>();
+
+                ArrayList<Integer>listBasket = new ArrayList<Integer>();
                 if (cook != null && cook.length() > 0) {
-                    for (char ch : cook.toCharArray()) {
-                        if (Character.isDigit(ch))
-                            listBasket.add(Character.getNumericValue(ch));
+
+                    String str = cook.substring(1,cook.length()-1);
+                    str = str.replaceAll(" ","");
+                    String []ar = str.split(",");
+                    for (String ch: ar) {
+                        listBasket.add( Integer.parseInt(ch));
                     }
                     List<Good> outList = goodService.getListGoods(listBasket);
 
@@ -89,14 +94,23 @@ public class OrderController {
                     newOrder.setDate(new Date());
 
                     orderService.addOrders(newOrder);
+                    for (Good good: outList) {
+                        goodService.changeStatus(good.getId(), 0);
+
+                    }
+
+                  Cookie  cookie = new Cookie("backetGentl", "");
+                    cookie.setMaxAge(-1);
+                    cookie.setPath("/");
+                    response.addCookie(cookie);
                 }
 
             }
 
         }
 
-        String referer = request.getHeader("Referer");
-        return "redirect:"+ referer;
+
+        return "myorders";
     }
 
     @RequestMapping(value="admin/orders")

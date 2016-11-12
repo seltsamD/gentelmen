@@ -34,9 +34,8 @@ public class CatalogueController {
     @RequestMapping(value="/catalogue" , method = RequestMethod.GET )
     public String gullCatalogue(ModelMap model, HttpServletRequest request) {
         List<Good> listGood;
-        if(request.getParameter("page") != null)
-            listGood = goodService.getAllGoods();
-        else listGood = goodService.getAllGoods();
+
+        listGood = goodService.getAllGoods();
         setPageData(model);
 
         int page = 0;
