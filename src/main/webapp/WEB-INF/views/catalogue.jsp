@@ -10,11 +10,55 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:include page="header.jsp" />
-<jsp:include page="footer.jsp" />
-<link href="<c:url value="${pageContext.request.contextPath}/resources/css/jquery-ui.css" />" rel="stylesheet">
-<script src="<c:url value="${pageContext.request.contextPath}/resources/js/jquery-ui.js" />" type="text/javascript"></script>
 
+<html>
+<head>
+    <title>Каталог чоловічого одягу та аксесуарів у інтернет-магазині джентльмен.in.ua</title>
+
+    <link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/css/jquery.fancybox.css" />" rel="stylesheet">
+    <script  src="<c:url value="/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
+
+    <script   src="<c:url value="/resources/js/bootstrap.min.js" />" type="text/javascript"></script>
+
+    <script   src="<c:url value="/resources/js/jquery.fancybox.pack.js" />" type="text/javascript"></script>
+    <script   src="<c:url value="/resources/js/jquery-ui.js" />" type="text/javascript"></script>
+    <script   src="<c:url value="/resources/js/app.js" />" type="text/javascript"></script>
+
+
+
+
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-87631623-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+    <script type="text/javascript">
+
+        $(function() {
+            $( "#slider-range" ).slider({
+                range: true,
+                min: ${minPrice},
+                max: ${maxPrice},
+                values: [ ${minPrice}, ${maxPrice} ],
+                slide: function( event, ui ) {
+                    $( "#amount" ).html(ui.values[ 0 ] + "грн. - " + ui.values[ 1 ]+ "грн." );
+                    $( "#amount1" ).val(ui.values[ 0 ]);
+                    $( "#amount2" ).val(ui.values[ 1 ]);
+                }
+            });
+            $( "#amount" ).html( $( "#slider-range" ).slider( "values", 0 ) +
+                    "грн. - " + $( "#slider-range" ).slider( "values", 1 ) )+"грн.";
+        });
+    </script>
+</head>
+<body>
+<jsp:include page="header.jsp" />
 <div class="container">
     <div class="main">
     <div class="topBox">
@@ -24,7 +68,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="headingNull">
                             <h4 class="panel-title">
-                                <a href="${pageContext.request.contextPath}/catalogue">   <spring:message code="good.all"/>
+                                <a href="${pageContext.request.contextPath}/${lang}/catalogue">   <spring:message code="good.all"/>
                                     </a>
 
                             </h4>
@@ -43,11 +87,11 @@
                             <div class="panel-body">
                                     <ul>
                                         <c:forEach var="cat" items="${categories}">
-                                            <li><a href="${pageContext.request.contextPath}/category?id=${cat.id}">
-                                            <c:if test="${lang_code == 'uaText'}">
+                                            <li><a href="${pageContext.request.contextPath}/${lang}/catalogue/category?id=${cat.id}">
+                                            <c:if test="${lang == 'ua'}">
                                                 <c:out value="${cat.uaText}"/>
                                             </c:if>
-                                            <c:if test="${lang_code == 'ruText'}">
+                                            <c:if test="${lang == 'ru'}">
                                                 <c:out value="${cat.ruText}"/>
                                             </c:if>
 
@@ -71,11 +115,11 @@
                             <div class="panel-body">
                                 <ul>
                                     <c:forEach var="color" items="${colors}">
-                                        <li><a href="${pageContext.request.contextPath}/color?id=${color.id}">
-                                            <c:if test="${lang_code == 'uaText'}">
+                                        <li><a href="${pageContext.request.contextPath}/${lang}/catalogue/color?id=${color.id}">
+                                            <c:if test="${lang == 'ua'}">
                                                 <c:out value="${color.uaText}"/>
                                             </c:if>
-                                            <c:if test="${lang_code == 'ruText'}">
+                                            <c:if test="${lang == 'ru'}">
                                                 <c:out value="${color.ruText}"/>
                                             </c:if>
                                        </a> </li>
@@ -97,7 +141,7 @@
                                 <p id="amount"></p>
                                 <div id="slider-range"></div>
 
-                                <form:form id="priceRange" action="/priceRange" method="POST">
+                                <form:form id="priceRange" action="/${lang}/catalogue/priceRange" method="POST">
                                     <input type="hidden" id="amount1" name="amount1" />
                                     <input type="hidden" id="amount2" name="amount2" />
                                     <input type="submit" name="submit_range" value="<spring:message code="search"/>"/>
@@ -149,11 +193,11 @@
                             <td> <c:out value="${obj.id}"/> </td>
                             <td> <c:out value="${obj.firm}"/> </td>
 
-                            <c:if test="${lang_code == 'uaText'}">
+                            <c:if test="${lang == 'ua'}">
                                 <td> <c:out value="${obj.color.uaText}"/> </td>
                                 <td> <c:out value="${obj.category.uaText}"/> </td>
                             </c:if>
-                            <c:if test="${lang_code == 'ruText'}">
+                            <c:if test="${lang == 'ru'}">
                                 <td> <c:out value="${obj.color.ruText}"/> </td>
                                 <td> <c:out value="${obj.category.ruText}"/> </td>
                             </c:if>
@@ -162,11 +206,11 @@
                             <td> <c:out value="${obj.price}"/> </td>
                             <td> <c:out value="${obj.size}"/> </td>
 
-                            <c:if test="${lang_code == 'uaText'}">
-                                <td> <c:out value="${obj.description.uaText}"/> </td>
+                            <c:if test="${lang == 'ua'}">
+                                <td> <c:out value="${obj.uaText}"/> </td>
                             </c:if>
-                            <c:if test="${lang_code == 'ruText'}">
-                                <td> <c:out value="${obj.description.ruText}"/> </td>
+                            <c:if test="${lang == 'ru'}">
+                                <td> <c:out value="${obj.ruText}"/> </td>
                             </c:if>
                             <c:if test="${pageContext.request.userPrincipal.name != null}">
                             <td class="right_table"> <a href="${pageContext.request.contextPath}/admin/deleteGood?id=${obj.id}"><spring:message code="form.delete"/> </a> |
@@ -187,6 +231,9 @@
     </div>
 </div>
 </div>
+
+</body>
+</html>
 <style>
     @media
     only screen and (max-width: 760px),
@@ -201,21 +248,4 @@
      .good-info td:nth-of-type(8):before { content: "<spring:message code="good.about"/>"; }
     }
 </style>
-<script type="text/javascript">
 
-    $(function() {
-        $( "#slider-range" ).slider({
-            range: true,
-            min: ${minPrice},
-            max: ${maxPrice},
-            values: [ ${minPrice}, ${maxPrice} ],
-            slide: function( event, ui ) {
-                $( "#amount" ).html(ui.values[ 0 ] + "грн. - " + ui.values[ 1 ]+ "грн." );
-                $( "#amount1" ).val(ui.values[ 0 ]);
-                $( "#amount2" ).val(ui.values[ 1 ]);
-            }
-        });
-        $( "#amount" ).html( $( "#slider-range" ).slider( "values", 0 ) +
-                "грн. - " + $( "#slider-range" ).slider( "values", 1 ) )+"грн.";
-    });
-</script>

@@ -10,7 +10,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="header.jsp" />
 <jsp:include page="footer.jsp" />
-<script src="<c:url value="${pageContext.request.contextPath}/resources/js/jquery.maskedinput.min.js" />" type="text/javascript"></script>
+<script  src="<c:url value="/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
+<script   src="<c:url value="${pageContext.request.contextPath}/resources/js/jquery.maskedinput.min.js" />" type="text/javascript"></script>
 
 
 <body>
@@ -68,26 +69,26 @@
     <c:forEach var="obj" items="${listBasket}">
         <tr>
             <td>
-                <a class="single_image" href="<c:url value="images/${obj.id}_0.jpg"/>"><img  class="miniImg"  src="<c:url value="images/${obj.id}_0.jpg"/>" alt="${obj.firm} ${obj.category.uaText} "${obj.color.uaText}"/></a>
+                <a class="single_image" href="<c:url value="/images/${obj.id}_0.jpg"/>"><img  class="miniImg"  src="<c:url value="/images/${obj.id}_0.jpg"/>" alt="${obj.firm} ${obj.category.uaText} "${obj.color.uaText}"/></a>
 
             </td>
             <td> <c:out value="${obj.id}"/> </td>
             <td> <c:out value="${obj.firm}"/> </td>
-            <c:if test="${lang_code == 'uaText'}">
+            <c:if test="${lang == 'ua'}">
                 <td> <c:out value="${obj.color.uaText}"/> </td>
                 <td> <c:out value="${obj.category.uaText}"/> </td>
             </c:if>
-            <c:if test="${lang_code == 'ruText'}">
+            <c:if test="${lang == 'ru'}">
                 <td> <c:out value="${obj.color.ruText}"/> </td>
                 <td> <c:out value="${obj.category.ruText}"/> </td>
             </c:if>
-             <td> <c:out value="${obj.price}"/> </td>
+             <td> <c:out value="${obj.price}"/> грн.</td>
             <td> <c:out value="${obj.size}"/> </td>
-            <c:if test="${lang_code == 'uaText'}">
-                <td> <c:out value="${obj.description.uaText}"/> </td>
+            <c:if test="${lang == 'ua'}">
+                <td> <c:out value="${obj.uaText}"/> </td>
             </c:if>
-            <c:if test="${lang_code == 'ruText'}">
-                <td> <c:out value="${obj.description.ruText}"/> </td>
+            <c:if test="${lang == 'ru'}">
+                <td> <c:out value="${obj.ruText}"/> </td>
             </c:if>
 
 

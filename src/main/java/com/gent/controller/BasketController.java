@@ -10,10 +10,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -164,8 +161,9 @@ public class BasketController {
     }
 
 
-    @RequestMapping(value = "shopping-cart")
-    public String shopCart(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/{lang}/shopping-cart", method = RequestMethod.GET)
+    public String shopCart(ModelMap model, HttpServletRequest request, HttpServletResponse response,
+                           @PathVariable("lang") String lang) {
         Cookie[] cookies = request.getCookies();
         Cookie myCookie = null;
         for (Cookie cookie : cookies) {
@@ -206,11 +204,7 @@ public class BasketController {
         }
 
         model.addAttribute("countInBasket", count);
-        Locale locale = LocaleContextHolder.getLocale();
-        if (locale.getLanguage().equals("uk"))
-            model.addAttribute("lang_code", "uaText");
-        else if (locale.getLanguage().equals("ru"))
-            model.addAttribute("lang_code", "ruText");
+        model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
 
         model.addAttribute("order", new Orders());
         return "shoppingCart";
@@ -267,6 +261,6 @@ public class BasketController {
                 }
             }
         }
-        return "redirect:shopping-cart";
+        return "shopping-cart";
     }
 }

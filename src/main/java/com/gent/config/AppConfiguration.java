@@ -1,5 +1,6 @@
 package com.gent.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.MultipartConfigFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +16,10 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.MultipartConfigElement;
 import java.util.Locale;
 /**
@@ -28,6 +31,12 @@ import java.util.Locale;
 @Import({DBConfig.class, SecurityApplicationInitializer.class, SecurityConfig.class})
 @EnableWebMvc
 public class AppConfiguration extends WebMvcConfigurerAdapter {
+
+//    public static String urlWriteImages = "C:/jav/i18n/goods/";
+//    public static String urlReadImages = "file:///C:/jav/i18n/goods/";
+
+    public static String urlWriteImages = "/home/daria/gent/goods/";
+    public static String urlReadImages = "/home/daria/gent/goods/";
     @Bean
     public MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
@@ -43,12 +52,20 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
         multipartResolver.setMaxUploadSize(-1);
         return multipartResolver;
     }
+    @Autowired
+    private RequestMappingHandlerAdapter requestMappingHandlerAdapter;
 
+
+    @PostConstruct
+    public void init() {
+        requestMappingHandlerAdapter.setIgnoreDefaultModelOnRedirect(true);
+    }
     @Bean
     public InternalResourceViewResolver viewResolver(){
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setPrefix("/WEB-INF/views/");
         resolver.setSuffix(".jsp");
+
         return resolver;
     }
 
@@ -60,27 +77,30 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
         return messageSource;
     }
 
+
     @Bean
     public LocaleResolver localeResolver(){
         CookieLocaleResolver resolver = new CookieLocaleResolver();
-        resolver.setDefaultLocale(new Locale("uk"));
+        resolver.setDefaultLocale(new Locale("ua"));
         resolver.setCookieName("localeCookie");
         resolver.setCookieMaxAge(-1);
+
         return resolver;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry){
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
-        interceptor.setParamName("mylocale");
+        interceptor.setParamName("lang");
         registry.addInterceptor(interceptor);
+
     }
 
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
-        registry.addResourceHandler("/images/**").addResourceLocations("file:///home/daria/gent/goods/");
-        //  registry.addResourceHandler("/images/**").addResourceLocations("file:///C:/jav/i18n/goods/");
+        //        registry.addResourceHandler("/images/**").addResourceLocations("file:///home/daria/gent/goods/");
+       registry.addResourceHandler("/images/**").addResourceLocations(urlReadImages);
     }
 
 

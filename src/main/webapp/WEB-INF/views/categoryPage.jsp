@@ -10,11 +10,26 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<html>
+<head>
+    <title>Чоловічий одяг та аксесуари купити у інтернет-магазині джентльмен.in.ua</title>
+     <script  src="<c:url value="${pageContext.request.contextPath}/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
+     <script  src="<c:url value="${pageContext.request.contextPath}/resources/js/app.js" />" type="text/javascript"></script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-87631623-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</head>
+<body>
 <jsp:include page="header.jsp" />
-<jsp:include page="footer.jsp" />
-<script src="<c:url value="${pageContext.request.contextPath}/resources/js/app.js" />" type="text/javascript"></script>
-
-
 <div class="container">
     <div class="main">
 
@@ -31,6 +46,36 @@
             </div>
             <form:form cssClass="form-horizontal" id="formCategory" action="/admin/addCategory" method="POST" commandName="category" enctype="multipart/form-data">
                 <form:hidden path="id"/>
+
+                <div class="form-group">
+                    <label for="level" class="col-sm-2 control-label"><spring:message code="level"/></label>
+                    <div class="col-sm-10">
+                        <select class="col-sm-10" id="level" name="level" onchange="parentVis();">
+                            <option value="0">1</option>
+                            <option value="1">2</option>
+                        </select>
+                        <form:errors path="level" cssClass="error-msg"/>
+                    </div>
+                </div>
+
+                <div class="form-group" id="parent_div" style="display: none;">
+                    <label for="parent" class="col-sm-2 control-label"><spring:message code="parent"/></label>
+                    <div class="col-sm-10">
+                        <form:select path="parent"  class="col-sm-10">
+
+                            <c:if test="${lang == 'ua'}">
+                                <form:options  items="${parentList}" itemValue="id" itemLabel="uaText"/>
+                            </c:if>
+                            <c:if test="${lang == 'ru'}">
+                                <form:options  items="${parentList}" itemValue="id" itemLabel="ruText"/>
+                            </c:if>
+
+
+                        </form:select>
+                   </div>
+                </div>
+
+
                 <div class="form-group">
                     <label for="uaText" class="col-sm-2 control-label">Українською</label>
                     <div class="col-sm-10">
@@ -55,7 +100,7 @@
                     </div>
                 </div>
                 <div class="form-group col-sm-12">
-                    <c:out value="${msg}"/>
+                    <h4><c:out value="${msg}"/></h4>
                 </div>
             </form:form>
 
@@ -87,3 +132,21 @@
 
     </div>
 </div>
+<jsp:include page="footer.jsp" />
+</body>
+</html>
+
+<script type="text/javascript">
+ function parentVis(){
+     var el = document.getElementById("level");
+     console.log(el.selectedIndex);
+     if (el.selectedIndex == '1') {
+         document.getElementById("parent_div").style.display = "block";
+     }
+     else{
+         document.getElementById("parent_div").style.display = "none";
+     }
+
+ }
+
+</script>

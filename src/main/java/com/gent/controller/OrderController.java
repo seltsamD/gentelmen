@@ -142,16 +142,9 @@ public class OrderController {
 
     }
 
-    @RequestMapping(value="myorders")
-    public String order(ModelMap model, HttpServletRequest request) {
-
-
-        Locale locale = LocaleContextHolder.getLocale();
-        if(locale.getLanguage().equals("uk"))
-            model.addAttribute("lang_code", "uaText");
-        else
-        if(locale.getLanguage().equals( "ru"))
-            model.addAttribute("lang_code", "ruText");
+    @RequestMapping(value="/{lang}/myorders", method = RequestMethod.GET)
+    public String order(ModelMap model, HttpServletRequest request, @PathVariable("lang") String lang) {
+    model.addAttribute("lang", lang);
 
         return "myorders";
 

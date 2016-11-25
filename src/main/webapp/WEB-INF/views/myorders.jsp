@@ -11,8 +11,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="header.jsp" />
 <jsp:include page="footer.jsp" />
-<script src="<c:url value="/resources/js/app.js" />" type="text/javascript"></script>
-<script src="<c:url value="${pageContext.request.contextPath}/resources/js/jquery.maskedinput.min.js" />" type="text/javascript"></script>
+
+<script  async src="<c:url value="${pageContext.request.contextPath}/resources/js/jquery.maskedinput.min.js" />" type="text/javascript"></script>
 
 <body>
 

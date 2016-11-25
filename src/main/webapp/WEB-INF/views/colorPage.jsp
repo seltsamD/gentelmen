@@ -9,9 +9,26 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:include page="header.jsp" />
-<jsp:include page="footer.jsp" />
 
+<html>
+<head>
+    <title>Чоловічий одяг та аксесуари купити у інтернет-магазині джентльмен.in.ua</title>
+    <script  src="<c:url value="${pageContext.request.contextPath}/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
+    <script  src="<c:url value="${pageContext.request.contextPath}/resources/js/app.js" />" type="text/javascript"></script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-87631623-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</head>
+<body>
+<jsp:include page="header.jsp" />
 
 <div class="container">
     <div class="main">

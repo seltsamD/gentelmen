@@ -7,6 +7,10 @@
 .navbar-nav{
     background-color: #e7e7e7;  !important;
 }
+a .navbar-brand{
+    color: #ffffff; !important;
+}
+
 .navbar-brand{
     color: #ffffff; !important;
 }
@@ -79,9 +83,10 @@ a{
     background-color: #F4D8B9;
     opacity: 0.9;
     margin: 20px;
-    margin-top: 70px;
+    margin-top: 50px;
     width: 100%;
     padding: 25px;
+
 }
 .topBox  .btn-success, .btn-warning{
     width: 100%;
@@ -100,32 +105,47 @@ a{
     /*width: 100%;*/
 
 /*}*/
-.back{
-    background: #F4D8B9;
-}
 
+.infoGood{
+    margin-top: 50px;
+}
+.top{
+    margin-top: 20px;
+}
+#table-info td .bottomTd{
+    padding-bottom: 20px; !important;
+}
+.index{
+    padding-top:50px;
+
+}
 #table-info{
-    margin: 20px;
+
     text-align: left;
     border-collapse: collapse;
     border-top: 1px solid #2f0311;
     border-bottom: 1px solid #2f0311;
     padding: 20px;
-    width: 200px;
     background: #F4D8B9;
+    width: 100%;
 }
+#table-info td{
+    padding: 2px;
+    padding-left: 20px;
+}
+
 #table-info tr{
-    padding: 20px;
+    padding-left: 20px;
 }
 #table-info th{
     font-size: 13px;
     font-weight: lighter;
     color: #6e3400;
-    padding-right: 20px;
+    padding-left: 20px;
 }
 #table-info hr{
     height: 20px;
-    background-size: cover;
+    background-size: contain;
 }
 #box-table-b
 {
@@ -176,19 +196,41 @@ a{
     max-width: 150px;
 }
 .infoBox{
-   width: 100%;
+    width: 100%;
     height: 100%;
-    bottom: 0px;
+    padding-top: 20px;
 }
 
+#table-index img{
+    max-height: 150px; !important;
+    max-width: 150px; !important;
+
+}
+#table-index{
+    width: 100%;  !important;
+    height: 100%; !important;
+    padding-bottom: 20px; !important;
+}
+#table-index th{
+    height: 70%; !important;
+    text-align: center; !important;
+    vertical-align: middle; !important;
+}
+
+#table-index td{
+    height: 30%; !important;
+    text-align: center; !important;
+    vertical-align: bottom; !important;
+}
 .back{
-    background: url("ram2.png");
+    /*background: url("ram5.png");*/
     background-size: 200px 340px; padding-top: 60px;
     height: 340px;
     width: 200px;
     font-size: 14pt;
     margin: 5px;
-
+    border-style: double;
+    background-color: #F4D8B9;
     text-align: center;
     font-family: 'Pattaya', sans-serif; !important;
 }
@@ -238,30 +280,32 @@ only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px) {
 
     /* Force table to not be like tables anymore */
-    table, thead, tbody, th, td, tr {
+    #box-table-b  table, thead, tbody, th, td, tr {
         display: block;
+        margin: auto;
+        border: none !important;
     }
 
     /* Hide table headers (but not display: none;, for accessibility) */
-    thead tr {
+    #box-table-b thead tr {
         position: absolute;
         top: -9999px;
         left: -9999px;
     }
 
-    tr {
+    #box-table-b  tr {
         border: 1px solid #ccc;
     }
 
-    td {
+    #box-table-b td {
         /* Behave  like a "row" */
         border: none;
-        border-bottom: 1px solid #eee;
+        /*border-bottom: 1px solid #eee;*/
         position: relative;
         padding-left: 50%;
     }
 
-    td:before {
+    #box-table-b td:before {
         /* Now like a table header */
         position: absolute;
         /* Top/left values mimic padding */

@@ -49,6 +49,8 @@ public class GoodDAO implements IGoodDAO {
         g.setCategory(good.getCategory());
         g.setCountImg(good.getCountImg());
         g.setSize(good.getSize());
+        g.setRuText(good.getRuText());
+        g.setUaText(good.getUaText());
         sessionFactory.getCurrentSession().update(g);
     }
 
@@ -116,8 +118,8 @@ public class GoodDAO implements IGoodDAO {
         Criteria criteria = sessionFactory.getCurrentSession()
                 .createCriteria(Good.class)
                 .setProjection(Projections.max("price"));
-        Integer maxAge = (Integer)criteria.uniqueResult();
-        return maxAge;
+        Integer maxPrice = (Integer)criteria.uniqueResult();
+        return maxPrice;
     }
 
     @Override

@@ -14,4 +14,7 @@ public interface ICategoryService {
     boolean addCategory(Category text);
     void updateCategory(Category text);
     void deleteCategory(int id);
+    List<Category> getFirstLevel();
+    List<Category> getChild(int id);
+    List<Category> getSecondLevel();
 }

@@ -8,8 +8,25 @@
   Time: 22:20
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
+<html>
+<head>
+    <title>Чоловічий одяг та аксесуари купити у інтернет-магазині джентльмен.in.ua</title>
+    <script  src="<c:url value="${pageContext.request.contextPath}/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
+    <script  src="<c:url value="${pageContext.request.contextPath}/resources/js/app.js" />" type="text/javascript"></script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-87631623-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</head>
+<body>
 <jsp:include page="header.jsp" />
-<jsp:include page="footer.jsp" />
 
     <div class="container">
     <div class="main">
@@ -78,15 +95,15 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="description.uaText" class="col-sm-2 control-label"><spring:message code="good.about"/> українською</label>
+                    <label for="uaText" class="col-sm-2 control-label"><spring:message code="good.about"/> українською</label>
                     <div class="col-sm-10">
-                        <form:textarea path="description.uaText"  cssClass="form-control"/>
-                        <form:errors path="description.uaText" cssClass="error-msg"/>
+                        <form:textarea path="uaText"  cssClass="form-control"/>
+                        <form:errors path="uaText" cssClass="error-msg"/>
                     </div>
-                    <label for="description.ruText" class="col-sm-2 control-label"><spring:message code="good.about"/> на русском</label>
+                    <label for="ruText" class="col-sm-2 control-label"><spring:message code="good.about"/> на русском</label>
                     <div class="col-sm-10">
-                        <form:textarea path="description.ruText"  cssClass="form-control"/>
-                        <form:errors path="description.ruText" cssClass="error-msg"/></div>
+                        <form:textarea path="ruText"  cssClass="form-control"/>
+                        <form:errors path="ruText" cssClass="error-msg"/></div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-2">
@@ -147,16 +164,16 @@
                         <td> <c:out value="${obj.size}"/> </td>
 
                         <c:if test="${lang_code == 'uaText'}">
-                            <td> <c:out value="${obj.description.uaText}"/> </td>
+                            <td><xmp><c:out value="${obj.uaText}"/></xmp></td>
                         </c:if>
                         <c:if test="${lang_code == 'ruText'}">
-                            <td> <c:out value="${obj.description.ruText}"/> </td>
+                            <td> <c:out value="${obj.ruText}"/> </td>
                         </c:if>
 
 
-                        <td class="right_table"> <a href="${pageContext.request.contextPath}/admin/deleteGood?id=${obj.id}"><spring:message code="form.delete"/> </a> |
-                            <a href="${pageContext.request.contextPath}/admin/goodById?id=${obj.id}"><spring:message code="form.edit"/></a> |
-                            <a href="${pageContext.request.contextPath}/admin/goodInfo?id=${obj.id}"><spring:message code="form.info"/></a>
+                        <td class="right_table"> <a href="${pageContext.request.contextPath}/${lang}//admin/deleteGood?id=${obj.id}"><spring:message code="form.delete"/> </a> |
+                            <a href="${pageContext.request.contextPath}/${lang}//admin/goodById?id=${obj.id}"><spring:message code="form.edit"/></a> |
+                            <a href="${pageContext.request.contextPath}/${lang}//admin/goodInfo?id=${obj.id}"><spring:message code="form.info"/></a>
                         </td>
                     </tr>
                     <tr><td colspan="9"><hr></td> </tr>
@@ -166,6 +183,9 @@
 
     </div>
     </div>
+<jsp:include page="footer.jsp" />
+</body>
+</html>
 <script type="text/javascript">
     function count() {
         var numFiles = $("input:file")[0].files.length;

@@ -23,6 +23,20 @@ public class Category implements Serializable {
     @Column(name = "uaText")
     private String uaText;
 
+    @Column(name = "parent_id")
+    private int parent;
+
+    @Column(name = "level")
+    private int level;
+
+    public int getParent() {
+        return parent;
+    }
+
+    public void setParent(int parent) {
+        this.parent = parent;
+    }
+
     public int getId() {
         return id;
     }
@@ -45,5 +59,13 @@ public class Category implements Serializable {
 
     public void setUaText(String uaText) {
         this.uaText = uaText;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }

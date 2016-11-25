@@ -30,10 +30,8 @@ public class CategoryDAO implements ICategoryDAO {
 
     @Override
     public Category getCategoryById(int id) {
-        Query query = sessionFactory.getCurrentSession().createQuery(" from Category  where id = :id");
-        query.setParameter("id", id);
-        Category category = (Category) query.uniqueResult();
-        return category;
+        return (Category) sessionFactory.getCurrentSession().createQuery("from Category  where id = :id")
+                .setParameter("id", id).uniqueResult();
     }
 
     @Override
@@ -49,6 +47,8 @@ public class CategoryDAO implements ICategoryDAO {
         category.setId(cat.getId());
         category.setRuText(cat.getRuText());
         category.setUaText(cat.getUaText());
+        category.setParent(cat.getParent());
+        category.setLevel(cat.getLevel());
        sessionFactory.getCurrentSession().update(category);
     }
 
@@ -56,6 +56,27 @@ public class CategoryDAO implements ICategoryDAO {
     public void deleteCategory(int id) {
         sessionFactory.getCurrentSession().createQuery("delete from Category  where id = :id")
                 .setParameter("id", id).executeUpdate();
+    }
+
+    @Override
+    public List<Category> getFirstLevel() {
+        return sessionFactory.getCurrentSession().createQuery("from Category where level = :lev")
+                .setParameter("lev", 0)
+                .list();
+    }
+
+    @Override
+    public List<Category> getChild(int id) {
+        return sessionFactory.getCurrentSession().createQuery("from Category where parent = :id")
+                .setParameter("id", id)
+                .list();
+    }
+
+    @Override
+    public List<Category> getSecondLevel() {
+        return sessionFactory.getCurrentSession().createQuery("from Category where level = :lev")
+                .setParameter("lev", 1)
+                .list();
     }
 
 

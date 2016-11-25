@@ -23,19 +23,14 @@ public class Good implements Serializable{
     @Column(name = "Firm")
     private String firm;
 
-//    @IndexedEmbedded
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "color_id", nullable = false)
     private Color color;
-//    @Column(name = "Color")
-//    private int color;
 
-//    @IndexedEmbedded
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
-//    @Column(name = "Type")
-//    private int type;
 
     @Min(1)
     @Column(name = "Price")
@@ -52,19 +47,18 @@ public class Good implements Serializable{
     @Column(name = "Status")
     private int status;
 
+    @Size(min=2, max=1000)
+    @Column(name = "ruText")
+    private String ruText;
 
-    public int isStatus() {
-        return status;
-    }
+    @Size(min=2, max=1000)
+    @Column(name = "uaText")
+    private String uaText;
+
 
     public void setStatus(int status) {
         this.status = status;
     }
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "description_id", nullable = true)
-    private Description description;
-
 
     public String getSize() {
         return size;
@@ -122,12 +116,24 @@ public class Good implements Serializable{
         this.price = price;
     }
 
-    public Description getDescription() {
-        return description;
+    public int getStatus() {
+        return status;
     }
 
-    public void setDescription(Description description) {
-        this.description = description;
+    public String getRuText() {
+        return ruText;
+    }
+
+    public void setRuText(String ruText) {
+        this.ruText = ruText;
+    }
+
+    public String getUaText() {
+        return uaText;
+    }
+
+    public void setUaText(String uaText) {
+        this.uaText = uaText;
     }
 
     @Override
@@ -141,7 +147,7 @@ public class Good implements Serializable{
                 ", size='" + size + '\'' +
                 ", countImg=" + countImg +
                 ", status=" + status +
-                ", description=" + description.getRuText() +
+                ", description=" + ruText + " "+ uaText +
                 '}';
     }
 }

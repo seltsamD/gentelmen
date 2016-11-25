@@ -16,33 +16,48 @@ public class CategoryService implements ICategoryService {
 
 
     @Autowired
-    private ICategoryDAO uaCategoryDAO;
+    private ICategoryDAO categoryDAO;
 
     @Override
     public List<Category> getAllCategory() {
-        return uaCategoryDAO.getAllCategory();
+        return categoryDAO.getAllCategory();
     }
 
     @Override
     public Category getCategoryById(int id) {
-        Category text = uaCategoryDAO.getCategoryById(id);
+        Category text = categoryDAO.getCategoryById(id);
         return text;
     }
 
     @Override
     public boolean addCategory(Category text) {
-        uaCategoryDAO.addCategory(text);
+        categoryDAO.addCategory(text);
         return true;
     }
 
     @Override
     public void updateCategory(Category text) {
-        uaCategoryDAO.updateCategory(text);
+        categoryDAO.updateCategory(text);
     }
 
     @Override
     public void deleteCategory(int id) {
-        uaCategoryDAO.deleteCategory(id);
+        categoryDAO.deleteCategory(id);
+    }
+
+    @Override
+    public List<Category> getFirstLevel() {
+        return categoryDAO.getFirstLevel();
+    }
+
+    @Override
+    public List<Category> getChild(int id) {
+        return categoryDAO.getChild(id);
+    }
+
+    @Override
+    public List<Category> getSecondLevel() {
+        return categoryDAO.getSecondLevel();
     }
 
 
