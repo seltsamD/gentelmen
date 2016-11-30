@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +34,7 @@ public class CatalogueController {
     @Autowired
     private IGoodService goodService;
 
-    @RequestMapping(value="/{lang}/catalogue" , method = RequestMethod.GET )
+    @RequestMapping(value="/{lang}/каталог" , method = RequestMethod.GET )
     public String gullCatalogue(ModelMap model, HttpServletRequest request) {
         List<Good> listGood;
 
@@ -54,10 +55,11 @@ public class CatalogueController {
        return redirectWithLang(request, "catalogue");
     }
 
-    @RequestMapping(value="/{lang}/catalogue/category")
-    public String getCategoryById(ModelMap model, HttpServletRequest request) {
-
-        int catId = Integer.parseInt(request.getParameter("id"));
+    @RequestMapping(value="/{lang}/каталог/{category}")
+    public String getCategoryById(ModelMap model, HttpServletRequest request,
+                                  @PathVariable("category") String category) {
+        int catId = 0;
+        catId  = categoryService.getCategoryByName(LocaleContextHolder.getLocale().getLanguage(), category);
         List<Good> listGood = goodService.getGoodsByCategorie(catId);
         model.addAttribute("count", listGood.size());
         model.addAttribute("allData", listGood);
@@ -66,10 +68,12 @@ public class CatalogueController {
         return redirectWithLang(request, "catalogue");
     }
 
-    @RequestMapping(value="/{lang}/catalogue/color")
-    public String getColorById(ModelMap model, HttpServletRequest request) {
+    @RequestMapping(value={"/{lang}/каталог/цвет/{color}", "/{lang}/каталог/колір/{color}"})
+    public String getColorById(ModelMap model, HttpServletRequest request,
+                               @PathVariable("color") String color) {
 
-        int catId = Integer.parseInt(request.getParameter("id"));
+        int catId = 0;
+        catId  = colorService.getColoryByName(LocaleContextHolder.getLocale().getLanguage(), color);
         List<Good> listGood = goodService.getGoodsByColor(catId);
         model.addAttribute("count", listGood.size());
         model.addAttribute("allData", listGood);

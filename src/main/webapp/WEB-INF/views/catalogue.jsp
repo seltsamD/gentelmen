@@ -61,14 +61,14 @@
 <jsp:include page="header.jsp" />
 <div class="container">
     <div class="main">
-    <div class="topBox">
+
         <div class="row">
             <div class="col-sm-3">
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="headingNull">
                             <h4 class="panel-title">
-                                <a href="${pageContext.request.contextPath}/${lang}/catalogue">   <spring:message code="good.all"/>
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог">   <spring:message code="good.all"/>
                                     </a>
 
                             </h4>
@@ -87,11 +87,13 @@
                             <div class="panel-body">
                                     <ul>
                                         <c:forEach var="cat" items="${categories}">
-                                            <li><a href="${pageContext.request.contextPath}/${lang}/catalogue/category?id=${cat.id}">
-                                            <c:if test="${lang == 'ua'}">
+
+                                            <c:if test="${lang == 'uk'}">
+                                                <li><a href="${pageContext.request.contextPath}/${lang}/каталог/${cat.uaText}">
                                                 <c:out value="${cat.uaText}"/>
                                             </c:if>
                                             <c:if test="${lang == 'ru'}">
+                                                <li><a href="${pageContext.request.contextPath}/${lang}/каталог/${cat.ruText}">
                                                 <c:out value="${cat.ruText}"/>
                                             </c:if>
 
@@ -115,11 +117,13 @@
                             <div class="panel-body">
                                 <ul>
                                     <c:forEach var="color" items="${colors}">
-                                        <li><a href="${pageContext.request.contextPath}/${lang}/catalogue/color?id=${color.id}">
-                                            <c:if test="${lang == 'ua'}">
+
+                                            <c:if test="${lang == 'uk'}">
+                                                <li><a href="${pageContext.request.contextPath}/${lang}/каталог/колір/${color.uaText}">
                                                 <c:out value="${color.uaText}"/>
                                             </c:if>
                                             <c:if test="${lang == 'ru'}">
+                                                <li><a href="${pageContext.request.contextPath}/${lang}/каталог/цвет/${color.ruText}">
                                                 <c:out value="${color.ruText}"/>
                                             </c:if>
                                        </a> </li>
@@ -163,72 +167,124 @@
                 <h3><spring:message code="good.notFound"/></h3>
             </c:if>
             <c:if test="${count > 0}">
+                <section>
+                    <div class="row">
+                        <c:forEach var="obj" items="${allData}">
+                            <article>
+                            <div class="col-xs-6 col-sm-3 back" >
+                                <div class="infoBox">
+                                    <table id="table-index">
+                                        <tr>
+                                            <th>
+                                                <c:if test="${lang == 'uk'}">
 
-                <table id="box-table-b" class="good-info">
-                    <thead>
-                    <tr> <th>  </th>
-                        <th> <spring:message code="good.id"/> </th>
-                        <th> <spring:message code="good.firm"/> </th>
-                        <th> <spring:message code="good.color"/> </th>
-                        <th> <spring:message code="good.type"/> </th>
-                        <th> <spring:message code="good.price"/> </th>
-                        <th> <spring:message code="good.size"/> </th>
-                        <th> <spring:message code="good.about"/> </th>
+                                                    <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.uaText}-${obj.firm}-${obj.color.uaText}/${obj.id}"><img  src="<c:url value="/images/${obj.id}_0.jpg"/>" alt="${obj.firm} ${obj.category.uaText} ${obj.color.uaText}"/></a>
+                                                </c:if>
+                                                <c:if test="${lang == 'ru'}">
+                                                    <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.ruText}-${obj.firm}-${obj.color.ruText}/${obj.id}"><img  src="<c:url value="/images/${obj.id}_0.jpg"/>" alt="${obj.firm} ${obj.category.ruText} ${obj.color.ruText}"/></a>
+                                                </c:if>
 
-                    </tr></thead>
 
-                    <tbody>
-                    <c:forEach var="obj" items="${allData}">
-                        <tr>
-                            <td> <a class="single_image" href="<c:url value="/images/${obj.id}_0.jpg"/>"><img  class="miniImg"  src="<c:url value="/images/${obj.id}_0.jpg"/>" alt="${obj.firm} ${obj.category.uaText} "${obj.color.uaText}"/></a>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="priceInfo">
+                                                    <c:if test="${lang == 'uk'}">
 
-                                <c:if test="${pageContext.request.userPrincipal.name == null}">
-                                    <form:form id="baskForm${obj.id}" action="addToBasket" method="POST">
-                                        <input type="hidden" name="goodId" value="${obj.id}">
-                                        <input type="button" onclick="tobasket(${obj.id})" value="<spring:message code="basket.add"/>" id="btn-basket-add" class="btn btn-success">
-                                    </form:form>
-                                </c:if>
+                                                        <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.uaText}-${obj.firm}-${obj.color.uaText}/${obj.id}"><c:out value="${obj.category.uaText} ${obj.firm}"/></a>
+                                                    </c:if>
+                                                    <c:if test="${lang == 'ru'}">
+                                                        <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.ruText}-${obj.firm}-${obj.color.ruText}/${obj.id}"><c:out value="${obj.category.ruText} ${obj.firm}"/></a>
+                                                    </c:if>
+                                                    <p class="price">${obj.price}грн.</p>
+
+                                                    <form:form id="baskForm${obj.id}" action="addToBasket" method="POST">
+                                                        <input type="hidden" name="goodId" value="${obj.id}">
+                                                        <input type="button" onclick="tobasket(${obj.id})" value="<spring:message code="basket.add"/>" id="btn-basket-add" class="btn btn-success">
+                                                    </form:form>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                        <%--<div class="infoBox">--%>
+
+                                </div>
+
+                            </div>
+                            </article>
+                        </c:forEach>
+
+                        <%--<div class="demo">--%>
+                            <%--<div id="demo2">--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
+                    </div>
+                <%--<table id="box-table-b" class="good-info">--%>
+                    <%--<thead>--%>
+                    <%--<tr> <th>  </th>--%>
+                        <%--<th> <spring:message code="good.id"/> </th>--%>
+                        <%--<th> <spring:message code="good.firm"/> </th>--%>
+                        <%--<th> <spring:message code="good.color"/> </th>--%>
+                        <%--<th> <spring:message code="good.type"/> </th>--%>
+                        <%--<th> <spring:message code="good.price"/> </th>--%>
+                        <%--<th> <spring:message code="good.size"/> </th>--%>
+                        <%--<th> <spring:message code="good.about"/> </th>--%>
+
+                    <%--</tr></thead>--%>
+
+                    <%--<tbody>--%>
+                    <%--<c:forEach var="obj" items="${allData}">--%>
+                        <%--<tr>--%>
+                            <%--<td> <a class="single_image" href="<c:url value="/images/${obj.id}_0.jpg"/>"><img  class="miniImg"  src="<c:url value="/images/${obj.id}_0.jpg"/>" alt="${obj.firm} ${obj.category.uaText} "${obj.color.uaText}"/></a>--%>
+
+                                <%--<c:if test="${pageContext.request.userPrincipal.name == null}">--%>
+                                    <%--<form:form id="baskForm${obj.id}" action="addToBasket" method="POST">--%>
+                                        <%--<input type="hidden" name="goodId" value="${obj.id}">--%>
+                                        <%--<input type="button" onclick="tobasket(${obj.id})" value="<spring:message code="basket.add"/>" id="btn-basket-add" class="btn btn-success">--%>
+                                    <%--</form:form>--%>
+                                <%--</c:if>--%>
+                            <%--&lt;%&ndash;</td>&ndash;%&gt;--%>
                             <%--</td>--%>
-                            </td>
-                            <td> <c:out value="${obj.id}"/> </td>
-                            <td> <c:out value="${obj.firm}"/> </td>
+                            <%--<td> <c:out value="${obj.id}"/> </td>--%>
+                            <%--<td> <c:out value="${obj.firm}"/> </td>--%>
 
-                            <c:if test="${lang == 'ua'}">
-                                <td> <c:out value="${obj.color.uaText}"/> </td>
-                                <td> <c:out value="${obj.category.uaText}"/> </td>
-                            </c:if>
-                            <c:if test="${lang == 'ru'}">
-                                <td> <c:out value="${obj.color.ruText}"/> </td>
-                                <td> <c:out value="${obj.category.ruText}"/> </td>
-                            </c:if>
+                            <%--<c:if test="${lang == 'uk'}">--%>
+                                <%--<td> <c:out value="${obj.color.uaText}"/> </td>--%>
+                                <%--<td> <c:out value="${obj.category.uaText}"/> </td>--%>
+                            <%--</c:if>--%>
+                            <%--<c:if test="${lang == 'ru'}">--%>
+                                <%--<td> <c:out value="${obj.color.ruText}"/> </td>--%>
+                                <%--<td> <c:out value="${obj.category.ruText}"/> </td>--%>
+                            <%--</c:if>--%>
 
 
-                            <td> <c:out value="${obj.price}"/> </td>
-                            <td> <c:out value="${obj.size}"/> </td>
+                            <%--<td> <c:out value="${obj.price}"/>грн.</td>--%>
+                            <%--<td> <c:out value="${obj.size}"/> </td>--%>
 
-                            <c:if test="${lang == 'ua'}">
-                                <td> <c:out value="${obj.uaText}"/> </td>
-                            </c:if>
-                            <c:if test="${lang == 'ru'}">
-                                <td> <c:out value="${obj.ruText}"/> </td>
-                            </c:if>
-                            <c:if test="${pageContext.request.userPrincipal.name != null}">
-                            <td class="right_table"> <a href="${pageContext.request.contextPath}/admin/deleteGood?id=${obj.id}"><spring:message code="form.delete"/> </a> |
-                                <a href="${pageContext.request.contextPath}/admin/goodById?id=${obj.id}"><spring:message code="form.edit"/></a> |
-                                <a href="${pageContext.request.contextPath}/admin/goodInfo?id=${obj.id}"><spring:message code="form.info"/></a>
-                            </td>
-                            </c:if>
-                        </tr>
-                        <tr><td colspan="9"><hr></td> </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+                            <%--<c:if test="${lang == 'uk'}">--%>
+                                <%--<td> <c:out value="${obj.uaText}"/> </td>--%>
+                            <%--</c:if>--%>
+                            <%--<c:if test="${lang == 'ru'}">--%>
+                                <%--<td> <c:out value="${obj.ruText}"/> </td>--%>
+                            <%--</c:if>--%>
+                            <%--<c:if test="${pageContext.request.userPrincipal.name != null}">--%>
+                            <%--<td class="right_table"> <a href="${pageContext.request.contextPath}/admin/deleteGood?id=${obj.id}"><spring:message code="form.delete"/> </a> |--%>
+                                <%--<a href="${pageContext.request.contextPath}/admin/goodById?id=${obj.id}"><spring:message code="form.edit"/></a> |--%>
+                                <%--<a href="${pageContext.request.contextPath}/admin/goodInfo?id=${obj.id}"><spring:message code="form.info"/></a>--%>
+                            <%--</td>--%>
+                            <%--</c:if>--%>
+                        <%--</tr>--%>
+                        <%--<tr><td colspan="9"><hr></td> </tr>--%>
+                    <%--</c:forEach>--%>
+                    <%--</tbody>--%>
+                <%--</table>--%>
 
                 </c:if>
             </div>
         </div>
 
-    </div>
 </div>
 </div>
 
@@ -249,3 +305,18 @@
     }
 </style>
 
+<script src="<c:url value="/resources/js/paginate.js"/>" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function() {
+        $("#demo2").paginate({
+            count: ${count},
+            start: 1,
+            display: 5,
+            border: false,
+            text_color: '#888',
+            background_color: '#EEE',
+            text_hover_color: 'black',
+            background_hover_color: '#CFCFCF'
+        });
+    });
+    </script>

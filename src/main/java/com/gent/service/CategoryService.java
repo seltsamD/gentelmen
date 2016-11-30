@@ -60,5 +60,10 @@ public class CategoryService implements ICategoryService {
         return categoryDAO.getSecondLevel();
     }
 
+    @Override
+    public int getCategoryByName(String lang, String text) {
+        return categoryDAO.getCategoryByName(lang, text);
+    }
+
 
 }

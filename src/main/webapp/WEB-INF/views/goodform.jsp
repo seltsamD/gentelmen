@@ -164,7 +164,7 @@
                         <td> <c:out value="${obj.size}"/> </td>
 
                         <c:if test="${lang_code == 'uaText'}">
-                            <td><xmp><c:out value="${obj.uaText}"/></xmp></td>
+                            <td><c:out value="${obj.uaText}"/></td>
                         </c:if>
                         <c:if test="${lang_code == 'ruText'}">
                             <td> <c:out value="${obj.ruText}"/> </td>

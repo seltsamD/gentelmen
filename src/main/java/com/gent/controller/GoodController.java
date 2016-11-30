@@ -130,14 +130,14 @@ public class GoodController {
 
 
 
-            if(request.getParameter("lang").equals("ua"))
+            if(request.getParameter("lang").equals("uk"))
 
 
                 try {
                     String cat = URLEncoder.encode(good.getCategory().getUaText(), "UTF-8");
                     String col = URLEncoder.encode(good.getColor().getUaText(), "UTF-8");
                     String parent = URLEncoder.encode( categoryService.getCategoryById(good.getCategory().getParent()).getUaText(), "UTF-8");
-                    url2 = "/ua/"+parent+"/"+cat+"/"+good.getFirm()+"/"+col+"/"+good.getId();
+                    url2 = "/uk/"+parent+"/"+cat+"/"+good.getFirm()+"/"+col+"/"+good.getId();
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }

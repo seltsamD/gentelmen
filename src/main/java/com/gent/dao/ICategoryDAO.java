@@ -21,4 +21,6 @@ public interface ICategoryDAO {
     List<Category> getChild(int id);
     List<Category> getSecondLevel();
 
+    int getCategoryByName(String lang, String text);
+
 }

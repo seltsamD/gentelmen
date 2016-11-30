@@ -17,4 +17,5 @@ public interface ICategoryService {
     List<Category> getFirstLevel();
     List<Category> getChild(int id);
     List<Category> getSecondLevel();
+    int getCategoryByName(String lang, String text);
 }

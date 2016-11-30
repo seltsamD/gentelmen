@@ -29,7 +29,7 @@
                     <ul class="nav navbar-nav">
                         <li><div id="msg"></div></li>
                         <li class="active"><a href="<c:url value="/${lang}/index"/>"><spring:message code="page.title"/></a></li>
-                        <li class="active"><a href="<c:url value="/${lang}/catalogue"/>"><spring:message code="page.catalogue"/></a></li>
+                        <li class="active"><a href="<c:url value="/${lang}/каталог"/>"><spring:message code="page.catalogue"/></a></li>
 
 
                         <c:if test="${pageContext.request.userPrincipal.name != null}">
@@ -47,12 +47,12 @@
                         </c:if>
 
                         <c:if test="${pageContext.request.getParameter('id') == null}">
-                        <li><a href="?lang=ua"><img class="flag" src="<c:url value="/resources/images/ukraine-flag.png"/>" ></a></li>
+                        <li><a href="?lang=uk"><img class="flag" src="<c:url value="/resources/images/ukraine-flag.png"/>" ></a></li>
                             <li><a href="?lang=ru"><img class="flag" src="<c:url value="/resources/images/rus-flag.png"/>" ></a></li>
 
                         </c:if>
                         <c:if test="${pageContext.request.getParameter('id') != null}">
-                            <li><a href="${pageContext.request.contextPath}?lang=ua&${pageContext.request.queryString}"><img class="flag" src="<c:url value="/resources/images/ukraine-flag.png"/>" ></a></li>
+                            <li><a href="${pageContext.request.contextPath}?lang=uk&${pageContext.request.queryString}"><img class="flag" src="<c:url value="/resources/images/ukraine-flag.png"/>" ></a></li>
                             <li><a href="${pageContext.request.contextPath}?lang=ru&${pageContext.request.queryString}"><img class="flag" src="<c:url value="/resources/images/rus-flag.png"/>" ></a></li>
 
                         </c:if>
@@ -64,4 +64,6 @@
             </div>
         </div>
     </nav>
+
+    <div id = "flake">&#10052;</div>
 </header>

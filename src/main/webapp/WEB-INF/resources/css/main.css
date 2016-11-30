@@ -7,13 +7,6 @@
 .navbar-nav{
     background-color: #e7e7e7;  !important;
 }
-a .navbar-brand{
-    color: #ffffff; !important;
-}
-
-.navbar-brand{
-    color: #ffffff; !important;
-}
  .navbar-default {
     background-color: #7c7c3e; !important;
     color: #feffe1;
@@ -22,7 +15,9 @@ a .navbar-brand{
     background-color: #7c7c3e; !important;
     color: #feffe1;
 }
-
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover{
+    color: #ffffff; !important;
+}
 h1, h3, h2, .h1{
     margin-left: 20px;
     font-family: 'Pattaya', sans-serif; !important;
@@ -152,13 +147,14 @@ a{
     /*font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;*/
     /*font-size: 14px;*/
     margin: 20px;
-    width: 100%;
+    /*width: 100%;*/
     text-align: center;
     border-collapse: collapse;
     border-top: 1px solid #2f0311;
     border-bottom: 1px solid #2f0311;
     background-color: #ffffff;
     padding: 20px;
+    word-wrap: normal;
 }
 #box-table-b th
 {
@@ -198,7 +194,7 @@ a{
 .infoBox{
     width: 100%;
     height: 100%;
-    padding-top: 20px;
+    padding-top: 10px;
 }
 
 #table-index img{
@@ -271,9 +267,14 @@ hr{
 }
 body{
 
-    background: url("background.jpg")center fixed;
+    background: url("bg.jpg")center fixed;
     background-size: cover;
 }
+
+#text-info{
+    word-wrap: normal;
+}
+
 
 @media
 only screen and (max-width: 760px),
@@ -494,3 +495,211 @@ Label the data
 .modal-5 a.active:hover:after {
     display: none;
 }
+#canvas {
+    border: 1px solid black;
+    position: absolute;
+    z-index: 10000;
+}
+
+
+#flake {
+    color: #fff;
+    position: absolute;
+    font-size: 25px;
+    top: -50px;
+}
+img.bg {
+    /* Set rules to fill background */
+    min-height: 100%;
+    min-width: 1024px;
+
+    /* Set up proportionate scaling */
+    width: 100%;
+    height: auto;
+
+    /* Set up positioning */
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#page h1 {
+    font-family: 'Lobster', cursive;
+    color: #FFF;
+    font-size: 90px;
+    text-align: center;
+    line-height: 95px;
+    font-weight: normal;
+    margin-top: 50px;
+    text-shadow: 5px 5px 5px #000;
+}
+
+@media screen and (max-width: 1024px) { /* Specific to this particular image */
+    img.bg {
+        left: 50%;
+        margin-left: -512px;   /* 50% */
+    }
+}
+
+
+html, body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    padding: 0;
+    margin: 0;
+    color: #333;
+}
+
+
+.bar {
+    background-color: #111;
+    color: #f0f0f0;
+    box-shadow: 0px 0px 2px #333;
+    line-height: 25px;
+    padding: 0px 20px;
+    opacity: 0.7;
+}
+
+.bar:hover {
+    opacity: 1;
+}
+
+.bar a {
+    color: #DDD;
+}
+
+.bar a:hover {
+    color: #FFFFFF;
+}
+
+/*a { color: #FFFFFF; text-decoration: none; }*/
+
+/*a:hover { color: #CCC; }*/
+
+#canvas {
+    border: 1px solid black;
+    position: absolute;
+    z-index: 10000;
+}
+
+
+#flake {
+    color: #fff;
+    position: absolute;
+    font-size: 25px;
+    top: -50px;
+}
+
+#page {
+    position: relative;
+}
+
+.jPaginate{
+    height:34px;
+    position:relative;
+    color:#a5a5a5;
+    font-size:small;
+    width:100%;
+}
+.jPaginate a{
+    line-height:15px;
+    height:18px;
+    cursor:pointer;
+    padding:2px 5px;
+    margin:2px;
+    float:left;
+}
+.jPag-control-back{
+    position:absolute;
+    left:0px;
+}
+.jPag-control-front{
+    position:absolute;
+    top:0px;
+}
+.jPaginate span{
+    cursor:pointer;
+}
+ul.jPag-pages{
+    float:left;
+    list-style-type:none;
+    margin:0px 0px 0px 0px;
+    padding:0px;
+}
+ul.jPag-pages li{
+    display:inline;
+    float:left;
+    padding:0px;
+    margin:0px;
+}
+ul.jPag-pages li a{
+    float:left;
+    padding:2px 5px;
+}
+span.jPag-current{
+    cursor:default;
+    font-weight:normal;
+    line-height:15px;
+    height:18px;
+    padding:2px 5px;
+    margin:2px;
+    float:left;
+}
+ul.jPag-pages li span.jPag-previous,
+ul.jPag-pages li span.jPag-next,
+span.jPag-sprevious,
+span.jPag-snext,
+ul.jPag-pages li span.jPag-previous-img,
+ul.jPag-pages li span.jPag-next-img,
+span.jPag-sprevious-img,
+span.jPag-snext-img{
+    height:22px;
+    margin:2px;
+    float:left;
+    line-height:18px;
+}
+
+ul.jPag-pages li span.jPag-previous,
+ul.jPag-pages li span.jPag-previous-img{
+    margin:2px 0px 2px 2px;
+    font-size:12px;
+    font-weight:bold;
+    width:10px;
+
+}
+ul.jPag-pages li span.jPag-next,
+ul.jPag-pages li span.jPag-next-img{
+    margin:2px 2px 2px 0px;
+    font-size:12px;
+    font-weight:bold;
+    width:10px;
+}
+span.jPag-sprevious,
+span.jPag-sprevious-img{
+    margin:2px 0px 2px 2px;
+    font-size:18px;
+    width:15px;
+    text-align:right;
+}
+span.jPag-snext,
+span.jPag-snext-img{
+    margin:2px 2px 2px 0px;
+    font-size:18px;
+    width:15px;
+    text-align:right;
+}
+ul.jPag-pages li span.jPag-previous-img{
+    background:transparent url(../images/previous.png) no-repeat center right;
+}
+ul.jPag-pages li span.jPag-next-img{
+    background:transparent url(../images/next.png) no-repeat center left;
+}
+span.jPag-sprevious-img{
+    background:transparent url(../images/sprevious.png) no-repeat center right;
+}
+span.jPag-snext-img{
+    background:transparent url(../images/snext.png) no-repeat center left;
+}
+
+

@@ -17,10 +17,12 @@
 <html>
 <head>
     <meta name="google-site-verification" content="-MD2HrSDLr7JKWM9xnqx5OiPG7Uio20xytJhg4iICqc" />
-    <title>Чоловічий одяг та аксесуари купити у інтернет-магазині джентльмен.in.ua</title>
+    <title>Чоловічий одяг та аксесуари купити у інтернет-магазині джентльмен.in.uk</title>
     <link href="https://fonts.googleapis.com/css?family=Merriweather|Pattaya|Playfair+Display+SC" rel="stylesheet">
 
     <script  src="<c:url value="/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
+    <script  src="<c:url value="/resources/js/snow.js" />" type="text/javascript"></script>
+    <link href='http://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <%--<link href="<c:url value="/resources/css/jquery.fancybox.css" />" rel="stylesheet">--%>
 
 
@@ -39,8 +41,12 @@
     </script>
 </head>
 <body>
+<div id = "flake">&#10052;</div>
 <jsp:include page="header.jsp" />
 <div class="container">
+    <div id="page">
+        <h1>Свято наближається...!</h1>
+    </div>
     <section>
         <div class="row index">
             <c:forEach var="obj" items="${allData}">
@@ -49,7 +55,7 @@
                 <table id="table-index">
                     <tr>
                         <th>
-                            <c:if test="${lang == 'ua'}">
+                            <c:if test="${lang == 'uk'}">
 
                                 <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.uaText}-${obj.firm}-${obj.color.uaText}/${obj.id}"><img  src="<c:url value="/images/${obj.id}_0.jpg"/>" alt="${obj.firm} ${obj.category.uaText} ${obj.color.uaText}"/></a>
                             </c:if>
@@ -63,13 +69,15 @@
                     <tr>
                         <td>
                             <div class="priceInfo">
-                                <c:if test="${lang == 'ua'}">
+                                <p>
+                                <c:if test="${lang == 'uk'}">
 
-                                    <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.uaText}-${obj.firm}-${obj.color.uaText}/${obj.id}"><c:out value="${obj.firm}"/></a>
+                                    <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.uaText}-${obj.firm}-${obj.color.uaText}/${obj.id}"><c:out value="${obj.category.uaText} ${obj.firm}"/></a>
                                 </c:if>
                                 <c:if test="${lang == 'ru'}">
-                                    <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.ruText}-${obj.firm}-${obj.color.ruText}/${obj.id}"><c:out value="${obj.firm}"/></a>
+                                    <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.ruText}-${obj.firm}-${obj.color.ruText}/${obj.id}"><c:out value="${obj.category.ruText} ${obj.firm}"/></a>
                                 </c:if>
+                                </p>
                                 <p class="price">${obj.price}грн.</p>
 
                                 <form:form id="baskForm${obj.id}" action="addToBasket" method="POST">

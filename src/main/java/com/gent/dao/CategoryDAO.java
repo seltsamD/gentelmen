@@ -79,5 +79,21 @@ public class CategoryDAO implements ICategoryDAO {
                 .list();
     }
 
+    @Override
+    public int getCategoryByName(String lang, String text) {
+       int id = 0;
+
+        if(lang.equals("uk"))
+            id = (Integer) sessionFactory.getCurrentSession().createQuery("select id from Category where uaText LIKE :text")
+                .setParameter("text", text)
+                .uniqueResult();
+        else
+        if(lang.equals("ru"))
+            id = (Integer) sessionFactory.getCurrentSession().createQuery("select id from Category where ruText LIKE :text")
+                    .setParameter("text", text)
+                    .uniqueResult();
+        return id;
+    }
+
 
 }

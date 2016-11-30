@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static com.gent.config.ChangeLang.redirectWithLang;
+
 /**
  * Created by daria on 19.10.2016.
  */
@@ -207,12 +209,13 @@ public class BasketController {
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
 
         model.addAttribute("order", new Orders());
-        return "shoppingCart";
+        return redirectWithLang(request, "shoppingCart");
 
     }
 
-    @RequestMapping(value = "deleteFromBasket")
-    public String deleteFrom(@CookieValue(value = "backetGentl", required = false) Cookie myCookie, HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/{lang}/shopping-cart/deleteFromBasket")
+    public String deleteFrom(@CookieValue(value = "backetGentl", required = false) Cookie myCookie,
+                             ModelMap model, HttpServletRequest request, HttpServletResponse response) {
         int count = 0;
         if (myCookie != null) {
             String cook = null;
@@ -261,6 +264,10 @@ public class BasketController {
                 }
             }
         }
-        return "shopping-cart";
+        model.addAttribute("countInBasket", count);
+        model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
+
+        model.addAttribute("order", new Orders());
+        return redirectWithLang(request, "shoppingCart");
     }
 }

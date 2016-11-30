@@ -15,5 +15,5 @@ public interface IColorDAO {
     boolean addColor(Color color);
     void updateColor(Color color);
     void deleteColor(int id);
-
+    int getColoryByName(String lang, String text);
 }

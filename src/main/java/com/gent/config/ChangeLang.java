@@ -15,8 +15,8 @@ public class ChangeLang {
             String url2 = null;
             StringBuffer ur = request.getRequestURL();
 
-            if(request.getParameter("lang").equals("ua"))
-                url2 = ur.substring(0, ur.indexOf("/", 10))+"/ua/"+url;
+            if(request.getParameter("lang").equals("uk"))
+                url2 = ur.substring(0, ur.indexOf("/", 10))+"/uk/"+url;
             else
             if(request.getParameter("lang").equals("ru"))
                 url2 = ur.substring(0, ur.indexOf("/", 10))+"/ru/"+url;

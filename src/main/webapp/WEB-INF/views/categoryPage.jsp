@@ -63,7 +63,7 @@
                     <div class="col-sm-10">
                         <form:select path="parent"  class="col-sm-10">
 
-                            <c:if test="${lang == 'ua'}">
+                            <c:if test="${lang == 'uk'}">
                                 <form:options  items="${parentList}" itemValue="id" itemLabel="uaText"/>
                             </c:if>
                             <c:if test="${lang == 'ru'}">

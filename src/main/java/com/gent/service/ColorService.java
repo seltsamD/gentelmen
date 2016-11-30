@@ -44,5 +44,10 @@ public class ColorService implements IColorService {
         colorDAO.deleteColor(id);
     }
 
+    @Override
+    public int getColoryByName(String lang, String text) {
+        return colorDAO.getColoryByName(lang, text);
+    }
+
 
 }

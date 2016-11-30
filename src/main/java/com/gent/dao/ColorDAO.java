@@ -57,6 +57,20 @@ public class ColorDAO implements IColorDAO {
                 .setParameter("id", id).executeUpdate();
     }
 
+    @Override
+    public int getColoryByName(String lang, String text) {
+        int id = 0;
 
+        if(lang.equals("uk"))
+            id = (Integer) sessionFactory.getCurrentSession().createQuery("select id from Color where uaText LIKE :text")
+                    .setParameter("text", text)
+                    .uniqueResult();
+        else
+        if(lang.equals("ru"))
+            id = (Integer) sessionFactory.getCurrentSession().createQuery("select id from Color where ruText LIKE :text")
+                    .setParameter("text", text)
+                    .uniqueResult();
+        return id;
+    }
 
 }

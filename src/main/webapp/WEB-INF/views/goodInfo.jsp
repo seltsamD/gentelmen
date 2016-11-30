@@ -15,7 +15,7 @@
 <html>
 <head>
     <meta name="google-site-verification" content="-MD2HrSDLr7JKWM9xnqx5OiPG7Uio20xytJhg4iICqc" />
-    <c:if test="${lang == 'ua'}">
+    <c:if test="${lang == 'uk'}">
         <title>Купити <c:out value="${info.category.uaText}"/> <c:out value="${info.firm}"/> <c:out value="${info.color.uaText}"/> у інтернет-магазині джентльмен.in.ua</title>
     </c:if>
     <c:if test="${lang == 'ru'}">
@@ -49,7 +49,7 @@
 
             <div class="row infoGood">
 
-                <div class="col-xs-4 top">
+                <div class="col-xs-5 top">
                     <div id="carousel-example-generic" class="carousel slide maxiImg" data-ride="carousel">
                         <!-- Indicators -->
                         <ol class="carousel-indicators">
@@ -84,7 +84,7 @@
                 <div class="col-xs-6">
 
                     <div class="whiteBack">
-                        <c:if test="${lang == 'ua'}">
+                        <c:if test="${lang == 'uk'}">
                             <h1><c:out value="${info.category.uaText}"/> <c:out value="${info.firm}"/></h1>
                         </c:if>
                         <c:if test="${lang == 'ru'}">
@@ -119,7 +119,7 @@
 
                         <tr>
                             <th> <spring:message code="good.color"/>: </th>
-                            <c:if test="${lang == 'ua'}">
+                            <c:if test="${lang == 'uk'}">
                                 <td><c:out value="${info.color.uaText}"/> </td>
                             </c:if>
                             <c:if test="${lang == 'ru'}">
@@ -128,7 +128,7 @@
                         </tr>
                         <tr>
                             <th> <spring:message code="good.type"/>: </th>
-                                <c:if test="${lang == 'ua'}">
+                                <c:if test="${lang == 'uk'}">
                                     <td><c:out value="${info.category.uaText}"/> </td>
                                 </c:if>
                                 <c:if test="${lang == 'ru'}">
@@ -143,11 +143,11 @@
                         <tr><td colspan="2"><hr></td> </tr>
                         <tr>
 
-                            <c:if test="${lang == 'ua'}">
-                                <td colspan="2" class="bottomTd"> <c:out value="${info.uaText}"/> </td>
+                            <c:if test="${lang == 'uk'}">
+                                <td colspan="2" id="text-info" class="bottomTd"><p><c:out value="${info.uaText}"/></p></td>
                             </c:if>
-                            <c:if test="${lang == 'ru'}">
-                                <td colspan="2" class="bottomTd"> <c:out value="${info.ruText}"/> </td>
+                            <c:if test="${lang == 'ru'}"><p>
+                                <td colspan="2" id="text-info" class="bottomTd"><p><c:out value="${info.ruText}"/></p</td>
                             </c:if>
                         </tr>
                     </table>

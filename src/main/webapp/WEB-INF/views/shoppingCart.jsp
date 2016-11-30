@@ -74,7 +74,7 @@
             </td>
             <td> <c:out value="${obj.id}"/> </td>
             <td> <c:out value="${obj.firm}"/> </td>
-            <c:if test="${lang == 'ua'}">
+            <c:if test="${lang == 'uk'}">
                 <td> <c:out value="${obj.color.uaText}"/> </td>
                 <td> <c:out value="${obj.category.uaText}"/> </td>
             </c:if>
@@ -84,7 +84,7 @@
             </c:if>
              <td> <c:out value="${obj.price}"/> грн.</td>
             <td> <c:out value="${obj.size}"/> </td>
-            <c:if test="${lang == 'ua'}">
+            <c:if test="${lang == 'uk'}">
                 <td> <c:out value="${obj.uaText}"/> </td>
             </c:if>
             <c:if test="${lang == 'ru'}">
@@ -92,7 +92,7 @@
             </c:if>
 
 
-            <td class="right_table"> <a href="${pageContext.request.contextPath}/deleteFromBasket?id=${obj.id}"><spring:message code="basket.delete"/> </a>
+            <td class="right_table"> <a href="${pageContext.request.contextPath}/${lang}/shopping-cart/deleteFromBasket?id=${obj.id}"><spring:message code="basket.delete"/> </a>
             </td>
         </tr>
         <tr><td colspan="9"><hr></td> </tr>
