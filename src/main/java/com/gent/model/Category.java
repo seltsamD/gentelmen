@@ -68,4 +68,31 @@ public class Category implements Serializable {
     public void setLevel(int level) {
         this.level = level;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Category category = (Category) o;
+
+        if (id != category.id) return false;
+        if (parent != category.parent) return false;
+        if (level != category.level) return false;
+        if (ruText != null ? !ruText.equals(category.ruText) : category.ruText != null) return false;
+        return uaText != null ? uaText.equals(category.uaText) : category.uaText == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (ruText != null ? ruText.hashCode() : 0);
+        result = 31 * result + (uaText != null ? uaText.hashCode() : 0);
+        result = 31 * result + parent;
+        result = 31 * result + level;
+        return result;
+    }
+
+
 }

@@ -8,14 +8,14 @@
   Time: 13:39
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:include page="header.jsp" />
-<jsp:include page="footer.jsp" />
+
+
 <script  src="<c:url value="/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
 <script   src="<c:url value="${pageContext.request.contextPath}/resources/js/jquery.maskedinput.min.js" />" type="text/javascript"></script>
 
 
 <body>
-
+<jsp:include page="header.jsp" />
 <div class="container">
     <div class="main">
         <div class="whiteBack">
@@ -102,6 +102,9 @@
 </c:if>
 </div>
 </div>
+
+<jsp:include page="footer.jsp" />
+</body>
 <style>
     @media
     only screen and (max-width: 760px),
@@ -139,7 +142,6 @@
         }
     }
 </style>
-</body>
 <script type="text/javascript">
     jQuery(function($){
         $("#phone").mask("(999) 999-99-99");

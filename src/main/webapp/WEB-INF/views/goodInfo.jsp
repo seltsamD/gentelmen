@@ -21,7 +21,7 @@
     <c:if test="${lang == 'ru'}">
         <title>Купить <c:out value="${info.category.ruText}"/> <c:out value="${info.firm}"/> <c:out value="${info.color.ruText}"/> в интернет-магазине джентльмен.in.ua</title>
     </c:if>
-
+    <link rel="alternate" hreflang="${alternativeLang}" href="${alternativeHref}"/>
     <script  src="<c:url value="${pageContext.request.contextPath}/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
 
     <script   src="<c:url value="/resources/js/app.js" />" type="text/javascript"></script>
@@ -81,14 +81,14 @@
                     </div>
                 </div>
 
-                <div class="col-xs-6">
+                <div  itemscope itemtype="http://schema.org/Product" class="col-xs-6">
 
                     <div class="whiteBack">
                         <c:if test="${lang == 'uk'}">
-                            <h1><c:out value="${info.category.uaText}"/> <c:out value="${info.firm}"/></h1>
+                            <h1 itemprop="name"><c:out value="${info.category.uaText}"/> <c:out value="${info.firm}"/></h1>
                         </c:if>
                         <c:if test="${lang == 'ru'}">
-                            <h1><c:out value="${info.category.ruText}"/> <c:out value="${info.firm}"/>></h1>
+                            <h1 itemprop="name"><c:out value="${info.category.ruText}"/> <c:out value="${info.firm}"/></h1>
                         </c:if>
 
                     </div>
@@ -96,7 +96,12 @@
 
 
                         <tr>
-                            <td class="price" colspan="2"> <h3><spring:message code="good.price"/>: <c:out value="${info.price}"/> грн.</h3></td>
+                            <td class="price" colspan="2"> <h3 itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                <spring:message code="good.price"/>:
+
+                                <span itemprop="price" content="<c:out value="${info.price}"/>"><c:out value="${info.price}"/></span>
+                                <span itemprop="priceCurrency" content="UAH">грн</span>
+                            </h3></td>
                         </tr>
                         <tr>
                             <td>
@@ -108,9 +113,9 @@
                         </tr>
 
                         <tr><td colspan="2"><hr></td> </tr>
-                        <tr>
+                        <tr itemprop="brand" itemscope itemtype="http://schema.org/Brand">
                             <th><spring:message code="good.firm"/></th>
-                            <td><c:out value="${info.firm}"/></td>
+                            <td itemprop="name"><c:out value="${info.firm}"/></td>
                         </tr>
                         <tr>
                             <th> Код: </th>
@@ -120,10 +125,10 @@
                         <tr>
                             <th> <spring:message code="good.color"/>: </th>
                             <c:if test="${lang == 'uk'}">
-                                <td><c:out value="${info.color.uaText}"/> </td>
+                                <td itemprop="color"><c:out value="${info.color.uaText}"/> </td>
                             </c:if>
                             <c:if test="${lang == 'ru'}">
-                                <td> <c:out value="${info.color.ruText}"/> </td>
+                                <td itemprop="color"> <c:out value="${info.color.ruText}"/> </td>
                             </c:if>
                         </tr>
                         <tr>
@@ -144,10 +149,10 @@
                         <tr>
 
                             <c:if test="${lang == 'uk'}">
-                                <td colspan="2" id="text-info" class="bottomTd"><p><c:out value="${info.uaText}"/></p></td>
+                                <td colspan="2" id="text-info" class="bottomTd"><p itemprop="description"><c:out value="${info.uaText}"/></p></td>
                             </c:if>
                             <c:if test="${lang == 'ru'}"><p>
-                                <td colspan="2" id="text-info" class="bottomTd"><p><c:out value="${info.ruText}"/></p</td>
+                                <td colspan="2" id="text-info" class="bottomTd"><p itemprop="description"><c:out value="${info.ruText}"/></p</td>
                             </c:if>
                         </tr>
                     </table>

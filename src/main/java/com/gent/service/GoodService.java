@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by daria on 30.09.2016.
@@ -88,6 +89,19 @@ public class GoodService implements IGoodService {
         return goodDAO.getGoodBetweenPrice(price1, price2);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        GoodService that = (GoodService) o;
 
+        return goodDAO != null ? goodDAO.equals(that.goodDAO) : that.goodDAO == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return goodDAO != null ? goodDAO.hashCode() : 0;
+    }
 }

@@ -6,8 +6,8 @@
   Time: 18:32
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:include page="header.jsp" />
-<jsp:include page="footer.jsp" />
+
+
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -25,12 +25,19 @@
 <html>
 <head>
     <meta name="google-site-verification" content="-MD2HrSDLr7JKWM9xnqx5OiPG7Uio20xytJhg4iICqc" />
-    <title>Інтернет-магазин чоловічого одягу та аксесуарів джентльмен.in.ua</title>
+    <c:if test="${lang == 'uk'}">
+        <title>Про нас інтернет-магазині джентльмен.in.ua</title>
+    </c:if>
+    <c:if test="${lang == 'ru'}">
+        <title>О нас интернет-магазине джентльмен.in.ua</title>
+    </c:if>
     <link href="https://fonts.googleapis.com/css?family=Merriweather|Pattaya|Playfair+Display+SC" rel="stylesheet">
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
-    </head>
+    <link rel="alternate" hreflang="${alternativeLang}" href="${alternativeHref}"/>
+</head>
 <body>
+<jsp:include page="header.jsp" />
 <div class="container">
     <div class="topBox">
     <c:if test="${lang == 'uk'}">
@@ -55,6 +62,6 @@
     </c:if>
         </div>
 </div>
-<jsp:include page="header.jsp" />
+<jsp:include page="footer.jsp" />
 </body>
 </html>

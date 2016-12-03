@@ -13,7 +13,13 @@
 
 <html>
 <head>
-    <title>Каталог чоловічого одягу та аксесуарів у інтернет-магазині джентльмен.in.ua</title>
+    <c:if test="${lang == 'uk'}">
+        <title> Каталог чоловічого одягу та аксесуарів у інтернет-магазині джентльмен.in.ua</title>
+    </c:if>
+    <c:if test="${lang == 'ru'}">
+        <title>Каталог мужской одежды и аксессуаров в интернет-магазине джентльмен.in.ua</title>
+    </c:if>
+    <link rel="alternate" hreflang="${alternativeLang}" href="${alternativeHref}"/>
 
     <link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/css/jquery.fancybox.css" />" rel="stylesheet">
@@ -89,11 +95,11 @@
                                         <c:forEach var="cat" items="${categories}">
 
                                             <c:if test="${lang == 'uk'}">
-                                                <li><a href="${pageContext.request.contextPath}/${lang}/каталог/${cat.uaText}">
+                                                <li> <a href="#" onclick="setParam('cat_id', ${cat.id});">
                                                 <c:out value="${cat.uaText}"/>
                                             </c:if>
                                             <c:if test="${lang == 'ru'}">
-                                                <li><a href="${pageContext.request.contextPath}/${lang}/каталог/${cat.ruText}">
+                                                <li> <a href="#" onclick="setParam('cat_id', ${cat.id});">
                                                 <c:out value="${cat.ruText}"/>
                                             </c:if>
 
@@ -119,14 +125,16 @@
                                     <c:forEach var="color" items="${colors}">
 
                                             <c:if test="${lang == 'uk'}">
-                                                <li><a href="${pageContext.request.contextPath}/${lang}/каталог/колір/${color.uaText}">
-                                                <c:out value="${color.uaText}"/>
+                                                <li>
+                                               <a href="#" onclick="setParam('color_id', ${color.id});">
+                                                <c:out value="${color.uaText}"/></a>
+                                                </li>
                                             </c:if>
                                             <c:if test="${lang == 'ru'}">
-                                                <li><a href="${pageContext.request.contextPath}/${lang}/каталог/цвет/${color.ruText}">
+                                                <li> <a href="#" onclick="setParam('color_id', ${color.id});">
                                                 <c:out value="${color.ruText}"/>
-                                            </c:if>
-                                       </a> </li>
+                                                </a> </li>   </c:if>
+
                                     </c:forEach>
                                 </ul>
                             </div>
@@ -145,11 +153,11 @@
                                 <p id="amount"></p>
                                 <div id="slider-range"></div>
 
-                                <form:form id="priceRange" action="/${lang}/catalogue/priceRange" method="POST">
+                                <%--<form:form id="priceRange" action="/${lang}/catalogue/priceRange" method="POST">--%>
                                     <input type="hidden" id="amount1" name="amount1" />
                                     <input type="hidden" id="amount2" name="amount2" />
-                                    <input type="submit" name="submit_range" value="<spring:message code="search"/>"/>
-                               </form:form>
+                                    <input type="button" onclick="setParamPrice();" name="submit_range" value="<spring:message code="search"/>"/>
+                               <%--</form:form>--%>
 
                             </div>
                         </div>
@@ -174,14 +182,15 @@
                             <div class="col-xs-6 col-sm-3 back" >
                                 <div class="infoBox">
                                     <table id="table-index">
+                                        <tbody itemscope itemtype="http://schema.org/Product">
                                         <tr>
                                             <th>
                                                 <c:if test="${lang == 'uk'}">
 
-                                                    <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.uaText}-${obj.firm}-${obj.color.uaText}/${obj.id}"><img  src="<c:url value="/images/${obj.id}_0.jpg"/>" alt="${obj.firm} ${obj.category.uaText} ${obj.color.uaText}"/></a>
+                                                    <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.uaText}-${obj.firm}-${obj.color.uaText}/${obj.id}"><img itemprop="image"  src="<c:url value="/images/${obj.id}_0.jpg"/>" alt="${obj.firm} ${obj.category.uaText} ${obj.color.uaText}"/></a>
                                                 </c:if>
                                                 <c:if test="${lang == 'ru'}">
-                                                    <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.ruText}-${obj.firm}-${obj.color.ruText}/${obj.id}"><img  src="<c:url value="/images/${obj.id}_0.jpg"/>" alt="${obj.firm} ${obj.category.ruText} ${obj.color.ruText}"/></a>
+                                                    <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.ruText}-${obj.firm}-${obj.color.ruText}/${obj.id}"><img itemprop="image"  src="<c:url value="/images/${obj.id}_0.jpg"/>" alt="${obj.firm} ${obj.category.ruText} ${obj.color.ruText}"/></a>
                                                 </c:if>
 
 
@@ -190,14 +199,28 @@
                                         <tr>
                                             <td>
                                                 <div class="priceInfo">
-                                                    <c:if test="${lang == 'uk'}">
+                                                    <p>
+                                                        <c:if test="${lang == 'uk'}">
 
-                                                        <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.uaText}-${obj.firm}-${obj.color.uaText}/${obj.id}"><c:out value="${obj.category.uaText} ${obj.firm}"/></a>
-                                                    </c:if>
-                                                    <c:if test="${lang == 'ru'}">
-                                                        <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.ruText}-${obj.firm}-${obj.color.ruText}/${obj.id}"><c:out value="${obj.category.ruText} ${obj.firm}"/></a>
-                                                    </c:if>
-                                                    <p class="price">${obj.price}грн.</p>
+                                                            <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.uaText}-${obj.firm}-${obj.color.uaText}/${obj.id}">
+                                                                <span itemprop="name"><c:out value="${obj.category.uaText}"/></span>
+                                                <span itemprop="brand" itemscope itemtype="http://schema.org/Brand">
+                                                    <span itemprop="name"><c:out value="${obj.firm}"/> </span>
+                                                </span>
+                                                            </a>
+                                                        </c:if>
+                                                        <c:if test="${lang == 'ru'}">
+                                                            <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.ruText}-${obj.firm}-${obj.color.ruText}/${obj.id}">
+                                                                <span itemprop="name"><c:out value="${obj.category.ruText}"/></span>
+                                                <span itemprop="brand" itemscope itemtype="http://schema.org/Brand">
+                                                    <span itemprop="name"><c:out value="${obj.firm}"/> </span>
+                                                </span>
+                                                            </a>
+                                                        </c:if>
+                                                    </p>
+                                       <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                           <p itemprop="price"  class="price">${obj.price}грн.</p>
+                                       </span>
 
                                                     <form:form id="baskForm${obj.id}" action="addToBasket" method="POST">
                                                         <input type="hidden" name="goodId" value="${obj.id}">
@@ -206,7 +229,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-
+                                        </tbody>
                                     </table>
                                         <%--<div class="infoBox">--%>
 
@@ -305,18 +328,32 @@
     }
 </style>
 
-<script src="<c:url value="/resources/js/paginate.js"/>" type="text/javascript"></script>
+
 <script type="text/javascript">
-    $(function() {
-        $("#demo2").paginate({
-            count: ${count},
-            start: 1,
-            display: 5,
-            border: false,
-            text_color: '#888',
-            background_color: '#EEE',
-            text_hover_color: 'black',
-            background_hover_color: '#CFCFCF'
-        });
-    });
-    </script>
+   function setParam(type, id){
+       var url = window.location.href;
+       if(url.indexOf('?') == -1)
+               url = url + '?'+type+'=' + id;
+       else
+       if(url.indexOf('?') >= 0)
+           url = url + '&'+type+'=' + id;
+
+       window.location.href = url;
+
+   }
+
+   function setParamPrice(){
+       var url = window.location.href;
+       var price1 = document.getElementById('amount1').value;
+       var price2 = document.getElementById('amount2').value;
+       if(url.indexOf('?') == -1)
+           url = url + '?price1=' + price1+'&price2='+price2;
+       else
+       if(url.indexOf('?') >= 0)
+           url = url + '&price1=' + price1+'&price2='+price2;
+
+       window.location.href = url;
+
+   }
+
+</script>

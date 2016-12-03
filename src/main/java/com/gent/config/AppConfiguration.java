@@ -36,7 +36,9 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
 //    public static String urlReadImages = "file:///C:/jav/i18n/goods/";
 
     public static String urlWriteImages = "/home/daria/gent/goods/";
-    public static String urlReadImages = "/home/daria/gent/goods/";
+    public static String urlReadImages = "file:///home/daria/gent/goods/";
+
+
     @Bean
     public MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
@@ -81,7 +83,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
     @Bean
     public LocaleResolver localeResolver(){
         CookieLocaleResolver resolver = new CookieLocaleResolver();
-        resolver.setDefaultLocale(new Locale("ua"));
+        resolver.setDefaultLocale(new Locale("uk"));
         resolver.setCookieName("localeCookie");
         resolver.setCookieMaxAge(-1);
 
@@ -101,6 +103,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
         //        registry.addResourceHandler("/images/**").addResourceLocations("file:///home/daria/gent/goods/");
        registry.addResourceHandler("/images/**").addResourceLocations(urlReadImages);
+       registry.addResourceHandler("/robots.txt").addResourceLocations("/WEB-INF/resources/info/robots.txt");
     }
 
 

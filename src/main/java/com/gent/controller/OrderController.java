@@ -31,6 +31,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import static com.gent.config.ChangeLang.redirectWithLang;
+
 /**
  * Created by daria on 15.10.2016.
  */
@@ -146,7 +148,7 @@ public class OrderController {
     public String order(ModelMap model, HttpServletRequest request, @PathVariable("lang") String lang) {
     model.addAttribute("lang", lang);
 
-        return "myorders";
+        return redirectWithLang(request, "myorders", model, "myorders");
 
     }
 
@@ -167,7 +169,8 @@ public class OrderController {
         if(locale.getLanguage().equals( "ru"))
             model.addAttribute("lang_code", "ruText");
 
-        return "myorders";
+        return redirectWithLang(request, "myorders", model, "myorders");
+
 
     }
 }

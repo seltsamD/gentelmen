@@ -2,10 +2,14 @@ package com.gent.model;
 
 
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Created by daria on 30.09.2016.
@@ -13,7 +17,7 @@ import java.io.Serializable;
 @Entity
 @Table(name= "tbGood")
 public class Good implements Serializable{
-    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name="id")
@@ -136,18 +140,85 @@ public class Good implements Serializable{
         this.uaText = uaText;
     }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        Good good = (Good) o;
+//
+//        if (id != good.id) return false;
+//        if (price != good.price) return false;
+//        if (countImg != good.countImg) return false;
+//        if (status != good.status) return false;
+//        if (!firm.equals(good.firm)) return false;
+//        if (color.getId() != (good.color.getId())) return false;
+//        if (category.getId() != (good.category.getId())) return false;
+//        return uaText.equals(good.uaText);
+//
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        int result = id;
+//        result = 31 * result + firm.hashCode();
+//        result = 31 * result + color.getId();
+//        result = 31 * result + category.getId();
+//        result = 31 * result + price;
+//        result = 31 * result + size.hashCode();
+//        result = 31 * result + countImg;
+//        return result;
+//    }
+//
     @Override
     public String toString() {
         return "Good{" +
                 "id=" + id +
                 ", firm='" + firm + '\'' +
-                ", color=" + color.getRuText() +
-                ", category=" + category.getRuText() +
+                ", color=" + color +
+                ", category=" + category +
                 ", price=" + price +
                 ", size='" + size + '\'' +
                 ", countImg=" + countImg +
                 ", status=" + status +
-                ", description=" + ruText + " "+ uaText +
+                ", ruText='" + ruText + '\'' +
+                ", uaText='" + uaText + '\'' +
                 '}';
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Good good = (Good) o;
+
+        if (id != good.id) return false;
+        if (price != good.price) return false;
+        if (countImg != good.countImg) return false;
+        if (status != good.status) return false;
+        if (!firm.equals(good.firm)) return false;
+        if (!color.equals(good.color)) return false;
+        if (!category.equals(good.category)) return false;
+        if (!size.equals(good.size)) return false;
+        if (!ruText.equals(good.ruText)) return false;
+        return uaText.equals(good.uaText);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + firm.hashCode();
+        result = 31 * result + color.hashCode();
+        result = 31 * result + category.hashCode();
+        result = 31 * result + price;
+        result = 31 * result + size.hashCode();
+        result = 31 * result + countImg;
+        result = 31 * result + status;
+        result = 31 * result + ruText.hashCode();
+        result = 31 * result + uaText.hashCode();
+        return result;
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by daria on 30.09.2016.
@@ -88,7 +89,7 @@ public class GoodDAO implements IGoodDAO {
     @Override
     public List<Good> getGoodsByCategorie(int catId) {
 
-        List<Good> list = sessionFactory.getCurrentSession().createQuery("select p FROM Good  p where p.status = 1 and p.category.id = :id ORDER BY p.id ")
+        List<Good> list = sessionFactory.getCurrentSession().createQuery("FROM Good  p where p.status = 1 and p.category.id = :id ORDER BY p.id ")
                 .setParameter("id", catId)
                 .list();
 
@@ -97,7 +98,7 @@ public class GoodDAO implements IGoodDAO {
 
     @Override
     public List<Good> getGoodsByColor(int colorId) {
-        List<Good> list = sessionFactory.getCurrentSession().createQuery("select p FROM Good  p where p.status = 1 and p.color.id = :id ORDER BY p.id ")
+        List<Good> list = sessionFactory.getCurrentSession().createQuery("FROM Good  p where p.status = 1 and p.color.id = :id ORDER BY p.id ")
                 .setParameter("id", colorId)
                 .list();
 
@@ -132,7 +133,19 @@ public class GoodDAO implements IGoodDAO {
         return list;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        GoodDAO goodDAO = (GoodDAO) o;
 
+        return sessionFactory != null ? sessionFactory.equals(goodDAO.sessionFactory) : goodDAO.sessionFactory == null;
 
+    }
+
+    @Override
+    public int hashCode() {
+        return sessionFactory != null ? sessionFactory.hashCode() : 0;
+    }
 }

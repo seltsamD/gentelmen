@@ -171,9 +171,9 @@
                         </c:if>
 
 
-                        <td class="right_table"> <a href="${pageContext.request.contextPath}/${lang}//admin/deleteGood?id=${obj.id}"><spring:message code="form.delete"/> </a> |
-                            <a href="${pageContext.request.contextPath}/${lang}//admin/goodById?id=${obj.id}"><spring:message code="form.edit"/></a> |
-                            <a href="${pageContext.request.contextPath}/${lang}//admin/goodInfo?id=${obj.id}"><spring:message code="form.info"/></a>
+                        <td class="right_table"> <a href="${pageContext.request.contextPath}/${lang}/admin/deleteGood?id=${obj.id}"><spring:message code="form.delete"/> </a> |
+                            <a href="${pageContext.request.contextPath}/${lang}/admin/goodById?id=${obj.id}"><spring:message code="form.edit"/></a> |
+                            <a href="${pageContext.request.contextPath}/${lang}/admin/goodInfo?id=${obj.id}"><spring:message code="form.info"/></a>
                         </td>
                     </tr>
                     <tr><td colspan="9"><hr></td> </tr>

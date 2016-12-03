@@ -49,7 +49,7 @@ public class CategoryController {
                 model.addAttribute(new Category());
             }
             setPageData(model);
-           return redirectWithLang(request, "admin/categoryPage"); //call function for redirect
+           return redirectWithLang(request, "admin/categoryPage", model, "admin/categoryPage"); //call function for redirect
         }
 
         @RequestMapping(value="/{lang}/admin/categoryById")
@@ -58,7 +58,7 @@ public class CategoryController {
             Category category = categoryService.getCategoryById(pid);
             setPageData(model);
             model.addAttribute(category);
-            return redirectWithLang(request, "admin/categoryPage"); //call function for redirect
+            return redirectWithLang(request, "admin/categoryPage", model, "admin/categoryPage"); //call function for redirect
         }
         @RequestMapping(value="/{lang}/admin/updateCategory", method = RequestMethod.POST)
         public String updateCategory(@ModelAttribute("category") @Valid Category category, BindingResult result,
@@ -69,7 +69,7 @@ public class CategoryController {
                 model.addAttribute("msg", getMsg("updated", request));
             }
             setPageData(model);
-            return redirectWithLang(request, "admin/categoryPage"); //call function for redirect
+            return redirectWithLang(request, "admin/categoryPage", model, "admin/categoryPage"); //call function for redirect
         }
         @RequestMapping(value="/{lang}/admin/deleteCategory")
         public String deleteCategory(ModelMap model, HttpServletRequest request) {
@@ -84,7 +84,7 @@ public class CategoryController {
 
             model.addAttribute(new Category());
             setPageData(model);
-            return redirectWithLang(request, "admin/categoryPage"); //call function for redirect
+            return redirectWithLang(request, "admin/categoryPage", model, "admin/categoryPage"); //call function for redirect
         }
         private void setPageData(ModelMap model) {
             model.addAttribute("allData", categoryService.getAllCategory());

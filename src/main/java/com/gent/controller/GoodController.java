@@ -136,8 +136,8 @@ public class GoodController {
                 try {
                     String cat = URLEncoder.encode(good.getCategory().getUaText(), "UTF-8");
                     String col = URLEncoder.encode(good.getColor().getUaText(), "UTF-8");
-                    String parent = URLEncoder.encode( categoryService.getCategoryById(good.getCategory().getParent()).getUaText(), "UTF-8");
-                    url2 = "/uk/"+parent+"/"+cat+"/"+good.getFirm()+"/"+col+"/"+good.getId();
+                    String parent = URLEncoder.encode(categoryService.getCategoryById(good.getCategory().getParent()).getUaText(), "UTF-8");
+                    url2 = "good/"+cat+"-"+good.getFirm()+"-"+col+"/"+good.getId();
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -149,7 +149,7 @@ public class GoodController {
                     String cat = URLEncoder.encode(good.getCategory().getRuText(), "UTF-8");
                     String col = URLEncoder.encode(good.getColor().getRuText(), "UTF-8");
                     String parent = URLEncoder.encode( categoryService.getCategoryById(good.getCategory().getParent()).getUaText(), "UTF-8");
-                    url2 = "/ru/"+parent+"/"+cat+"/"+good.getFirm()+"/"+col+"/"+good.getId();
+                    url2 = "good/"+cat+"-"+good.getFirm()+"-"+col+"/"+good.getId();
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -160,10 +160,10 @@ public class GoodController {
                 e.printStackTrace();
             }
 
-            redirectWithLang(request, "index"); //call function for redirect
+            return redirectWithLang(request, url2, model, url2); //call function for redirect
 
         }
-        return "goodInfo";
+       return redirectWithLang(request, "goodInfo", model, "goodInfo"); //call function for redirect
     }
 
     @RequestMapping(value="/{lang}/admin/goodInfo")
@@ -263,7 +263,11 @@ public class GoodController {
         model.addAttribute("colors", colorService.getAllColor());
         model.addAttribute("categories", categoryService.getSecondLevel());
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage()); //get locale language
-        model.addAttribute("lang_code", LocaleContextHolder.getLocale().getLanguage()+"Text"); //get locale language
+        if(LocaleContextHolder.getLocale().getLanguage().equals("uk"))
+            model.addAttribute("lang_code","uaText");
+        else
+        if(LocaleContextHolder.getLocale().getLanguage().equals("ru"))
+            model.addAttribute("lang_code","ruText");
     }
     private String getMsg(String key, HttpServletRequest request) {
         return messageSource.getMessage(key, null, localeResolver.resolveLocale(request));

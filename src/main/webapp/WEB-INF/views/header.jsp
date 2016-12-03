@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Merriweather|Pattaya|Playfair+Display+SC" rel="stylesheet">
         <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
         <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
+        <script  src="<c:url value="/resources/js/snow.js" />" type="text/javascript"></script>
 <header>
     <nav>
 
@@ -65,5 +66,6 @@
         </div>
     </nav>
 
-    <div id = "flake">&#10052;</div>
+
 </header>
+<div id = "flake">&#10052;</div>

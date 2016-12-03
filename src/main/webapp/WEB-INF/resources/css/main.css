@@ -1,6 +1,14 @@
-/*#myCarousel img{*/
-    /*width: 100%;*/
-/*}*/
+.back{
+    background-size: 200px 340px;
+    height: 340px;
+    width: 200px;
+    font-size: 14pt;
+    margin: 5px;
+    border-style: double;
+    background-color: #F4D8B9;
+    text-align: center;
+    font-family: 'Pattaya', sans-serif;
+}
 #cartDiv{
     min-width: 40px;
 }
@@ -35,7 +43,7 @@ a{
 }
 
 .right_table{
-    font-size: 12px;
+    font-size: 10pt;
     color: #6e3400; !important;
 }
 .carousel,
@@ -133,7 +141,7 @@ a{
     padding-left: 20px;
 }
 #table-info th{
-    font-size: 13px;
+    font-size: 10pt;
     font-weight: lighter;
     color: #6e3400;
     padding-left: 20px;
@@ -154,12 +162,13 @@ a{
     border-bottom: 1px solid #2f0311;
     background-color: #ffffff;
     padding: 20px;
+    font-size: 10pt;
     word-wrap: normal;
 }
 #box-table-b th
 {
     text-align: center;
-    font-size: 13px;
+    font-size: 10pt;
     font-weight: normal;
     padding: 8px;
     background: #F4D8B9;
@@ -218,18 +227,7 @@ a{
     text-align: center; !important;
     vertical-align: bottom; !important;
 }
-.back{
-    /*background: url("ram5.png");*/
-    background-size: 200px 340px; padding-top: 60px;
-    height: 340px;
-    width: 200px;
-    font-size: 14pt;
-    margin: 5px;
-    border-style: double;
-    background-color: #F4D8B9;
-    text-align: center;
-    font-family: 'Pattaya', sans-serif; !important;
-}
+
 .priceInfo{
  margin-left: auto;
     margin-right: auto;
@@ -269,6 +267,7 @@ body{
 
     background: url("bg.jpg")center fixed;
     background-size: cover;
+  font-size: 10pt;;
 }
 
 #text-info{
@@ -544,7 +543,7 @@ img.bg {
 
 html, body {
     font-family: Helvetica, Arial, sans-serif;
-    font-size: 12px;
+    font-size: 10pt;
     line-height: 16px;
     padding: 0;
     margin: 0;

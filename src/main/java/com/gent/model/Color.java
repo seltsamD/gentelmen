@@ -51,4 +51,25 @@ public class Color implements Serializable{
     public void setUaText(String uaText) {
         this.uaText = uaText;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Color color = (Color) o;
+
+        if (id != color.id) return false;
+        if (ruText != null ? !ruText.equals(color.ruText) : color.ruText != null) return false;
+        return uaText != null ? uaText.equals(color.uaText) : color.uaText == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (ruText != null ? ruText.hashCode() : 0);
+        result = 31 * result + (uaText != null ? uaText.hashCode() : 0);
+        return result;
+    }
 }

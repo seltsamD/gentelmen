@@ -209,7 +209,7 @@ public class BasketController {
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
 
         model.addAttribute("order", new Orders());
-        return redirectWithLang(request, "shoppingCart");
+        return redirectWithLang(request, "shoppingCart", model, "shoppingCart");
 
     }
 
@@ -268,6 +268,6 @@ public class BasketController {
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
 
         model.addAttribute("order", new Orders());
-        return redirectWithLang(request, "shoppingCart");
+        return redirectWithLang(request, "shoppingCart", model, "shoppingCart");
     }
 }

@@ -1,6 +1,8 @@
 package com.gent.controller;
 
 import com.gent.model.Good;
+import com.gent.service.ICategoryService;
+import com.gent.service.IColorService;
 import com.gent.service.IGoodService;
 import com.gent.service.IOrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,13 +40,15 @@ public class HomeController {
     private IGoodService goodService;
     @Autowired
     private IOrdersService orderService;
-
+    @Autowired
+    private IColorService colorService;
+    @Autowired
+    private ICategoryService categoryService;
 
     @RequestMapping(value = {"index","/{lang}/index", "/"}, method = RequestMethod.GET)
     public String show (HttpServletRequest request, ModelMap model, HttpServletResponse response){
 
-        //get current locale
-        Locale locale = LocaleContextHolder.getLocale();
+
 
         List<Good> list =goodService.getRandomGoods();
         for (Good good : list) {
@@ -54,10 +58,15 @@ public class HomeController {
         model.addAttribute("allData", list ); //get 10 random goods
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage()); //get locale language
         model.addAttribute("countInBasket", getCountBasket(request)); //count good in the basket
+        model.addAttribute("maxPrice", goodService.getMaxPrice());
+        model.addAttribute("minPrice", goodService.getMinPrice());
 
-//        redirectWithLang(request, "index"); //call function for redirect
+        model.addAttribute("colors", colorService.getAllColor());
+        model.addAttribute("categories", categoryService.getSecondLevel());
 
-        return redirectWithLang(request, "index"); //call function for redirect
+        StringBuffer ur = request.getRequestURL();
+
+        return redirectWithLang(request, "index", model, "index"); //call function for redirect
     }
 
 
@@ -96,7 +105,9 @@ public class HomeController {
     @RequestMapping(value = "/{lang}/about", method = RequestMethod.GET)
     public String aboutPageLang (HttpServletRequest request, ModelMap model) {
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
-        return redirectWithLang(request, "about");
+        StringBuffer ur = request.getRequestURL();
+
+        return redirectWithLang(request, "about", model, "about");
     }
 
 }
