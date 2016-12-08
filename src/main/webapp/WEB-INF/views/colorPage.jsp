@@ -93,8 +93,8 @@
                     <td> <c:out value="${obj.ruText}"/> </td>
 
                     <td>
-                        <a href="${pageContext.request.contextPath}/admin/deleteColor?id=${obj.id}"><spring:message code="form.delete"/></a> |
-                        <a href="${pageContext.request.contextPath}/admin/colorById?id=${obj.id}"><spring:message code="form.edit"/></a>
+                        <a href="${pageContext.request.contextPath}/${lang}/admin/deleteColor?id=${obj.id}"><spring:message code="form.delete"/></a> |
+                        <a href="${pageContext.request.contextPath}/${lang}/admin/colorById?id=${obj.id}"><spring:message code="form.edit"/></a>
                     </td>
                 </tr>
                 <tr><td colspan="4"><hr></td> </tr>

@@ -1,5 +1,6 @@
 package com.gent.controller;
 
+import com.gent.model.Category;
 import com.gent.model.Good;
 import com.gent.service.ICategoryService;
 import com.gent.service.IColorService;
@@ -53,6 +54,10 @@ public class HomeController {
         List<Good> list =goodService.getRandomGoods();
         for (Good good : list) {
             good.setFirm(good.getFirm().replace(' ', '-'));
+            Category cat = good.getCategory();
+            cat.setUaText(cat.getUaText().replace(' ', '-'));
+            cat.setRuText(cat.getRuText().replace(' ', '-'));
+            good.setCategory(cat);
 
         }
         model.addAttribute("allData", list ); //get 10 random goods
@@ -62,8 +67,8 @@ public class HomeController {
         model.addAttribute("minPrice", goodService.getMinPrice());
 
         model.addAttribute("colors", colorService.getAllColor());
-        model.addAttribute("categories", categoryService.getSecondLevel());
-
+        model.addAttribute("secondLevel", categoryService.getSecondLevel());
+        model.addAttribute("firstLevel", categoryService.getFirstLevel());
         StringBuffer ur = request.getRequestURL();
 
         return redirectWithLang(request, "index", model, "index"); //call function for redirect

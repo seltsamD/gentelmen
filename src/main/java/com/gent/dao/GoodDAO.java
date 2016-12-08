@@ -134,18 +134,13 @@ public class GoodDAO implements IGoodDAO {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public List<Good> getGoodsBySize(String size) {
+        List<Good> list = sessionFactory.getCurrentSession().createQuery("FROM Good  p where p.status = 1 and p.size LIKE :size ORDER BY p.id ")
+                .setParameter("size", size)
+                .list();
 
-        GoodDAO goodDAO = (GoodDAO) o;
-
-        return sessionFactory != null ? sessionFactory.equals(goodDAO.sessionFactory) : goodDAO.sessionFactory == null;
-
+        return list;
     }
 
-    @Override
-    public int hashCode() {
-        return sessionFactory != null ? sessionFactory.hashCode() : 0;
-    }
+
 }

@@ -231,7 +231,7 @@ public class GoodController {
         else
         System.out.println(result.getAllErrors().toString());
         setPageData(model);
-        return "redirect:goodform";
+        return "goodform";
     }
     @RequestMapping(value="/{lang}/admin/deleteGood")
     public String deleteGood(ModelMap model, HttpServletRequest request) {
@@ -254,7 +254,7 @@ public class GoodController {
         model.addAttribute(new Good());
         model.addAttribute("msg", getMsg("deleted", request));
         setPageData(model);
-        return "redirect:goodform";
+        return "goodform";
     }
     private void setPageData(ModelMap model) {
         model.addAttribute("allData", goodService.getAllGoods());

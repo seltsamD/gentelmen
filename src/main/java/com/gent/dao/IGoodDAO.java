@@ -23,6 +23,6 @@ public interface IGoodDAO {
     int getMinPrice();
     int getMaxPrice();
     List<Good> getGoodBetweenPrice(int price1, int price2);
-
+    List<Good> getGoodsBySize(String size);
 
 }

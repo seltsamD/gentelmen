@@ -32,12 +32,12 @@ import java.util.Locale;
 @EnableWebMvc
 public class AppConfiguration extends WebMvcConfigurerAdapter {
 
-//    public static String urlWriteImages = "C:/jav/i18n/goods/";
-//    public static String urlReadImages = "file:///C:/jav/i18n/goods/";
+    public static String urlWriteImages = "C:/jav/i18n/goods/";
+    public static String urlReadImages = "file:///C:/jav/i18n/goods/";
 
-    public static String urlWriteImages = "/home/daria/gent/goods/";
-    public static String urlReadImages = "file:///home/daria/gent/goods/";
-
+//    public static String urlWriteImages = "/home/daria/gent/goods/";
+//    public static String urlReadImages = "file:///home/daria/gent/goods/";
+//
 
     @Bean
     public MultipartConfigElement multipartConfigElement() {
@@ -103,7 +103,8 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
         //        registry.addResourceHandler("/images/**").addResourceLocations("file:///home/daria/gent/goods/");
        registry.addResourceHandler("/images/**").addResourceLocations(urlReadImages);
-       registry.addResourceHandler("/robots.txt").addResourceLocations("/WEB-INF/resources/info/robots.txt");
+       registry.addResourceHandler("/robots.txt").addResourceLocations(urlReadImages+"/robots.txt");
+        registry.addResourceHandler("/sitemap.xml").addResourceLocations(urlReadImages+"/sitemap.xml");
     }
 
 

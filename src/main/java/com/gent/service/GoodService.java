@@ -90,18 +90,8 @@ public class GoodService implements IGoodService {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        GoodService that = (GoodService) o;
-
-        return goodDAO != null ? goodDAO.equals(that.goodDAO) : that.goodDAO == null;
-
+    public List<Good> getGoodsBySize(String size) {
+        return goodDAO.getGoodsBySize(size);
     }
 
-    @Override
-    public int hashCode() {
-        return goodDAO != null ? goodDAO.hashCode() : 0;
-    }
 }

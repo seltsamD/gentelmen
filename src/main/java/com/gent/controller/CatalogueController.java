@@ -1,5 +1,6 @@
 package com.gent.controller;
 
+import com.gent.model.Category;
 import com.gent.model.Good;
 import com.gent.service.ICategoryService;
 import com.gent.service.IColorService;
@@ -35,33 +36,100 @@ public class CatalogueController {
     @Autowired
     private IGoodService goodService;
 
+    public <T> List<T> union(List<T> list1, List<T> list2) {
+        Set<T> set = new HashSet<T>();
 
+        set.addAll(list1);
+        set.addAll(list2);
+
+        return new ArrayList<T>(set);
+    }
 
     @RequestMapping(value="/{lang}/каталог" , method = RequestMethod.GET )
     public String gullCatalogue(ModelMap model, HttpServletRequest request,
                                 @PathVariable("lang") String lang) throws UnsupportedEncodingException {
         List<Good> listGood = goodService.getAllGoods();
+        for (Good good : listGood) {
+            good.setFirm(good.getFirm().replace(' ', '-'));
+            Category cat = good.getCategory();
+            cat.setUaText(cat.getUaText().replace(' ', '-'));
+            cat.setRuText(cat.getRuText().replace(' ', '-'));
+            good.setCategory(cat);
+
+        }
         setPageData(model);
 
         int page = 0;
         if(request.getParameter("page") != null)
             page = Integer.valueOf(request.getParameter("page"));
 
+
+        boolean cat = false;
+        boolean color = false;
+        boolean price = false;
+        boolean siz = false;
+
         String cat_id =  request.getParameter("cat_id");
         String color_id =  request.getParameter("color_id");
         String price1 = request.getParameter("price1");
         String price2 = request.getParameter("price2");
+        String size = request.getParameter("size");
 
 
-        if(cat_id != null) {
-            List<Good> listByCat = goodService.getGoodsByCategorie(Integer.valueOf(request.getParameter("cat_id")));
-            listGood.retainAll(listByCat);
-        }
+        Map<String, String[]> parameters = request.getParameterMap();
 
-        if(color_id != null)
+        for (String key : parameters.keySet())
         {
-            List<Good> listByColor = goodService.getGoodsByColor(Integer.valueOf(request.getParameter("color_id")));
-            listGood.retainAll(listByColor);
+            String[] value = parameters.get(key);
+
+            if (value != null && value.length > 0) {
+                if (key.equals("color_id")) {
+                    String[] value1 = parameters.get("color_id");
+                    for (String aValue : value1) {
+                        if (!color) {
+                            List<Good> listByColor = goodService.getGoodsByColor(Integer.valueOf(aValue));
+                            listGood.retainAll(listByColor);
+                            color = true;
+                        } else {
+                            List<Good> listByColor = goodService.getGoodsByColor(Integer.valueOf(aValue));
+                            listGood.addAll(listByColor);
+                        }
+
+                    }
+
+
+                }
+                else
+                if (key.equals("cat_id")) {
+                    String[] value1 = parameters.get("cat_id");
+                    for (String aValue : value1) {
+                        if (!cat) {
+                            List<Good> listByCat = goodService.getGoodsByCategorie(Integer.valueOf(aValue));
+                            listGood.retainAll(listByCat);
+                            cat = true;
+                        } else {
+                            List<Good> listByCat = goodService.getGoodsByCategorie(Integer.valueOf(aValue));
+                            listGood.addAll(listByCat);
+                        }
+
+                    }
+                }
+                else
+                if (key.equals("size")) {
+                    String[] value1 = parameters.get("cat_id");
+                    for (String aValue : value1)
+                    if(!cat) {
+                        List<Good> listBySize = goodService.getGoodsBySize(aValue);
+                        listGood.retainAll(listBySize);
+                        siz = true;
+                    }
+                    else {
+                        List<Good> listBySize = goodService.getGoodsBySize(aValue);
+                        listGood.addAll(listBySize);
+                    }
+                }
+
+            }
         }
 
         if(price1 != null && price2 != null)
@@ -70,10 +138,18 @@ public class CatalogueController {
             listGood.retainAll(listByPrice);
         }
 
+
+
+
         model.addAttribute("page",page);
         model.addAttribute("count", listGood.size());
         model.addAttribute("allData", listGood);
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
+        if (lang.equals("uk"))
+            model.addAttribute("title", "Купити одяг та аксесуари, краватки та костюми у інтернет-магазині джентльмен.in.ua");
+        else
+        if (lang.equals("ru"))
+            model.addAttribute("title", "Купить одежду и аксессуары, галстуки и пиджаки в интернет-магазине джентльмен.in.ua");
 
         if(request.getParameter("lang") != null)
             return redirectWithLang(request, URLEncoder.encode("каталог", "UTF-8"), model, "каталог");
@@ -85,12 +161,10 @@ public class CatalogueController {
                                   @PathVariable("lang") String lang,
                                   @PathVariable("category") String category) throws UnsupportedEncodingException {
         String altURL = "";
+        List<Good> listGood = null;
+        int catId = 0;
         if(request.getParameter("lang") != null) {
-
-            int catId = 0;
-            List<Good> listGood = null;
-
-            setPageData(model);
+          setPageData(model);
 
             String url2 = "";
 
@@ -111,14 +185,13 @@ public class CatalogueController {
                 altURL = URLEncoder.encode("каталог", "UTF-8")+ "/"+ URLEncoder.encode(categoryService.getCategoryById(catId).getUaText(), "UTF-8");
             }
 
-            model.addAttribute("count", listGood.size());
-            model.addAttribute("allData", listGood);
-            return redirectWithLang(request, url2, model, altURL); //call function for redirect
+
+
         }
         else {
-            int catId = 0;
+
             catId  = categoryService.getCategoryByName(lang, category);
-            List<Good> listGood = goodService.getGoodsByCategorie(catId);
+            listGood = goodService.getGoodsByCategorie(catId);
             model.addAttribute("count", listGood.size());
             model.addAttribute("allData", listGood);
             setPageData(model);
@@ -129,7 +202,64 @@ public class CatalogueController {
             if (lang.equals("ru"))
                 altURL = URLEncoder.encode("каталог", "UTF-8")+ "/"+ URLEncoder.encode(categoryService.getCategoryById(catId).getUaText(), "UTF-8");
 
+
+
+
         }
+
+
+        if (lang.equals("uk"))
+            model.addAttribute("title", "Купити "+categoryService.getCategoryById(catId).getUaText()+" у інтернет-магазині джентльмен.in.ua");
+        else
+        if (lang.equals("ru"))
+            model.addAttribute("title", "Купить "+categoryService.getCategoryById(catId).getRuText()+" в интернет-магазине джентльмен.in.ua");
+
+
+
+
+        ArrayList<String> listSize = new ArrayList<String>();
+        listSize.add(listGood.get(0).getSize());
+
+        for(Good item: listGood)
+            if(listSize.indexOf(item.getSize()) == -1)
+                listSize.add(item.getSize());
+
+        model.addAttribute("listSize", listSize);
+        model.addAttribute("countSize", listSize.size());
+        for (Good good : listGood) {
+            good.setFirm(good.getFirm().replace(' ', '-'));
+            Category cat = good.getCategory();
+            cat.setUaText(cat.getUaText().replace(' ', '-'));
+            cat.setRuText(cat.getRuText().replace(' ', '-'));
+            good.setCategory(cat);
+        }
+
+
+        String color_id =  request.getParameter("color_id");
+        String price1 = request.getParameter("price1");
+        String price2 = request.getParameter("price2");
+        String size = request.getParameter("size");
+
+        if(color_id != null)
+        {
+            List<Good> listByColor = goodService.getGoodsByColor(Integer.valueOf(request.getParameter("color_id")));
+            listGood.retainAll(listByColor);
+        }
+
+        if(price1 != null && price2 != null)
+        {
+            List<Good> listByPrice = goodService.getGoodBetweenPrice(Integer.valueOf(price1),Integer.valueOf(price2));
+            listGood.retainAll(listByPrice);
+        }
+
+        if(size != null)
+        {
+            List<Good> listBySize = goodService.getGoodsBySize(size);
+            listGood.retainAll(listBySize);
+        }
+
+        model.addAttribute("count", listGood.size());
+        model.addAttribute("allData", listGood);
         return redirectWithLang(request, "catalogue", model, altURL); //call function for redirect
     }
 
@@ -138,15 +268,11 @@ public class CatalogueController {
                                @PathVariable("lang") String lang,
                                @PathVariable("color") String color) throws UnsupportedEncodingException {
         String altURL = "";
+        int colorId = 0;
+        List<Good> listGood = null;
+        String url2 = "";
         if(request.getParameter("lang") != null) {
-
-            int colorId = 0;
-            List<Good> listGood = null;
-
-            setPageData(model);
-
-            String url2 = "";
-
+           setPageData(model);
             String cat;
             if (request.getParameter("lang").equals("uk")){
                 colorId  = colorService.getColoryByName("ru", color);
@@ -164,40 +290,96 @@ public class CatalogueController {
                 altURL = URLEncoder.encode("каталог", "UTF-8")+ "/"+ URLEncoder.encode(colorService.getColorById(colorId).getUaText(), "UTF-8");
             }
 
-
-            model.addAttribute("count", listGood.size());
-            model.addAttribute("allData", listGood);
-            return redirectWithLang(request, url2, model, altURL); //call function for redirect
         }
         else {
-            int catId = 0;
-            catId  = colorService.getColoryByName(lang, color);
-            List<Good> listGood = goodService.getGoodsByColor(catId);
-            model.addAttribute("count", listGood.size());
-            model.addAttribute("allData", listGood);
+            colorId  = colorService.getColoryByName(lang, color);
+            listGood = goodService.getGoodsByColor(colorId);
+
             setPageData(model);
             if (lang.equals("ru"))
-                altURL = URLEncoder.encode("каталог", "UTF-8")+ "/"+  URLEncoder.encode("колір", "UTF-8")+ "/"+ URLEncoder.encode(colorService.getColorById(catId).getUaText(), "UTF-8");
+                altURL = URLEncoder.encode("каталог", "UTF-8")+ "/"+  URLEncoder.encode("колір", "UTF-8")+ "/"+ URLEncoder.encode(colorService.getColorById(colorId).getUaText(), "UTF-8");
             else
             if (lang.equals("uk"))
-                altURL = URLEncoder.encode("каталог", "UTF-8")+ "/"+  URLEncoder.encode("цвет", "UTF-8")+ "/"+ URLEncoder.encode(colorService.getColorById(catId).getRuText(), "UTF-8");
+                altURL = URLEncoder.encode("каталог", "UTF-8")+ "/"+  URLEncoder.encode("цвет", "UTF-8")+ "/"+ URLEncoder.encode(colorService.getColorById(colorId).getRuText(), "UTF-8");
+
+            url2="catalogue";
+        }
+        if (lang.equals("uk"))
+            model.addAttribute("title", "Купити "+colorService.getColorById(colorId).getUaText()+"одяг та аксесуари, краватки та костюми у інтернет-магазині джентльмен.in.ua");
+        else
+        if (lang.equals("ru"))
+            model.addAttribute("title", "Купить "+colorService.getColorById(colorId).getRuText()+"одежду и аксессуары, галстуки и пиджаки в интернет-магазине джентльмен.in.ua");
+
+
+
+        for (Good good : listGood) {
+            good.setFirm(good.getFirm().replace(' ', '-'));
+            Category category = good.getCategory();
+            category.setUaText(category.getUaText().replace(' ', '-'));
+            category.setRuText(category.getRuText().replace(' ', '-'));
+            good.setCategory(category);
 
         }
 
+        String cat_id =  request.getParameter("cat_id");
+        String color_id =  request.getParameter("color_id");
+        String price1 = request.getParameter("price1");
+        String price2 = request.getParameter("price2");
+        String size = request.getParameter("size");
 
 
-//        if(request.getParameter("lang") != null)
-//            return redirectWithLang(request, URLEncoder.encode("каталог/цвет/"+color, "UTF-8"), model,"color");
-        return redirectWithLang(request, "catalogue", model, altURL);
+        if(cat_id != null) {
+            List<Good> listByCat = goodService.getGoodsByCategorie(Integer.valueOf(request.getParameter("cat_id")));
+            listGood.retainAll(listByCat);
+        }
+
+        if(color_id != null)
+        {
+            List<Good> listByColor = goodService.getGoodsByColor(Integer.valueOf(request.getParameter("color_id")));
+            listGood.retainAll(listByColor);
+        }
+
+        if(price1 != null && price2 != null)
+        {
+            List<Good> listByPrice = goodService.getGoodBetweenPrice(Integer.valueOf(price1),Integer.valueOf(price2));
+            listGood.retainAll(listByPrice);
+        }
+
+        if(size != null)
+        {
+            List<Good> listBySize = goodService.getGoodsBySize(size);
+            listGood.retainAll(listBySize);
+        }
+
+
+        model.addAttribute("count", listGood.size());
+        model.addAttribute("allData", listGood);
+        return redirectWithLang(request, url2, model, altURL); //call function for redirect
+
     }
     @RequestMapping(value="/{lang}/catalogue/priceRange" , method = RequestMethod.POST)
     public String getBetweenPrice(HttpServletRequest request, ModelMap model,
+                                  @PathVariable("lang") String lang,
                                   @RequestParam("amount1") String price1,  @RequestParam("amount2") String price2) {
 
         List<Good> listGood = goodService.getGoodBetweenPrice(Integer.valueOf(price1),Integer.valueOf(price2));
 
+        for (Good good : listGood) {
+            good.setFirm(good.getFirm().replace(' ', '-'));
+            Category category = good.getCategory();
+            category.setUaText(category.getUaText().replace(' ', '-'));
+            category.setRuText(category.getRuText().replace(' ', '-'));
+            good.setCategory(category);
+
+        }
         model.addAttribute("count", listGood.size());
         model.addAttribute("allData", listGood);
+        if (lang.equals("uk"))
+            model.addAttribute("title", "Купити одяг та аксесуари за ціною від "+price1+" до "+price2+" у інтернет-магазині джентльмен.in.ua");
+        else
+        if (lang.equals("ru"))
+            model.addAttribute("title", "Купить одежду и аксессуары, галстуки по цене от "+price1+" до "+price2+" гривен в интернет-магазине джентльмен.in.ua ");
+
         setPageData(model);
 
         return redirectWithLang(request, "catalogue", model, "catalogue");
@@ -210,6 +392,7 @@ public class CatalogueController {
         model.addAttribute("minPrice", goodService.getMinPrice());
 
         model.addAttribute("colors", colorService.getAllColor());
-        model.addAttribute("categories", categoryService.getSecondLevel());
+        model.addAttribute("secondLevel", categoryService.getSecondLevel());
+        model.addAttribute("firstLevel", categoryService.getFirstLevel());
     }
 }

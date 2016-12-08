@@ -36,7 +36,7 @@
     <script   src="<c:url value="/resources/js/jquery-ui.js" />" type="text/javascript"></script>
     <script   src="<c:url value="/resources/js/app.js" />" type="text/javascript"></script>
 
-
+    <meta name="yandex-verification" content="3d522b3830a4aa99" />
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -97,18 +97,38 @@
                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                     <div class="panel-body">
                         <ul>
-                            <c:forEach var="cat" items="${categories}">
+                            <c:forEach var="cat" items="${firstLevel}">
 
                                 <c:if test="${lang == 'uk'}">
-                                    <li> <a href="#" onclick="setParam('cat_id', ${cat.id});">
-                                    <c:out value="${cat.uaText}"/>
+                                    <li>
+                                        <c:out value="${cat.uaText}"/>
+                                        <ul>
+                                            <c:forEach var="secLevel" items="${secondLevel}">
+                                                <c:if test="${secLevel.parent == cat.id}">
+                                                <li><a href="${pageContext.request.contextPath}/${lang}/каталог/${secLevel.uaText}">
+                                                        <c:out value="${secLevel.uaText}"/></a></li>
+                                                    <%--<li> <a href="#" onclick="setParam('cat_id', ${secLevel.id});"><c:out value="${secLevel.uaText}"/></a></li>--%>
+                                                </c:if>
+                                            </c:forEach>
+                                        </ul>
+                                    </li>
                                 </c:if>
                                 <c:if test="${lang == 'ru'}">
-                                    <li> <a href="#" onclick="setParam('cat_id', ${cat.id});">
-                                    <c:out value="${cat.ruText}"/>
+                                    <li>
+                                        <c:out value="${cat.ruText}"/>
+                                        <ul>
+                                            <c:forEach var="secLevel" items="${secondLevel}">
+                                                <c:if test="${secLevel.parent == cat.id}">
+                                                    <li><a href="${pageContext.request.contextPath}/${lang}/каталог/${secLevel.ruText}">
+                                                        <c:out value="${secLevel.ruText}"/></a></li>
+                                                    <%--<li> <a href="#" onclick="setParam('cat_id', ${secLevel.id});"><c:out value="${secLevel.ruText}"/></a></li>--%>
+                                                </c:if>
+                                            </c:forEach>
+                                        </ul>
+                                    </li>
                                 </c:if>
 
-                                </a></li>
+
                             </c:forEach>
                         </ul>
 

@@ -13,12 +13,13 @@
 
 <html>
 <head>
-    <c:if test="${lang == 'uk'}">
-        <title> Каталог чоловічого одягу та аксесуарів у інтернет-магазині джентльмен.in.ua</title>
-    </c:if>
-    <c:if test="${lang == 'ru'}">
-        <title>Каталог мужской одежды и аксессуаров в интернет-магазине джентльмен.in.ua</title>
-    </c:if>
+    <%--<c:if test="${lang == 'uk'}">--%>
+        <%--<title> Каталог чоловічого одягу та аксесуарів у інтернет-магазині джентльмен.in.ua</title>--%>
+    <%--</c:if>--%>
+    <%--<c:if test="${lang == 'ru'}">--%>
+        <%--<title>Каталог мужской одежды и аксессуаров в интернет-магазине джентльмен.in.ua</title>--%>
+    <%--</c:if>--%>
+        <title>${title}</title>
     <link rel="alternate" hreflang="${alternativeLang}" href="${alternativeHref}"/>
 
     <link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
@@ -66,9 +67,10 @@
 <body>
 <jsp:include page="header.jsp" />
 <div class="container">
-    <div class="main">
+
 
         <div class="row">
+            <div class="main">
             <div class="col-sm-3">
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                     <div class="panel panel-default">
@@ -92,18 +94,38 @@
                         <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                             <div class="panel-body">
                                     <ul>
-                                        <c:forEach var="cat" items="${categories}">
+                                        <c:forEach var="cat" items="${firstLevel}">
 
                                             <c:if test="${lang == 'uk'}">
-                                                <li> <a href="#" onclick="setParam('cat_id', ${cat.id});">
-                                                <c:out value="${cat.uaText}"/>
+                                                <li>
+                                                    <c:out value="${cat.uaText}"/>
+                                                    <ul>
+                                                        <c:forEach var="secLevel" items="${secondLevel}">
+                                                            <c:if test="${secLevel.parent == cat.id}">
+                                                                <li><a href="${pageContext.request.contextPath}/${lang}/каталог/${secLevel.uaText}">
+                                                                    <c:out value="${secLevel.uaText}"/></a></li>
+                                                                <%--<li> <a href="#" onclick="setParam('cat_id', ${secLevel.id});"><c:out value="${secLevel.uaText}"/></a></li>--%>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </li>
                                             </c:if>
                                             <c:if test="${lang == 'ru'}">
-                                                <li> <a href="#" onclick="setParam('cat_id', ${cat.id});">
-                                                <c:out value="${cat.ruText}"/>
+                                                <li>
+                                                    <c:out value="${cat.ruText}"/>
+                                                    <ul>
+                                                        <c:forEach var="secLevel" items="${secondLevel}">
+                                                            <c:if test="${secLevel.parent == cat.id}">
+                                                                <li><a href="${pageContext.request.contextPath}/${lang}/каталог/${secLevel.ruText}">
+                                                                    <c:out value="${secLevel.ruText}"/></a></li>
+                                                                <%--<li> <a href="#" onclick="setParam('cat_id', ${secLevel.id});"><c:out value="${secLevel.ruText}"/></a></li>--%>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </li>
                                             </c:if>
 
-                                            </a></li>
+
                                         </c:forEach>
                                     </ul>
 
@@ -111,6 +133,30 @@
                              </div>
                         </div>
                     </div>
+                <c:if test="${countSize > 0}">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="heading5">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                                    <spring:message code="size"/>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading5">
+                            <div class="panel-body">
+                                <ul>
+                                    <c:forEach var="size" items="${listSize}">
+                                        <li>
+                                                <a href="#" onclick="setParam('size', '${size}');">
+                                                    <c:out value="${size}"/></a>
+                                        </li>
+
+                                    </c:forEach>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    </c:if>
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="headingTwo">
                             <h4 class="panel-title">
@@ -308,9 +354,9 @@
             </div>
         </div>
 
-</div>
-</div>
 
+</div>
+</div>
 </body>
 </html>
 <style>

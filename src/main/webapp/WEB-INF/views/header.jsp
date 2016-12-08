@@ -38,6 +38,8 @@
                             <li class="active"><a href="<c:url value="/${lang}/admin/colors"/>"><spring:message code="text.color"/></a></li>
                             <li class="active"><a href="<c:url value="/${lang}/admin/categories"/>"><spring:message code="text.category"/></a></li>
                             <li class="active"><a href="<c:url value="/${lang}/admin/orders"/>"><spring:message code="text.orders"/></a></li>
+                            <li class="active"><a href="<c:url value="/${lang}/admin/sitemap"/>">sitemap</a></li>
+
                         </c:if>
 
                         <c:if test="${pageContext.request.userPrincipal.name == null}">
