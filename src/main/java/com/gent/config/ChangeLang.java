@@ -14,14 +14,15 @@ public class ChangeLang {
         String url2 = null;
         StringBuffer ur = request.getRequestURL();
 
+        model.addAttribute("href", ur);
 
         if(LocaleContextHolder.getLocale().getLanguage().equals("uk")){
-            model.addAttribute("alternativeHref", ur.substring(0, ur.indexOf("/", 10))+"/ru/"+altURL);
+            model.addAttribute("alternativeHref",  ur.substring(0, ur.indexOf("/", 10))+"/ru/"+altURL);
             model.addAttribute("alternativeLang", "ru");
         }
         else
         if(LocaleContextHolder.getLocale().getLanguage().equals("ru")){
-            model.addAttribute("alternativeHref", ur.substring(0, ur.indexOf("/", 10))+"/uk/"+altURL);
+            model.addAttribute("alternativeHref",  ur.substring(0, ur.indexOf("/", 10))+"/uk/"+altURL);
             model.addAttribute("alternativeLang", "uk");
         }
         //if we have get-parametr lang then change URL

@@ -1,5 +1,6 @@
 package com.gent.config;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.MultipartConfigFactory;
 import org.springframework.context.MessageSource;
@@ -28,16 +29,16 @@ import java.util.Locale;
 
 @Configuration
 @ComponentScan("com.gent")
-@Import({DBConfig.class, SecurityApplicationInitializer.class, SecurityConfig.class})
+@Import({DBConfig.class, SecurityApplicationInitializer.class, SecurityConfig.class, MailConfiguration.class})
 @EnableWebMvc
 public class AppConfiguration extends WebMvcConfigurerAdapter {
 
-    public static String urlWriteImages = "C:/jav/i18n/goods/";
-    public static String urlReadImages = "file:///C:/jav/i18n/goods/";
+//    public static String urlWriteImages = "C:/jav/i18n/goods/";
+//    public static String urlReadImages = "file:///C:/jav/i18n/goods/";
 
-//    public static String urlWriteImages = "/home/daria/gent/goods/";
-//    public static String urlReadImages = "file:///home/daria/gent/goods/";
-//
+    public static String urlWriteImages = "/home/daria/gent/goods/";
+    public static String urlReadImages = "file:///home/daria/gent/goods/";
+
 
     @Bean
     public MultipartConfigElement multipartConfigElement() {
@@ -83,7 +84,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
     @Bean
     public LocaleResolver localeResolver(){
         CookieLocaleResolver resolver = new CookieLocaleResolver();
-        resolver.setDefaultLocale(new Locale("uk"));
+        resolver.setDefaultLocale(new Locale("ru"));
         resolver.setCookieName("localeCookie");
         resolver.setCookieMaxAge(-1);
 
@@ -105,7 +106,9 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
        registry.addResourceHandler("/images/**").addResourceLocations(urlReadImages);
        registry.addResourceHandler("/robots.txt").addResourceLocations(urlReadImages+"/robots.txt");
         registry.addResourceHandler("/sitemap.xml").addResourceLocations(urlReadImages+"/sitemap.xml");
+
     }
+
 
 
 }

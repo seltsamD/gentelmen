@@ -104,4 +104,16 @@ public class Orders implements Serializable{
     public void setStatus(int status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "Дата: " + date +
+                "\n Код заказа:" + id +
+                "\n Покупатель: " + name  +
+                ", номер телефона:" + phone +
+                "\n\n " + listGood.toString() +
+                " \n информация: " + info +
+                '}';
+    }
 }

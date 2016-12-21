@@ -174,15 +174,15 @@ public class Good implements Serializable{
     public String toString() {
         return "Good{" +
                 "id=" + id +
-                ", firm='" + firm + '\'' +
-                ", color=" + color +
-                ", category=" + category +
-                ", price=" + price +
-                ", size='" + size + '\'' +
-                ", countImg=" + countImg +
-                ", status=" + status +
-                ", ruText='" + ruText + '\'' +
-                ", uaText='" + uaText + '\'' +
+                ", firm= " + firm +
+                ", color= " + color.getUaText() +
+                ", category= "  + category.getUaText() +
+                ", price= " + price +
+                ", size= " + size +
+                ", countImg= " + countImg +
+                ", status= " + status +
+                ", \nruText= " + ruText +
+                ", \nuaText= " + uaText +
                 '}';
     }
 
@@ -199,8 +199,8 @@ public class Good implements Serializable{
         if (countImg != good.countImg) return false;
         if (status != good.status) return false;
         if (!firm.equals(good.firm)) return false;
-        if (!color.equals(good.color)) return false;
-        if (!category.equals(good.category)) return false;
+        if (color.getId() != good.color.getId()) return false;
+        if (category.getId() != good.category.getId()) return false;
         if (!size.equals(good.size)) return false;
         if (!ruText.equals(good.ruText)) return false;
         return uaText.equals(good.uaText);
@@ -211,12 +211,9 @@ public class Good implements Serializable{
     public int hashCode() {
         int result = id;
         result = 31 * result + firm.hashCode();
-        result = 31 * result + color.hashCode();
-        result = 31 * result + category.hashCode();
         result = 31 * result + price;
         result = 31 * result + size.hashCode();
         result = 31 * result + countImg;
-        result = 31 * result + status;
         result = 31 * result + ruText.hashCode();
         result = 31 * result + uaText.hashCode();
         return result;

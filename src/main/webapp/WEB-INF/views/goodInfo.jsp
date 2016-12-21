@@ -15,29 +15,20 @@
 <html>
 <head>
     <meta name="google-site-verification" content="-MD2HrSDLr7JKWM9xnqx5OiPG7Uio20xytJhg4iICqc" />
-    <c:if test="${lang == 'uk'}">
-        <title>Купити <c:out value="${info.category.uaText}"/> <c:out value="${info.firm}"/> <c:out value="${info.color.uaText}"/> у інтернет-магазині джентльмен.in.ua</title>
-    </c:if>
-    <c:if test="${lang == 'ru'}">
-        <title>Купить <c:out value="${info.category.ruText}"/> <c:out value="${info.firm}"/> <c:out value="${info.color.ruText}"/> в интернет-магазине джентльмен.in.ua</title>
-    </c:if>
+    <title>${title}</title>
+    <meta property="og:title" content="${title}"/>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="${href}" />
+    <meta property="og:image" content="http://xn--d1acac0agfd5bxg.in.ua/images/${info.id}_0.jpg" />
+    <meta property="og:site_name" content="джентльмен.in.ua" />
+    <meta name="description" content="${description}"/>
     <link rel="alternate" hreflang="${alternativeLang}" href="${alternativeHref}"/>
-    <script  src="<c:url value="${pageContext.request.contextPath}/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
 
-    <script   src="<c:url value="/resources/js/app.js" />" type="text/javascript"></script>
-    <link href="<c:url value="/resources/css/jquery.fancybox.css" />" rel="stylesheet">
-    <script   src="<c:url value="/resources/js/bootstrap.min.js" />" type="text/javascript"></script>
-    <script   src="<c:url value="/resources/js/jquery.fancybox.pack.js" />" type="text/javascript"></script>
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    <c:if test="${info.status == 0}">
+        <meta name="robots" content="noindex">
+    </c:if>
 
-        ga('create', 'UA-87631623-1', 'auto');
-        ga('send', 'pageview');
 
-    </script>
 </head>
 <body>
 <div class="container">
@@ -103,14 +94,23 @@
                                 <span itemprop="priceCurrency" content="UAH">грн</span>
                             </h3></td>
                         </tr>
-                        <tr>
-                            <td>
-                                <form:form id="baskForm${info.id}" action="addToBasket" method="POST" cssStyle="margin-left: 20px;">
-                                    <input type="hidden" name="goodId" value="${info.id}">
-                                    <input type="button" onclick="tobasket(${info.id})" value="<spring:message code="basket.add"/>" id="btn-basket-add" class="btn btn-success">
-                                </form:form>
-                            </td>
-                        </tr>
+                        <c:if test="${info.status == 1}">
+                            <tr>
+                                <td>
+                                    <form:form id="baskForm${info.id}" action="addToBasket" method="POST" cssStyle="margin-left: 20px;">
+                                        <input type="hidden" name="goodId" value="${info.id}">
+                                        <input type="button" onclick="tobasket(${info.id})" value="<spring:message code="basket.add"/>" id="btn-basket-add" class="btn btn-success">
+                                    </form:form>
+                                </td>
+                            </tr>
+                        </c:if>
+                        <c:if test="${info.status == 0}">
+                            <tr>
+                                <td>
+                                    <img src="<c:url value="/resources/images/sold.png"/>" >
+                                </td>
+                            </tr>
+                        </c:if>
 
                         <tr><td colspan="2"><hr></td> </tr>
                         <tr itemprop="brand" itemscope itemtype="http://schema.org/Brand">
@@ -149,10 +149,10 @@
                         <tr>
 
                             <c:if test="${lang == 'uk'}">
-                                <td colspan="2" id="text-info" class="bottomTd"><p itemprop="description"><c:out value="${info.uaText}"/></p></td>
+                                <xml><td colspan="2" id="text-info" class="bottomTd"><p itemprop="description"><c:out value="${info.uaText}"/></p></td></xml>
                             </c:if>
                             <c:if test="${lang == 'ru'}"><p>
-                                <td colspan="2" id="text-info" class="bottomTd"><p itemprop="description"><c:out value="${info.ruText}"/></p</td>
+                                <xml><td colspan="2" id="text-info" class="bottomTd"><p itemprop="description"><c:out value="${info.ruText}"/></p</td></xml>
                             </c:if>
                         </tr>
                     </table>
@@ -162,7 +162,22 @@
     </article>
 
 </div>
+<script  src="<c:url value="${pageContext.request.contextPath}/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
 
+<script   src="<c:url value="/resources/js/app.js" />" type="text/javascript"></script>
+<link href="<c:url value="/resources/css/jquery.fancybox.css" />" rel="stylesheet">
+<script   src="<c:url value="/resources/js/bootstrap.min.js" />" type="text/javascript"></script>
+<script   src="<c:url value="/resources/js/jquery.fancybox.pack.js" />" type="text/javascript"></script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-87631623-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
 <jsp:include page="footer.jsp" />
 </body>
 </html>

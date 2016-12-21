@@ -3,9 +3,14 @@ package com.gent.service;
 import com.gent.dao.IOrdersDAO;
 import com.gent.model.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +23,9 @@ public class OrderssService implements IOrdersService {
 
     @Autowired
     IOrdersDAO orderDAO;
+
+    @Autowired
+    JavaMailSenderImpl mailSender;
 
     @Override
     public List<Orders> getAllOrders() {
@@ -35,6 +43,20 @@ public class OrderssService implements IOrdersService {
         Date now = new Date();
         order.setDate(now);
         orderDAO.addOrders(order);
+
+
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper mailMsg = new MimeMessageHelper(mimeMessage);
+        try {
+            mailMsg.setFrom("gentlmen.in.ua@gmail.com");
+            mailMsg.setTo("nahod.dar@gmail.com");
+            mailMsg.setSubject("Новый заказ");
+            mailMsg.setText(order.toString());
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
+        mailSender.send(mimeMessage);
         return true;
     }
 

@@ -224,9 +224,8 @@ public class BasketController {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            if (cook.length() <= 3 )
-             {
-                 //remove cookie
+            if (cook.length() <= 3) {
+                //remove cookie
                 Cookie cookie = new Cookie("backetGentl", "");
                 cookie.setMaxAge(-1);
                 cookie.setPath("/");
@@ -262,8 +261,13 @@ public class BasketController {
                     cookie.setPath("/");
                     response.addCookie(cookie);
                 }
+                List<Good> outList = goodService.getListGoods(listBasket);
+                model.addAttribute("listBasket", outList);
+                 count = listBasket.size();
             }
+
         }
+
         model.addAttribute("countInBasket", count);
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
 

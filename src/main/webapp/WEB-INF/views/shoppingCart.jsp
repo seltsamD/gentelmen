@@ -27,7 +27,7 @@
         <c:if test="${countInBasket > 0}">
 
         <div class="topBox">
-            <form:form cssClass="form-horizontal" action="/newOrder" id="formNewOrder" method="post" commandName="order">
+            <form:form cssClass="form-horizontal" action="newOrder" id="formNewOrder" method="post" commandName="order">
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label"><spring:message code="order.name"/></label>
                     <div class="col-sm-10">

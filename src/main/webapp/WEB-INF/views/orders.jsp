@@ -9,11 +9,18 @@
   Time: 20:31
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:include page="header.jsp" />
-<jsp:include page="footer.jsp" />
+<link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/jquery.fancybox.css" />" rel="stylesheet">
+<script  src="<c:url value="/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
+
+<script   src="<c:url value="/resources/js/bootstrap.min.js" />" type="text/javascript"></script>
+
+<script   src="<c:url value="/resources/js/jquery.fancybox.pack.js" />" type="text/javascript"></script>
+<script   src="<c:url value="/resources/js/jquery-ui.js" />" type="text/javascript"></script>
+<script   src="<c:url value="/resources/js/app.js" />" type="text/javascript"></script>
 
 <body>
-
+<jsp:include page="header.jsp" />
 <div class="container">
     <div class="main">
         <div class="panel-group" id="accordion">
@@ -76,10 +83,10 @@
                                 <td> <c:out value="${obj.price}"/> </td>
                                 <td> <c:out value="${obj.size}"/> </td>
                                 <c:if test="${lang_code == 'uaText'}">
-                                    <td> <c:out value="${obj.description.uaText}"/> </td>
+                                    <td> <c:out value="${obj.uaText}"/> </td>
                                 </c:if>
                                 <c:if test="${lang_code == 'ruText'}">
-                                    <td> <c:out value="${obj.description.ruText}"/> </td>
+                                    <td> <c:out value="${obj.ruText}"/> </td>
                                 </c:if>
                             </tr>
                             <tr><td colspan="9"><hr></td> </tr>
@@ -87,6 +94,10 @@
                 </c:forEach>
                         </tbody>
                         </table>
+                        <div id="text${order.id}">
+                            <button class="btn-success" onclick="changeStatus(${order.id}) ">Виконано</button>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -97,6 +108,27 @@
 
     </div>
 
+<script type="text/javascript">
+    function changeStatus (id) {
+        $.ajax({
+            contentType : 'application/json; charset=utf-8',
+            type : "GET",
+            url : "/order/api/changeStatus",
+            dataType : 'json',
+
+            success : function(data) {
+                $('#text'.id).text("Статус змінено");
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {alert("ERROR:" + xhr.responseText+" - "+thrownError)},
+
+            done : function(e) {
+                console.log("DONE");
+            }
+        });
+    }
+
+</script>
 
 </body>
 </html>

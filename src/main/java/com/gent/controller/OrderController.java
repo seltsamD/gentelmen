@@ -54,7 +54,7 @@ public class OrderController {
 
     }
 
-    @RequestMapping(value="newOrder", method = RequestMethod.POST)
+    @RequestMapping(value="{lang}/newOrder", method = RequestMethod.POST)
     public String addColor( @ModelAttribute("order") @Valid Orders newOrder, BindingResult result,
                             ModelMap model, HttpServletRequest request, HttpServletResponse response) {
         if(!result.hasErrors()) {
@@ -111,11 +111,11 @@ public class OrderController {
 
         }
 
-
+        model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
         return "myorders";
     }
 
-    @RequestMapping(value="admin/orders")
+    @RequestMapping(value="{lang}/admin/orders")
     public String good(ModelMap model, HttpServletResponse response){
 
         List<Orders> listOrders = orderService.getAllOrders();
@@ -173,4 +173,6 @@ public class OrderController {
 
 
     }
+
+
 }

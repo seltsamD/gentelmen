@@ -133,14 +133,14 @@ public class SitemapController {
             rootElement.appendChild(url);
 
             Element loc = doc.createElement("loc");
-            loc.appendChild(doc.createTextNode("http://xn--d1acac0agfd5bxg.in.ua/uk/"+URLEncoder.encode("каталог","UTF-8")+"/"+URLEncoder.encode(item.getUaText(), "UTF-8")));
+            loc.appendChild(doc.createTextNode("http://xn--d1acac0agfd5bxg.in.ua/uk/"+URLEncoder.encode("каталог","UTF-8")+"/"+URLEncoder.encode(item.getUaText().replaceAll(" ","-"), "UTF-8")+"/"+item.getId()));
 
             url.appendChild(loc);
 
             Element xhtml = doc.createElement("xhtml:link");
             xhtml.setAttribute("rel", "alternate");
             xhtml.setAttribute("hreflang", "ru");
-            loc.appendChild(doc.createTextNode("http://xn--d1acac0agfd5bxg.in.ua/uk/"+URLEncoder.encode("каталог","UTF-8")+"/"+URLEncoder.encode(item.getRuText(), "UTF-8")));
+            xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/ru/"+URLEncoder.encode("каталог","UTF-8")+"/"+URLEncoder.encode(item.getRuText().replaceAll(" ","-"), "UTF-8")+"/"+item.getId());
             url.appendChild(xhtml);
         }
 
@@ -151,13 +151,13 @@ public class SitemapController {
             rootElement.appendChild(url);
 
             Element loc = doc.createElement("loc");
-            loc.appendChild(doc.createTextNode("http://xn--d1acac0agfd5bxg.in.ua/uk/good/"+URLEncoder.encode(item.getCategory().getUaText(), "UTF-8")+"-"+item.getFirm().replaceAll(" ","-")+"-"+URLEncoder.encode(item.getColor().getUaText(), "UTF-8")+"/"+item.getId()));
+            loc.appendChild(doc.createTextNode("http://xn--d1acac0agfd5bxg.in.ua/uk/good/"+URLEncoder.encode(item.getCategory().getUaText().replaceAll(" ","-"), "UTF-8")+"-"+item.getFirm().replaceAll(" ","-")+"-"+URLEncoder.encode(item.getColor().getUaText(), "UTF-8")+"/"+item.getId()));
             url.appendChild(loc);
 
             Element xhtml = doc.createElement("xhtml:link");
             xhtml.setAttribute("rel", "alternate");
             xhtml.setAttribute("hreflang", "ru");
-            xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/uk/good/"+URLEncoder.encode(item.getCategory().getRuText(), "UTF-8")+"-"+item.getFirm().replaceAll(" ","-")+"-"+URLEncoder.encode(item.getColor().getRuText(), "UTF-8")+"/"+item.getId());
+            xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/ru/good/"+URLEncoder.encode(item.getCategory().getRuText().replaceAll(" ","-"), "UTF-8")+"-"+item.getFirm().replaceAll(" ","-")+"-"+URLEncoder.encode(item.getColor().getRuText(), "UTF-8")+"/"+item.getId());
 
             url.appendChild(xhtml);
         }

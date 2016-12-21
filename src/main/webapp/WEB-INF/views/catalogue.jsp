@@ -20,17 +20,8 @@
         <%--<title>Каталог мужской одежды и аксессуаров в интернет-магазине джентльмен.in.ua</title>--%>
     <%--</c:if>--%>
         <title>${title}</title>
+        <meta name="description" content="${description}">
     <link rel="alternate" hreflang="${alternativeLang}" href="${alternativeHref}"/>
-
-    <link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
-    <link href="<c:url value="/resources/css/jquery.fancybox.css" />" rel="stylesheet">
-    <script  src="<c:url value="/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
-
-    <script   src="<c:url value="/resources/js/bootstrap.min.js" />" type="text/javascript"></script>
-
-    <script   src="<c:url value="/resources/js/jquery.fancybox.pack.js" />" type="text/javascript"></script>
-    <script   src="<c:url value="/resources/js/jquery-ui.js" />" type="text/javascript"></script>
-    <script   src="<c:url value="/resources/js/app.js" />" type="text/javascript"></script>
 
 
 
@@ -102,7 +93,7 @@
                                                     <ul>
                                                         <c:forEach var="secLevel" items="${secondLevel}">
                                                             <c:if test="${secLevel.parent == cat.id}">
-                                                                <li><a href="${pageContext.request.contextPath}/${lang}/каталог/${secLevel.uaText}">
+                                                                <li><a href="${pageContext.request.contextPath}/${lang}/каталог/${secLevel.uaText}/${secLevel.id}">
                                                                     <c:out value="${secLevel.uaText}"/></a></li>
                                                                 <%--<li> <a href="#" onclick="setParam('cat_id', ${secLevel.id});"><c:out value="${secLevel.uaText}"/></a></li>--%>
                                                             </c:if>
@@ -116,7 +107,7 @@
                                                     <ul>
                                                         <c:forEach var="secLevel" items="${secondLevel}">
                                                             <c:if test="${secLevel.parent == cat.id}">
-                                                                <li><a href="${pageContext.request.contextPath}/${lang}/каталог/${secLevel.ruText}">
+                                                                <li><a href="${pageContext.request.contextPath}/${lang}/каталог/${secLevel.ruText}/${secLevel.id}">
                                                                     <c:out value="${secLevel.ruText}"/></a></li>
                                                                 <%--<li> <a href="#" onclick="setParam('cat_id', ${secLevel.id});"><c:out value="${secLevel.ruText}"/></a></li>--%>
                                                             </c:if>
@@ -358,6 +349,17 @@
 </div>
 </div>
 </body>
+<link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/jquery.fancybox.css" />" rel="stylesheet">
+<script  src="<c:url value="/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
+
+<script   src="<c:url value="/resources/js/bootstrap.min.js" />" type="text/javascript"></script>
+
+<script   src="<c:url value="/resources/js/jquery.fancybox.pack.js" />" type="text/javascript"></script>
+<script   src="<c:url value="/resources/js/jquery-ui.js" />" type="text/javascript"></script>
+<script   src="<c:url value="/resources/js/app.js" />" type="text/javascript"></script>
+
+
 </html>
 <style>
     @media

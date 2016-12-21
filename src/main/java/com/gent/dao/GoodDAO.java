@@ -135,8 +135,8 @@ public class GoodDAO implements IGoodDAO {
 
     @Override
     public List<Good> getGoodsBySize(String size) {
-        List<Good> list = sessionFactory.getCurrentSession().createQuery("FROM Good  p where p.status = 1 and p.size LIKE :size ORDER BY p.id ")
-                .setParameter("size", size)
+        List<Good> list = sessionFactory.getCurrentSession().createQuery("select p FROM Good p where p.status = 1 and p.size LIKE :text")
+                .setParameter("text", size)
                 .list();
 
         return list;

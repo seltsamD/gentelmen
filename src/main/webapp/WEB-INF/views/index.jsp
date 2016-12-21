@@ -19,22 +19,15 @@
     <meta name="google-site-verification" content="-MD2HrSDLr7JKWM9xnqx5OiPG7Uio20xytJhg4iICqc" />
     <c:if test="${lang == 'uk'}">
         <title>Чоловічий одяг та аксесуари купити у інтернет-магазині джентльмен.in.ua</title>
+        <meta name="description" content="Магазин чоловічого одягу, краваток і костюмів. Тільки відомі і перевірені бренди. Кольори, фасони та великий вибір задовольнять навіть найвишуканіший смак.">
     </c:if>
     <c:if test="${lang == 'ru'}">
         <title>Мужская одежда и аксессуары в интернет-магазине джентльмен.in.ua</title>
+        <meta name="description" content="Магазин мужской одежды, галстуков и костюмов. Только известные и проверенные бренды. Цвета, фасоны и большой выбор удовлетворят даже самый изысканный вкус.">
     </c:if>
 
     <link rel="alternate" hreflang="${alternativeLang}" href="${alternativeHref}"/>
-    <link href="https://fonts.googleapis.com/css?family=Merriweather|Pattaya|Playfair+Display+SC" rel="stylesheet">
-    <link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
-    <link href="<c:url value="/resources/css/jquery.fancybox.css" />" rel="stylesheet">
-    <script  src="<c:url value="/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
 
-    <script   src="<c:url value="/resources/js/bootstrap.min.js" />" type="text/javascript"></script>
-
-    <script   src="<c:url value="/resources/js/jquery.fancybox.pack.js" />" type="text/javascript"></script>
-    <script   src="<c:url value="/resources/js/jquery-ui.js" />" type="text/javascript"></script>
-    <script   src="<c:url value="/resources/js/app.js" />" type="text/javascript"></script>
 
     <meta name="yandex-verification" content="3d522b3830a4aa99" />
     <script>
@@ -105,7 +98,7 @@
                                         <ul>
                                             <c:forEach var="secLevel" items="${secondLevel}">
                                                 <c:if test="${secLevel.parent == cat.id}">
-                                                <li><a href="${pageContext.request.contextPath}/${lang}/каталог/${secLevel.uaText}">
+                                                <li><a href="${pageContext.request.contextPath}/${lang}/каталог/${secLevel.uaText}/${secLevel.id}">
                                                         <c:out value="${secLevel.uaText}"/></a></li>
                                                     <%--<li> <a href="#" onclick="setParam('cat_id', ${secLevel.id});"><c:out value="${secLevel.uaText}"/></a></li>--%>
                                                 </c:if>
@@ -119,7 +112,7 @@
                                         <ul>
                                             <c:forEach var="secLevel" items="${secondLevel}">
                                                 <c:if test="${secLevel.parent == cat.id}">
-                                                    <li><a href="${pageContext.request.contextPath}/${lang}/каталог/${secLevel.ruText}">
+                                                    <li><a href="${pageContext.request.contextPath}/${lang}/каталог/${secLevel.ruText}/${secLevel.id}">
                                                         <c:out value="${secLevel.ruText}"/></a></li>
                                                     <%--<li> <a href="#" onclick="setParam('cat_id', ${secLevel.id});"><c:out value="${secLevel.ruText}"/></a></li>--%>
                                                 </c:if>
@@ -258,8 +251,20 @@
     </section>
     </div>
 </div>
+
 <jsp:include page="footer.jsp" />
 </body>
+<link href="https://fonts.googleapis.com/css?family=Merriweather|Pattaya|Playfair+Display+SC" rel="stylesheet">
+<link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/jquery.fancybox.css" />" rel="stylesheet">
+
+<script  src="<c:url value="/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
+
+<script   src="<c:url value="/resources/js/bootstrap.min.js" />" type="text/javascript"></script>
+
+<script   src="<c:url value="/resources/js/jquery.fancybox.pack.js" />" type="text/javascript"></script>
+<script   src="<c:url value="/resources/js/jquery-ui.js" />" type="text/javascript"></script>
+<script   src="<c:url value="/resources/js/app.js" />" type="text/javascript"></script>
 </html>
 <script type="text/javascript">
     $(function() {

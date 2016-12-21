@@ -60,6 +60,14 @@ public class HomeController {
             good.setCategory(cat);
 
         }
+
+        List<Category> listSec = categoryService.getSecondLevel();
+        for(Category cat: listSec)
+        {
+            cat.setUaText(cat.getUaText().replace(' ', '-'));
+            cat.setRuText(cat.getRuText().replace(' ', '-'));
+        }
+
         model.addAttribute("allData", list ); //get 10 random goods
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage()); //get locale language
         model.addAttribute("countInBasket", getCountBasket(request)); //count good in the basket
@@ -67,17 +75,24 @@ public class HomeController {
         model.addAttribute("minPrice", goodService.getMinPrice());
 
         model.addAttribute("colors", colorService.getAllColor());
-        model.addAttribute("secondLevel", categoryService.getSecondLevel());
+        model.addAttribute("secondLevel", listSec);
         model.addAttribute("firstLevel", categoryService.getFirstLevel());
         StringBuffer ur = request.getRequestURL();
 
-        return redirectWithLang(request, "index", model, "index"); //call function for redirect
+        String altURL = "";
+        if(LocaleContextHolder.getLocale().getLanguage().equals("uk"))
+            altURL = ur.substring(0, ur.indexOf("/", 10))+"/ru/";
+       else
+        if(LocaleContextHolder.getLocale().getLanguage().equals("ru"))
+            altURL = ur.substring(0, ur.indexOf("/", 10))+"/uk";
+
+        return redirectWithLang(request, "index", model, altURL); //call function for redirect
     }
 
 
 
     // for all admin-page
-    @RequestMapping(value = {"admin**", "/{lang}/admin**"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"admin**"}, method = RequestMethod.GET)
     public ModelAndView adminPage() {
 
         ModelAndView model = new ModelAndView();
@@ -110,9 +125,12 @@ public class HomeController {
     @RequestMapping(value = "/{lang}/about", method = RequestMethod.GET)
     public String aboutPageLang (HttpServletRequest request, ModelMap model) {
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
-        StringBuffer ur = request.getRequestURL();
-
         return redirectWithLang(request, "about", model, "about");
     }
+    @RequestMapping(value = "/{lang}/comments", method = RequestMethod.GET)
+    public String aboutComments (HttpServletRequest request, ModelMap model) {
+        model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
 
+        return redirectWithLang(request, "comments", model, "comments");
+    }
 }

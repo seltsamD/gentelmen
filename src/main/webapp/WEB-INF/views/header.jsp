@@ -29,24 +29,24 @@
                 <div class="navbar-collapse collapse navbar-right">
                     <ul class="nav navbar-nav">
                         <li><div id="msg"></div></li>
-                        <li class="active"><a href="<c:url value="/${lang}/index"/>"><spring:message code="page.title"/></a></li>
-                        <li class="active"><a href="<c:url value="/${lang}/каталог"/>"><spring:message code="page.catalogue"/></a></li>
+                        <li class="active"><a href="<c:url value="${pageContext.request.contextPath}/${lang}/index"/>"><spring:message code="page.title"/></a></li>
+                        <li class="active"><a href="<c:url value="${pageContext.request.contextPath}/${lang}/каталог"/>"><spring:message code="page.catalogue"/></a></li>
 
 
                         <c:if test="${pageContext.request.userPrincipal.name != null}">
-                            <li class="active"><a href="<c:url value="/${lang}/admin/goodform"/>"><spring:message code="page.good"/></a></li>
-                            <li class="active"><a href="<c:url value="/${lang}/admin/colors"/>"><spring:message code="text.color"/></a></li>
-                            <li class="active"><a href="<c:url value="/${lang}/admin/categories"/>"><spring:message code="text.category"/></a></li>
-                            <li class="active"><a href="<c:url value="/${lang}/admin/orders"/>"><spring:message code="text.orders"/></a></li>
-                            <li class="active"><a href="<c:url value="/${lang}/admin/sitemap"/>">sitemap</a></li>
+                            <li class="active"><a href="<c:url value="${pageContext.request.contextPath}/admin/goodform"/>"><spring:message code="page.good"/></a></li>
+                            <li class="active"><a href="<c:url value="${pageContext.request.contextPath}/admin/colors"/>"><spring:message code="text.color"/></a></li>
+                            <li class="active"><a href="<c:url value="${pageContext.request.contextPath}/admin/categories"/>"><spring:message code="text.category"/></a></li>
+                            <li class="active"><a href="<c:url value="${pageContext.request.contextPath}/admin/orders"/>"><spring:message code="text.orders"/></a></li>
+                            <li class="active"><a href="<c:url value="${pageContext.request.contextPath}/admin/sitemap"/>">sitemap</a></li>
 
                         </c:if>
 
                         <c:if test="${pageContext.request.userPrincipal.name == null}">
-
-                        <li class="active"><a href="<c:url value="/${lang}/about"/>"><spring:message code="page.about"/></a></li>
-                        <li class="active"><a href="<c:url value="/${lang}/shopping-cart"/>"><span  id="cartDiv" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
-                        <li class="active"><a href="<c:url value="/${lang}/myorders"/>"><spring:message code="page.myorder"/></a></li>
+                            <li class="active"><a href="<c:url value="${pageContext.request.contextPath}/${lang}/comments"/>"><spring:message code="comments"/></a></li>
+                        <li class="active"><a href="<c:url value="${pageContext.request.contextPath}/${lang}/about"/>"><spring:message code="page.about"/></a></li>
+                        <li class="active"><a href="<c:url value="${pageContext.request.contextPath}/${lang}/shopping-cart"/>"><span  id="cartDiv" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
+                        <li class="active"><a href="<c:url value="${pageContext.request.contextPath}/${lang}/myorders"/>"><spring:message code="page.myorder"/></a></li>
                         </c:if>
 
                         <c:if test="${pageContext.request.getParameter('id') == null}">

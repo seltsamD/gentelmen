@@ -9,11 +9,19 @@
   Time: 18:59
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/jquery.fancybox.css" />" rel="stylesheet">
+<script  src="<c:url value="/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
+
+<script   src="<c:url value="/resources/js/bootstrap.min.js" />" type="text/javascript"></script>
+
+<script   src="<c:url value="/resources/js/jquery.fancybox.pack.js" />" type="text/javascript"></script>
+<script   src="<c:url value="/resources/js/jquery-ui.js" />" type="text/javascript"></script>
+<script   src="<c:url value="/resources/js/app.js" />" type="text/javascript"></script>
+
+
+<script  async src="<c:url value="/resources/js/jquery.maskedinput.min.js" />" type="text/javascript"></script>
 <jsp:include page="header.jsp" />
-<jsp:include page="footer.jsp" />
-
-<script  async src="<c:url value="${pageContext.request.contextPath}/resources/js/jquery.maskedinput.min.js" />" type="text/javascript"></script>
-
 <body>
 
 <div class="container">
@@ -97,10 +105,10 @@
                                         <td> <c:out value="${obj.price}"/> </td>
                                         <td> <c:out value="${obj.size}"/> </td>
                                         <c:if test="${lang_code == 'uaText'}">
-                                            <td> <c:out value="${obj.description.uaText}"/> </td>
+                                            <td> <c:out value="${obj.uaText}"/> </td>
                                         </c:if>
                                         <c:if test="${lang_code == 'ruText'}">
-                                            <td> <c:out value="${obj.description.ruText}"/> </td>
+                                            <td> <c:out value="${obj.ruText}"/> </td>
                                         </c:if>
                                     </tr>
                                     <tr><td colspan="9"><hr></td> </tr>

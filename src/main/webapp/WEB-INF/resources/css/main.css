@@ -1,3 +1,9 @@
+.div404{
+    margin-top: 100px;
+    min-height: 700px;
+    background: url("404.jpg");
+    background-size: contain;
+}
 .back{
     background-size: 200px 340px;
     height: 340px;
@@ -264,9 +270,8 @@ hr{
 
 }
 body{
-
-    background: url("bg.jpg")center fixed;
-    background-size: cover;
+  background: url("bg1.jpg")center fixed;
+  background-size: cover;
   font-size: 10pt;;
 }
 
@@ -278,6 +283,12 @@ body{
 @media
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px) {
+    body{
+        background: url("snowMini.jpg")center fixed;
+        background-size: cover;
+        font-size: 10pt;;
+    }
+
 
     /* Force table to not be like tables anymore */
     #box-table-b  table, thead, tbody, th, td, tr {
