@@ -34,14 +34,14 @@ public class CategoryController {
         @Autowired
         private LocaleResolver localeResolver;
 
-        @RequestMapping(value="/{lang}/admin/categories")
+        @RequestMapping(value="/admin/categories")
         public ModelAndView categorys(){
             ModelAndView mv = new ModelAndView("categoryPage","category",new Category());
             setPageData(mv.getModelMap());
             return mv;
         }
 
-        @RequestMapping(value="/{lang}/admin/addCategory", method = RequestMethod.POST)
+        @RequestMapping(value="/admin/addCategory", method = RequestMethod.POST)
         public String addCategory(@ModelAttribute("category") @Valid Category category, BindingResult result,
                                ModelMap model, HttpServletRequest request) {
             if(!result.hasErrors()) {
@@ -52,7 +52,7 @@ public class CategoryController {
             return "categoryPage";
         }
 
-        @RequestMapping(value="/{lang}/admin/categoryById")
+        @RequestMapping(value="/admin/categoryById")
         public String getCategoryById(ModelMap model, HttpServletRequest request) {
             int pid = Integer.parseInt(request.getParameter("id"));
             Category category = categoryService.getCategoryById(pid);
@@ -60,7 +60,7 @@ public class CategoryController {
             model.addAttribute(category);
             return "categoryPage";
         }
-        @RequestMapping(value="/{lang}/admin/updateCategory", method = RequestMethod.POST)
+        @RequestMapping(value="/admin/updateCategory", method = RequestMethod.POST)
         public String updateCategory(@ModelAttribute("category") @Valid Category category, BindingResult result,
                                   ModelMap model, HttpServletRequest request) {
             if(!result.hasErrors()) {
@@ -71,7 +71,7 @@ public class CategoryController {
             setPageData(model);
             return "categoryPage";
         }
-        @RequestMapping(value="/{lang}/admin/deleteCategory")
+        @RequestMapping(value="/admin/deleteCategory")
         public String deleteCategory(ModelMap model, HttpServletRequest request) {
             int pid = Integer.parseInt(request.getParameter("id"));
             try{

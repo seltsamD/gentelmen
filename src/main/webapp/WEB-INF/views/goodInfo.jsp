@@ -32,15 +32,24 @@
 </head>
 <body>
 <div class="container">
+
     <jsp:include page="header.jsp" />
-
-    <article>
-
+    <div class="mainContent">
 
 
-            <div class="row infoGood">
+    <article class="product">
+     <div class="row">
+                <div  itemscope itemtype="http://schema.org/Product">
+                    <div class="whiteBack">
+                        <c:if test="${lang == 'uk'}">
+                            <h1 itemprop="name"><c:out value="${info.category.uaText}"/> <c:out value="${info.firm}"/></h1>
+                        </c:if>
+                        <c:if test="${lang == 'ru'}">
+                            <h1 itemprop="name"><c:out value="${info.category.ruText}"/> <c:out value="${info.firm}"/></h1>
+                        </c:if>
 
-                <div class="col-xs-5 top">
+                    </div>
+                <div class="col-xs-12  col-md-7 col-lg-6 ">
                     <div id="carousel-example-generic" class="carousel slide maxiImg" data-ride="carousel">
                         <!-- Indicators -->
                         <ol class="carousel-indicators">
@@ -70,24 +79,51 @@
                             <span class="sr-only">Next</span>
                         </a>
                     </div>
+                 </div>
                 </div>
 
-                <div  itemscope itemtype="http://schema.org/Product" class="col-xs-6">
+                        <%--<div class="col-xs-12 col-md-5 col-lg-6 infoGood">--%>
+                        <%--<h3 itemprop="offers" itemscope itemtype="http://schema.org/Offer">--%>
+                            <%--<spring:message code="good.price"/>--%>
+                             <%--<span itemprop="price" content="<c:out value="${info.price}"/>"><c:out value="${info.price}"/></span>--%>
+                            <%--<span itemprop="priceCurrency" content="UAH">грн</span>--%>
+                         <%--</h3>--%>
+                        <%--<c:if test="${info.status == 1}">--%>
+                            <%--<form:form id="baskForm${info.id}" action="addToBasket" method="POST">--%>
+                                <%--<input type="hidden" name="goodId" value="${info.id}">--%>
+                                <%--<input type="button" onclick="tobasket(${info.id})" value="<spring:message code="basket.add"/>" id="btn-basket-add" class="btn btn-success">--%>
+                            <%--</form:form>--%>
+                        <%--</c:if>--%>
+                        <%--<c:if test="${info.status == 0}">&ndash;%&gt;--%>
+                            <%--<img src="<c:url value="/resources/images/sold.png"/>" >--%>
+                        <%--</c:if>--%>
+                        <%--<ul class="goodInfoList">--%>
+                            <%--<li><span class="desc">ID</span><c:out value="${info.id}"/></li>--%>
+                            <%--<li itemprop="brand" itemscope itemtype="http://schema.org/Brand">--%>
+                                <%--<span class="desc"><spring:message code="good.firm"/></span>--%>
+                                <%--<span class="desc" itemprop="name"><c:out value="${info.firm}"/></span>--%>
+                            <%--</li>--%>
+                            <%--<li>--%>
+                                <%--<span class="desc"><spring:message code="good.color"/></span>--%>
+                                <%--<c:if test="${lang == 'uk'}">--%>
+                                <%--<span  class="desc" itemprop="color"><c:out value="${info.color.uaText}"/> </span>--%>
+                                <%--</c:if>--%>
+                                <%--<c:if test="${lang == 'ru'}">--%>
+                                <%--<span  class="desc" itemprop="color"> <c:out value="${info.color.ruText}"/> </span>--%>
+                                <%--</c:if>--%>
+                            <%--</li>--%>
+                        <%--</ul>--%>
+                    <%--</div>--%>
 
-                    <div class="whiteBack">
-                        <c:if test="${lang == 'uk'}">
-                            <h1 itemprop="name"><c:out value="${info.category.uaText}"/> <c:out value="${info.firm}"/></h1>
-                        </c:if>
-                        <c:if test="${lang == 'ru'}">
-                            <h1 itemprop="name"><c:out value="${info.category.ruText}"/> <c:out value="${info.firm}"/></h1>
-                        </c:if>
+         <%--<div class="col-xs-12 col-md-5 col-lg-6 infoGood">--%>
+                <div  class="col-xs-12 col-md-5 col-lg-6" itemscope itemtype="http://schema.org/Product" class="col-xs-6">
 
-                    </div>
+
                     <table id="table-info">
 
 
                         <tr>
-                            <td class="price" colspan="2"> <h3 itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                            <td id="infoTab" class="price" colspan="2"> <h3 itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                                 <spring:message code="good.price"/>:
 
                                 <span itemprop="price" content="<c:out value="${info.price}"/>"><c:out value="${info.price}"/></span>
@@ -96,8 +132,8 @@
                         </tr>
                         <c:if test="${info.status == 1}">
                             <tr>
-                                <td>
-                                    <form:form id="baskForm${info.id}" action="addToBasket" method="POST" cssStyle="margin-left: 20px;">
+                                <td  id="infoTab">
+                                    <form:form id="baskForm${info.id}" action="addToBasket" method="POST">
                                         <input type="hidden" name="goodId" value="${info.id}">
                                         <input type="button" onclick="tobasket(${info.id})" value="<spring:message code="basket.add"/>" id="btn-basket-add" class="btn btn-success">
                                     </form:form>
@@ -149,19 +185,25 @@
                         <tr>
 
                             <c:if test="${lang == 'uk'}">
-                                <xml><td colspan="2" id="text-info" class="bottomTd"><p itemprop="description"><c:out value="${info.uaText}"/></p></td></xml>
+                                <td colspan="2" id="text-info" class="bottomTd"><p itemprop="description"><xml><c:out value="${info.uaText}"/></xml></p></td>
                             </c:if>
                             <c:if test="${lang == 'ru'}"><p>
-                                <xml><td colspan="2" id="text-info" class="bottomTd"><p itemprop="description"><c:out value="${info.ruText}"/></p</td></xml>
+                               <td colspan="2" id="text-info" class="bottomTd"><p itemprop="description"> <xml><c:out value="${info.ruText}"/></xml></p</td>
                             </c:if>
                         </tr>
                     </table>
             </div>
-                </div>
+
 
     </article>
 
 </div>
+
+</div>
+<jsp:include page="footer.jsp" />
+
+
+</body>
 <script  src="<c:url value="${pageContext.request.contextPath}/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
 
 <script   src="<c:url value="/resources/js/app.js" />" type="text/javascript"></script>
@@ -178,7 +220,5 @@
     ga('send', 'pageview');
 
 </script>
-<jsp:include page="footer.jsp" />
-</body>
 </html>
 

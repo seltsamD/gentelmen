@@ -46,6 +46,15 @@ public class HomeController {
     @Autowired
     private ICategoryService categoryService;
 
+    @RequestMapping(value = {"allImages"}, method = RequestMethod.GET)
+    public String showImg (HttpServletRequest request, ModelMap model, HttpServletResponse response) {
+
+
+        List<Good> list = goodService.getAllGoods();
+        model.addAttribute("data", list);
+        return "allImages";
+    }
+
     @RequestMapping(value = {"index","/{lang}/index", "/"}, method = RequestMethod.GET)
     public String show (HttpServletRequest request, ModelMap model, HttpServletResponse response){
 

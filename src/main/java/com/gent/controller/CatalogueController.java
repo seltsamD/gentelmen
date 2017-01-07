@@ -119,15 +119,15 @@ public class CatalogueController {
                 if (key.equals("size")) {
                     String[] value1 = parameters.get("cat_id");
                     for (String aValue : value1)
-                    if(!cat) {
-                        List<Good> listBySize = goodService.getGoodsBySize(aValue);
-                        listGood.retainAll(listBySize);
-                        siz = true;
-                    }
-                    else {
-                        List<Good> listBySize = goodService.getGoodsBySize(aValue);
-                        listGood.addAll(listBySize);
-                    }
+                        if(!cat) {
+                            List<Good> listBySize = goodService.getGoodsBySize(aValue);
+                            listGood.retainAll(listBySize);
+                            siz = true;
+                        }
+                        else {
+                            List<Good> listBySize = goodService.getGoodsBySize(aValue);
+                            listGood.addAll(listBySize);
+                        }
                 }
 
             }

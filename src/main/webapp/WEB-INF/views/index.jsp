@@ -12,10 +12,11 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
 
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-site-verification" content="-MD2HrSDLr7JKWM9xnqx5OiPG7Uio20xytJhg4iICqc" />
     <c:if test="${lang == 'uk'}">
         <title>Чоловічий одяг та аксесуари купити у інтернет-магазині джентльмен.in.ua</title>
@@ -30,44 +31,16 @@
 
 
     <meta name="yandex-verification" content="3d522b3830a4aa99" />
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-        ga('create', 'UA-87631623-1', 'auto');
-        ga('send', 'pageview');
-
-    </script>
-    <script type="text/javascript">
-
-        $(function() {
-            $( "#slider-range" ).slider({
-                range: true,
-                min: ${minPrice},
-                max: ${maxPrice},
-                values: [ ${minPrice}, ${maxPrice} ],
-                slide: function( event, ui ) {
-                    $( "#amount" ).html(ui.values[ 0 ] + "грн. - " + ui.values[ 1 ]+ "грн." );
-                    $( "#amount1" ).val(ui.values[ 0 ]);
-                    $( "#amount2" ).val(ui.values[ 1 ]);
-                }
-            });
-            $( "#amount" ).html( $( "#slider-range" ).slider( "values", 0 ) +
-                    "грн. - " + $( "#slider-range" ).slider( "values", 1 ) )+"грн.";
-        });
-    </script>
 </head>
 <body>
+<div class="container">
 
 <jsp:include page="header.jsp" />
-<div class="container">
-    <div id="page">
-        <h1>Свято наближається...!</h1>
-    </div>
+<div class="mainContent">
     <div class="row">
     <div class="col-sm-3">
+        <div class="leftMenu">
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingNull">
@@ -82,20 +55,20 @@
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingOne">
                     <h4 class="panel-title">
-                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <a class="collapsed" role="button" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             <spring:message code="category"/>
                         </a>
                     </h4>
                 </div>
-                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                     <div class="panel-body">
-                        <ul>
+                        <ol>
                             <c:forEach var="cat" items="${firstLevel}">
 
                                 <c:if test="${lang == 'uk'}">
                                     <li>
                                         <c:out value="${cat.uaText}"/>
-                                        <ul>
+                                        <ol type="I">
                                             <c:forEach var="secLevel" items="${secondLevel}">
                                                 <c:if test="${secLevel.parent == cat.id}">
                                                 <li><a href="${pageContext.request.contextPath}/${lang}/каталог/${secLevel.uaText}/${secLevel.id}">
@@ -103,13 +76,13 @@
                                                     <%--<li> <a href="#" onclick="setParam('cat_id', ${secLevel.id});"><c:out value="${secLevel.uaText}"/></a></li>--%>
                                                 </c:if>
                                             </c:forEach>
-                                        </ul>
+                                        </ol>
                                     </li>
                                 </c:if>
                                 <c:if test="${lang == 'ru'}">
                                     <li>
                                         <c:out value="${cat.ruText}"/>
-                                        <ul>
+                                        <ol type="I">
                                             <c:forEach var="secLevel" items="${secondLevel}">
                                                 <c:if test="${secLevel.parent == cat.id}">
                                                     <li><a href="${pageContext.request.contextPath}/${lang}/каталог/${secLevel.ruText}/${secLevel.id}">
@@ -117,13 +90,13 @@
                                                     <%--<li> <a href="#" onclick="setParam('cat_id', ${secLevel.id});"><c:out value="${secLevel.ruText}"/></a></li>--%>
                                                 </c:if>
                                             </c:forEach>
-                                        </ul>
+                                        </ol>
                                     </li>
                                 </c:if>
 
 
                             </c:forEach>
-                        </ul>
+                        </ol>
 
 
                     </div>
@@ -139,7 +112,7 @@
                 </div>
                 <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                     <div class="panel-body">
-                        <ul>
+                        <ol type="I">
                             <c:forEach var="color" items="${colors}">
 
                                 <c:if test="${lang == 'uk'}">
@@ -154,7 +127,7 @@
                                     </a> </li>   </c:if>
 
                             </c:forEach>
-                        </ul>
+                        </ol>
                     </div>
                 </div>
             </div>
@@ -181,7 +154,7 @@
                 </div>
             </div>
         </div>
-
+    </div>
     </div>
     <section>
         <div class="col-sm-9">
@@ -196,10 +169,10 @@
                                 <th>
                                     <c:if test="${lang == 'uk'}">
 
-                                        <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.uaText}-${obj.firm}-${obj.color.uaText}/${obj.id}"><img itemprop="image"  src="<c:url value="/images/${obj.id}_0.jpg"/>" alt="${obj.firm} ${obj.category.uaText} ${obj.color.uaText}"/></a>
+                                        <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.uaText}-${obj.firm}-${obj.color.uaText}/${obj.id}"><img itemprop="image"  src="<c:url value="/images/${obj.id}_0_mini.jpg"/>" alt="${obj.firm} ${obj.category.uaText} ${obj.color.uaText}"/></a>
                                     </c:if>
                                     <c:if test="${lang == 'ru'}">
-                                        <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.ruText}-${obj.firm}-${obj.color.ruText}/${obj.id}"><img itemprop="image"  src="<c:url value="/images/${obj.id}_0.jpg"/>" alt="${obj.firm} ${obj.category.ruText} ${obj.color.ruText}"/></a>
+                                        <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.ruText}-${obj.firm}-${obj.color.ruText}/${obj.id}"><img itemprop="image"  src="<c:url value="/images/${obj.id}_0_mini.jpg"/>" alt="${obj.firm} ${obj.category.ruText} ${obj.color.ruText}"/></a>
                                     </c:if>
 
 
@@ -251,18 +224,44 @@
     </section>
     </div>
 </div>
+</div>
+    <jsp:include page="footer.jsp" />
 
-<jsp:include page="footer.jsp" />
+
 </body>
 <link href="https://fonts.googleapis.com/css?family=Merriweather|Pattaya|Playfair+Display+SC" rel="stylesheet">
 <link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
-<link href="<c:url value="/resources/css/jquery.fancybox.css" />" rel="stylesheet">
-
 <script  src="<c:url value="/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
 
 <script   src="<c:url value="/resources/js/bootstrap.min.js" />" type="text/javascript"></script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-<script   src="<c:url value="/resources/js/jquery.fancybox.pack.js" />" type="text/javascript"></script>
+    ga('create', 'UA-87631623-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+<script type="text/javascript">
+
+    $(function() {
+        $( "#slider-range" ).slider({
+            range: true,
+            min: ${minPrice},
+            max: ${maxPrice},
+            values: [ ${minPrice}, ${maxPrice} ],
+            slide: function( event, ui ) {
+                $( "#amount" ).html(ui.values[ 0 ] + "грн. - " + ui.values[ 1 ]+ "грн." );
+                $( "#amount1" ).val(ui.values[ 0 ]);
+                $( "#amount2" ).val(ui.values[ 1 ]);
+            }
+        });
+        $( "#amount" ).html( $( "#slider-range" ).slider( "values", 0 ) +
+                "грн. - " + $( "#slider-range" ).slider( "values", 1 ) )+"грн.";
+    });
+</script>
 <script   src="<c:url value="/resources/js/jquery-ui.js" />" type="text/javascript"></script>
 <script   src="<c:url value="/resources/js/app.js" />" type="text/javascript"></script>
 </html>
@@ -334,9 +333,9 @@
         {
             if(url.indexOf('uk') >= 0)
             {
-                url = url.substr(0, url.indexOf('uk'));
+                url = url.substr(0, url.indexOf('uk')+2);
                 if(url.indexOf('?') == -1)
-                    url = url + '${lang}/каталог?price1=' + price1+'&price2='+price2;
+                    url = url + '/каталог?price1=' + price1+'&price2='+price2;
                 else
                 if(url.indexOf('?') >= 0)
                     url = url + '&price1=' + price1+'&price2='+price2;
@@ -345,9 +344,9 @@
             else
             if(url.indexOf('ru') >= 0)
             {
-                url = url.substr(0, url.indexOf('uk'));
+                url = url.substr(0, url.indexOf('ru')+2);
                 if(url.indexOf('?') == -1)
-                    url = url + '${lang}/каталог?price1=' + price1+'&price2='+price2;
+                    url = url + '/каталог?price1=' + price1+'&price2='+price2;
                 else
                 if(url.indexOf('?') >= 0)
                     url = url + '&price1=' + price1+'&price2='+price2;

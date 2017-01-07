@@ -13,9 +13,8 @@
 
     <link href="https://fonts.googleapis.com/css?family=Merriweather|Pattaya|Playfair+Display+SC" rel="stylesheet">
         <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
-        <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
-        <script  src="<c:url value="/resources/js/snow.js" />" type="text/javascript"></script>
-<header>
+        <link href="<c:url value="/resources/css/site.css" />" rel="stylesheet">
+    <header>
     <nav>
 
         <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -50,8 +49,8 @@
                         </c:if>
 
                         <c:if test="${pageContext.request.getParameter('id') == null}">
-                        <li><a href="?lang=uk"><img class="flag" src="<c:url value="/resources/images/ukraine-flag.png"/>" ></a></li>
-                            <li><a href="?lang=ru"><img class="flag" src="<c:url value="/resources/images/rus-flag.png"/>" ></a></li>
+                        <li><a href="?lang=uk"><img class="flag" src="<c:url value="/resources/images/ukraine-flag1.png"/>" ></a></li>
+                            <li><a href="?lang=ru"><img class="flag" src="<c:url value="/resources/images/rus-flag1.png"/>" ></a></li>
 
                         </c:if>
                         <c:if test="${pageContext.request.getParameter('id') != null}">
@@ -70,4 +69,3 @@
 
 
 </header>
-<div id = "flake">&#10052;</div>

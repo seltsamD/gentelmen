@@ -15,9 +15,9 @@
 
 
 <body>
-<jsp:include page="header.jsp" />
 <div class="container">
-    <div class="main">
+<jsp:include page="header.jsp" />
+<div class="mainContent">
         <div class="whiteBack">
             <h1><spring:message code="newOrder"/></h1>
         </div>
@@ -69,7 +69,7 @@
     <c:forEach var="obj" items="${listBasket}">
         <tr>
             <td>
-                <a class="single_image" href="<c:url value="/images/${obj.id}_0.jpg"/>"><img  class="miniImg"  src="<c:url value="/images/${obj.id}_0.jpg"/>" alt="${obj.firm} ${obj.category.uaText} "${obj.color.uaText}"/></a>
+                <a class="single_image" href="<c:url value="/images/${obj.id}_0.jpg"/>"><img  class="miniImg"  src="<c:url value="/images/${obj.id}_0_mini.jpg"/>" alt="${obj.firm} ${obj.category.uaText} "${obj.color.uaText}"/></a>
 
             </td>
             <td> <c:out value="${obj.id}"/> </td>

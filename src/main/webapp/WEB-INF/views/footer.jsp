@@ -7,10 +7,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<footer>
-    <div class="footer">
-        <p class="text-muted">Джентльмен.in.ua 2016</p>
-    </div>
+<div id="snackbar"><spring:message code="basket.IsAdded"/></div>
+<%--<footer class="footer">--%>
+        <%--<p class="text-muted">Джентльмен.in.ua 2016-2017р.<br> gentlmen.in.ua@gmail.com </p>--%>
+    <%--</footer>--%>
     <!-- Top100 (Kraken) Counter -->
     <script>
         (function (w, d, c) {
@@ -40,4 +40,3 @@
     <!-- END Top100 (Kraken) Counter -->
 </footer>
 
-<div id="snackbar"><spring:message code="basket.IsAdded"/></div>

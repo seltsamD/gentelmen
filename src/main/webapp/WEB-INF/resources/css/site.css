@@ -1,0 +1,413 @@
+@font-face {
+    font-family: celticFont;
+    src: url("Oranienbaum-Regular.ttf");
+}
+body{
+    background: url("background2.jpg")center fixed;
+    background-size: cover;
+    font-size: 10pt;
+    min-width: 240px;
+}
+.container{
+    font-family: "Baskerville Old Face";
+    font-size: 12pt;
+}
+
+h1, .h1{
+    font-family: celticFont, serif;
+}
+@media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px) {
+    body {
+        background: url("miniBack.jpg") center fixed;
+        background-size: cover;
+        font-size: 10pt;
+    }
+
+
+
+    /* Force table to not be like tables anymore */
+    #box-table-b  table, thead, tbody, th, td, tr {
+        display: block;
+        margin: auto;
+        border: none !important;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    #box-table-b thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    #box-table-b  tr {
+        border: 1px solid #ccc;
+    }
+
+    #box-table-b td {
+        /* Behave  like a "row" */
+        border: none;
+        /*border-bottom: 1px solid #eee;*/
+        position: relative;
+        padding-left: 50%;
+    }
+
+    #box-table-b td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 65%;
+        padding-right: 10px;
+        white-space: nowrap;
+    }
+    #box-table-b img{
+        padding: 0;
+    }
+    #table-info  th, td{
+        display: inline;
+        margin: auto;
+        border: none;
+    }
+
+    #infoTab{
+        display: block; !important;
+    }
+}
+
+.mainContent{
+    margin-top: 70px;
+}
+
+@media
+only screen and (max-width: 1000px) {
+    .mainContent{
+        margin-top: 120px;
+    }
+}
+
+.leftMenu{
+    font-family: celticFont, serif;
+    font-size: 12pt;
+    /*background: url("wood.jpg") center fixed;*/
+    /*background-size: cover;*/
+}
+
+.leftMenu .panel-heading{
+    background-color: antiquewhite;
+    background-size: cover;
+    color: #523921;
+}
+.leftMenu .panel-body{
+    background-color: white;
+    font-weight: 600;
+    font-family: "Baskerville Old Face";
+}
+
+
+
+ol{
+    color: #523921;
+}
+.back{
+    background-size: 200px 340px;
+    height: 340px;
+    width: 200px;
+    font-size: 14pt;
+    margin: 5px;
+    border-style: double;
+    background-color: #F4D8B9;
+    text-align: center;
+    font-family: 'Pattaya', sans-serif;
+}
+.infoBox{
+    width: 100%;
+    height: 100%;
+    padding-top: 10px;
+}
+
+
+#table-index img{
+    max-height: 150px; !important;
+    max-width: 150px; !important;
+
+}
+#table-index{
+    width: 100%;  !important;
+    height: 100%; !important;
+    padding-bottom: 20px; !important;
+}
+#table-index th{
+    height: 70%; !important;
+    text-align: center; !important;
+    vertical-align: middle; !important;
+}
+
+#table-index td{
+    height: 30%; !important;
+    text-align: center; !important;
+    vertical-align: bottom; !important;
+}
+
+.priceInfo{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus,
+.navbar-default .navbar-nav>.active>a:hover {
+    color: #fcf8e3;
+    background-color: #5b7538;
+    font-family: celticFont, serif;
+    font-size: medium;
+}
+
+.navbar-default {
+    background-color: #5b7538;
+}
+.navbar-default .navbar-brand {
+    color: #fcf8e3;
+    font-weight: bolder;
+    font-variant: small-caps;
+}
+.navbar-brand{
+    background-color: #5b7538;
+}
+
+.div404{
+    margin-top: 100px;
+    min-height: 700px;
+    background: url("404.jpg");
+    background-size: contain;
+}
+
+.carousel,
+.item,
+.active {
+    max-height: 500px;
+}
+
+.carousel-inner {
+    max-height: 500px;
+}
+
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #333; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#snackbar.show {
+    visibility: visible; /* Show the snackbar */
+
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+    However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+.Absolute-Center {
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+
+}
+.opacity-back{
+    background-color: #ffefe4;
+    padding: 20px;
+}
+.Absolute-Center.is-Responsive {
+    width: 50%;
+    height: 50%;
+    min-width: 200px;
+    max-width: 400px;
+    /*padding: 40px;*/
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #5b7538;
+    text-align: right;
+}
+
+.desc{
+    width: 70px;
+    font-size: 10pt;
+    font-weight: lighter;
+    color: #6e3400;
+    padding-left: 20px;
+    display: block;
+}
+
+.goodInfoList{
+    margin: 20px 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.infoGood{
+    text-align: left;
+    border-collapse: collapse;
+    border-top: 1px solid #2f0311;
+    border-bottom: 1px solid #2f0311;
+    padding: 20px;
+    background: #F4D8B9;
+    width: 100%;
+
+}
+
+.whiteBack{
+    background-color: #ffffff;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.topBox{
+    background-color: #F4D8B9;
+    opacity: 0.9;
+    margin-top: 50px;
+    width: 100%;
+    padding: 25px;
+
+}
+.topBox  .btn-success, .btn-warning{
+    width: 100%;
+    font-family: 'Pattaya', sans-serif;
+    color: #2e1e15;
+    font-size: 14px;
+
+}
+
+#box-table-b
+{
+    text-align: center;
+    border-collapse: collapse;
+    border-top: 1px solid #2f0311;
+    border-bottom: 1px solid #2f0311;
+    background-color: #ffffff;
+    padding: 20px;
+    font-size: 10pt;
+    word-wrap: normal;
+}
+#box-table-b th
+{
+    text-align: center;
+    font-size: 10pt;
+    font-weight: normal;
+    padding: 8px;
+    background: #F4D8B9;
+    border-right: 1px solid #6e3400;
+    border-left: 1px solid #6e3400;
+    color: #2f0311;
+    border-bottom: 1px solid #6e3400;
+
+}
+#box-table-b td
+{
+    /*background-color: #F4D8B9;;*/
+    border-right: 1px solid #6e3400;
+    border-left: 1px solid #6e3400;
+    color: #2f0311;
+}
+
+#box-table-b img{
+    padding: 10px;
+}
+a{
+    color:  #6e3400;
+}
+
+.carousel,
+.item,
+.active {
+    max-height: 500px;
+}
+
+.carousel-inner {
+    max-height: 500px;
+}
+.maxiImg{
+    max-height: 700px;
+    max-width: 400px;
+}
+.miniImg{
+    max-height: 290px;
+    max-width: 150px;
+}
+
+#table-info{
+
+    text-align: left;
+    border-collapse: collapse;
+    border-top: 1px solid #2f0311;
+    border-bottom: 1px solid #2f0311;
+    padding: 20px;
+    background: #F4D8B9;
+    width: 100%;
+}
+#table-info td{
+    padding: 2px;
+    padding-left: 20px;
+}
+
+#table-info tr{
+    padding-left: 20px;
+}
+#table-info th{
+    font-size: 10pt;
+    font-weight: lighter;
+    color: #6e3400;
+    padding-left: 20px;
+}
+#table-info hr{
+    height: 20px;
+    background-size: contain;
+}
+
+.head{
+
+    background-image: url("sep.png");
+}
+hr{
+    background-image: url("sep.png") ;
+    background-size: contain;
+    height: 20px;
+}

@@ -37,14 +37,14 @@ public class ColorController {
     @Autowired
     private LocaleResolver localeResolver;
 
-    @RequestMapping(value="/{lang}/admin/colors")
+    @RequestMapping(value="/admin/colors")
     public ModelAndView colors(){
         ModelAndView mv = new ModelAndView("colorPage","color",new Color());
         setPageData(mv.getModelMap());
         return mv;
     }
 
-    @RequestMapping(value="/{lang}/admin/addColor", method = RequestMethod.POST)
+    @RequestMapping(value="/admin/addColor", method = RequestMethod.POST)
     public String addColor(@ModelAttribute("color") @Valid Color color, BindingResult result,
                           ModelMap model, HttpServletRequest request) {
         if(!result.hasErrors()) {
@@ -55,7 +55,7 @@ public class ColorController {
         return "colorPage";
     }
 
-    @RequestMapping(value="/{lang}/admin/colorById")
+    @RequestMapping(value="/admin/colorById")
     public String getColorById(ModelMap model, HttpServletRequest request) {
         int pid = Integer.parseInt(request.getParameter("id"));
         Color color = colorService.getColorById(pid);
@@ -63,7 +63,7 @@ public class ColorController {
         model.addAttribute(color);
         return "colorPage";
     }
-    @RequestMapping(value="/{lang}/admin/updateColor", method = RequestMethod.POST)
+    @RequestMapping(value="/admin/updateColor", method = RequestMethod.POST)
     public String updateColor(@ModelAttribute("color") @Valid Color color, BindingResult result,
                              ModelMap model, HttpServletRequest request) {
         if(!result.hasErrors()) {
@@ -74,7 +74,7 @@ public class ColorController {
         setPageData(model);
         return "colorPage";
     }
-    @RequestMapping(value="/{lang}/admin/deleteColor")
+    @RequestMapping(value="/admin/deleteColor")
     public String deleteColor(ModelMap model, HttpServletRequest request) {
         int pid = Integer.parseInt(request.getParameter("id"));
         try{
