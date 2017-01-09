@@ -8,12 +8,6 @@
   Time: 13:39
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-
-<script  src="<c:url value="/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
-<script   src="<c:url value="${pageContext.request.contextPath}/resources/js/jquery.maskedinput.min.js" />" type="text/javascript"></script>
-
-
 <body>
 <div class="container">
 <jsp:include page="header.jsp" />
@@ -37,7 +31,8 @@
                 <div class="form-group">
                     <label for="phone" class="col-sm-2 control-label"><spring:message code="order.phone"/></label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" id="phone" name="phone" placeholder="<spring:message code="order.phone"/>">
+                        <input class="form-control" type="text" id="phone" name="phone"
+                               placeholder="<spring:message code="order.phone"/>">
                        <form:errors path="phone" cssClass="error-msg"/>
                     </div>
                 </div>
@@ -142,8 +137,8 @@
         }
     }
 </style>
-<script type="text/javascript">
-    jQuery(function($){
-        $("#phone").mask("(999) 999-99-99");
-    });
-</script>
+<%--<script type="text/javascript">--%>
+    <%--jQuery(function($){--%>
+        <%--$("#phone").mask("(999) 999-99-99");--%>
+    <%--});--%>
+<%--</script>--%>

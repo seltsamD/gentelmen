@@ -5,9 +5,7 @@ import com.gent.model.Good;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by daria on 30.09.2016.
@@ -54,7 +52,7 @@ public class GoodService implements IGoodService {
     }
 
     @Override
-    public List<Good> getListGoods(ArrayList<Integer> list)
+    public List<Good> getListGoods(List<Integer> list)
     {
         return goodDAO.getListGoods(list);
     }

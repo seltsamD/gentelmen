@@ -2,7 +2,6 @@ package com.gent.dao;
 
 import com.gent.model.Good;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +15,7 @@ public interface IGoodDAO {
     void updateGood(Good good);
     void deleteGood(int id);
     List<Good> getRandomGoods();
-    List<Good> getListGoods(ArrayList<Integer> list);
+    List<Good> getListGoods(List<Integer> list);
     void changeStatus(int id, int status);
     List<Good> getGoodsByCategorie(int catId);
     List<Good> getGoodsByColor(int colorId);

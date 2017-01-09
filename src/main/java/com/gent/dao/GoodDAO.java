@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by daria on 30.09.2016.
@@ -72,7 +70,7 @@ public class GoodDAO implements IGoodDAO {
     }
 
     @Override
-    public List<Good> getListGoods(ArrayList<Integer> inList) {
+    public List<Good> getListGoods(List<Integer> inList) {
         List<Good> outList = sessionFactory.getCurrentSession().createQuery("from Good o where o.id in (:lis)")
                 .setParameterList("lis", inList)
                 .list();

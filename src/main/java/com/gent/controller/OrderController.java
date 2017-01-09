@@ -26,10 +26,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import static com.gent.config.ChangeLang.redirectWithLang;
 
@@ -47,17 +44,16 @@ public class OrderController {
     @Autowired
     IGoodService goodService;
 
-    @RequestMapping(value="addToBasket", method = RequestMethod.POST)
-    public void addToBasket(ModelMap model, HttpServletResponse response,HttpServletRequest request, @RequestParam("goodId") String goodId) throws UnsupportedEncodingException {
-
+    @RequestMapping(value = "addToBasket", method = RequestMethod.POST)
+    public void addToBasket(ModelMap model, HttpServletResponse response, HttpServletRequest request, @RequestParam("goodId") String goodId) throws UnsupportedEncodingException {
 
 
     }
 
-    @RequestMapping(value="{lang}/newOrder", method = RequestMethod.POST)
-    public String addColor( @ModelAttribute("order") @Valid Orders newOrder, BindingResult result,
-                            ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-        if(!result.hasErrors()) {
+    @RequestMapping(value = "/{lang}/newOrder", method = RequestMethod.POST)
+    public String addColor(@ModelAttribute("order") @Valid Orders newOrder, BindingResult result,
+                           ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+        if (!result.hasErrors()) {
             Cookie[] cookies = request.getCookies();
             Cookie myCookie = null;
             for (Cookie cookie : cookies) {
@@ -67,66 +63,62 @@ public class OrderController {
                 }
 
             }
-
-            if (myCookie != null) {
-                String cook = null;
-                try {
-                    cook = URLDecoder.decode(myCookie.getValue(), "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-
-                    e.printStackTrace();
-                }
-                int count = 0;
-
-                ArrayList<Integer>listBasket = new ArrayList<Integer>();
-                if (cook != null && cook.length() > 0) {
-
-                    String str = cook.substring(1,cook.length()-1);
-                    str = str.replaceAll(" ","");
-                    String []ar = str.split(",");
-                    for (String ch: ar) {
-                        listBasket.add( Integer.parseInt(ch));
-                    }
-                    List<Good> outList = goodService.getListGoods(listBasket);
+            if (myCookie != null && myCookie.getValue().length() > 0) {
+                List<String> listValue = new ArrayList<String>();
+                listValue = new ArrayList<String>(Arrays.asList(myCookie.getValue().split("-")));
 
 
+                if (listValue.size() > 0) {
+                    List<Good> outList = null;
+                    List<Integer> list2 = new ArrayList<Integer>();
+                    for (String str : listValue)
+                        list2.add(Integer.valueOf(str));
+
+                    outList = goodService.getListGoods(list2);
                     newOrder.setListGood(outList);
 
                     newOrder.setStatus(0);
                     newOrder.setDate(new Date());
 
                     orderService.addOrders(newOrder);
-                    for (Good good: outList) {
+                    for (Good good : outList) {
                         goodService.changeStatus(good.getId(), 0);
 
                     }
 
-                  Cookie  cookie = new Cookie("backetGentl", "");
-                    cookie.setMaxAge(-1);
-                    cookie.setPath("/");
-                    response.addCookie(cookie);
                 }
 
+
+                Cookie cookie = new Cookie("backetGentl", "");
+                cookie.setMaxAge(-1);
+                cookie.setPath("/");
+                response.addCookie(cookie);
             }
 
         }
+
+
+       if(LocaleContextHolder.getLocale().getLanguage().equals("uk"))
+           model.addAttribute("msg", "Замовлення успішно оформлено!");
+       else
+       if(LocaleContextHolder.getLocale().getLanguage().equals("ru"))
+           model.addAttribute("msg", "Заказ успешно оформлен!");
 
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
         return "myorders";
     }
 
-    @RequestMapping(value="{lang}/admin/orders")
-    public String good(ModelMap model, HttpServletResponse response){
+    @RequestMapping(value = "{lang}/admin/orders")
+    public String good(ModelMap model, HttpServletResponse response) {
 
         List<Orders> listOrders = orderService.getAllOrders();
 
 
-        model.addAttribute("ordersData",listOrders );
+        model.addAttribute("ordersData", listOrders);
         Locale locale = LocaleContextHolder.getLocale();
-        if(locale.getLanguage().equals("uk"))
+        if (locale.getLanguage().equals("uk"))
             model.addAttribute("lang_code", "uaText");
-        else
-        if(locale.getLanguage().equals( "ru"))
+        else if (locale.getLanguage().equals("ru"))
             model.addAttribute("lang_code", "ruText");
 
         Cookie cookie = new Cookie("backetGentl", "");
@@ -134,9 +126,8 @@ public class OrderController {
         cookie.setPath("/");
         response.addCookie(cookie);
 
-        for(Orders orders: listOrders)
-            for(Good good: orders.getListGood())
-            {
+        for (Orders orders : listOrders)
+            for (Good good : orders.getListGood()) {
                 goodService.changeStatus(good.getId(), 0);
             }
 
@@ -144,15 +135,15 @@ public class OrderController {
 
     }
 
-    @RequestMapping(value="/{lang}/myorders", method = RequestMethod.GET)
+    @RequestMapping(value = "/{lang}/myorders", method = RequestMethod.GET)
     public String order(ModelMap model, HttpServletRequest request, @PathVariable("lang") String lang) {
-    model.addAttribute("lang", lang);
+        model.addAttribute("lang", lang);
 
         return redirectWithLang(request, "myorders", model, "myorders");
 
     }
 
-    @RequestMapping(value="getByPhone", method = RequestMethod.POST)
+    @RequestMapping(value = "getByPhone", method = RequestMethod.POST)
     public String orderByPhone(ModelMap model, HttpServletRequest request) {
 
 
@@ -161,12 +152,11 @@ public class OrderController {
 
 
         model.addAttribute("count", listOrders.size());
-        model.addAttribute("ordersData",listOrders );
+        model.addAttribute("ordersData", listOrders);
         Locale locale = LocaleContextHolder.getLocale();
-        if(locale.getLanguage().equals("uk"))
+        if (locale.getLanguage().equals("uk"))
             model.addAttribute("lang_code", "uaText");
-        else
-        if(locale.getLanguage().equals( "ru"))
+        else if (locale.getLanguage().equals("ru"))
             model.addAttribute("lang_code", "ruText");
 
         return redirectWithLang(request, "myorders", model, "myorders");

@@ -16,9 +16,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,65 +37,51 @@ public class BasketController {
     @Autowired
     IGoodService goodService;
 
+    boolean isNumber(String inline) {
+        try {
+            Integer.parseInt(inline);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
     @RequestMapping(value = "order/api/getCountBasket", params = {"goodId"})
     public
     @ResponseBody
-    String writeCookie(@CookieValue(value = "backetGentl", required = false) Cookie myCookie, @RequestParam(value = "goodId") String cookieName, HttpServletRequest request, HttpServletResponse response) {
+    String writeCookie(@CookieValue(value = "backetGentl", required = false) Cookie myCookie,
+                       @RequestParam(value = "goodId") String goodId, HttpServletRequest request,
+                       HttpServletResponse response) {
 
-        String strCook = null;
-        int count = 0;
-        if (myCookie != null) {
-            String cook = null;
-            try {
-                cook = URLDecoder.decode(myCookie.getValue(), "UTF-8");
-            } catch (UnsupportedEncodingException e) {
+        List<String> listValue = new ArrayList<String>();
+        if (myCookie != null && myCookie.getValue().length() > 0) {
+            listValue = new ArrayList<String>(Arrays.asList(myCookie.getValue().split("-")));
+        }
 
-                e.printStackTrace();
-            }
+        if (listValue.size() <= 0)
+            listValue.add(goodId);
+        else {
+            boolean flag = false;
 
-            if (!cook.contains(request.getParameter("goodId"))) {
-                if(cook.length() <= 0)
-                    strCook = '['+request.getParameter("goodId") + ']';
-                else
-                if (cook.length() == 3)
-                    strCook = cook.substring(0, 2) + ',' + request.getParameter("goodId") + ']';
-                else
-                {
+            for (String value : listValue)
+                if (value.equals(goodId))
+                    flag = true;
 
-                    strCook = cook.substring(0, cook.length()-1) + ',' + request.getParameter("goodId") + ']';
-                }
-
-
-                Cookie cookie = null;
-                try {
-                    cookie = new Cookie("backetGentl", URLEncoder.encode(strCook, "UTF-8"));
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                cookie.setMaxAge(365 * 24 * 60 * 60);
-                cookie.setPath("/");
-                response.addCookie(cookie);
-
-            }
-            count = StringUtils.countOccurrencesOf(strCook, ",") + 1;
-        } else {
-            strCook = '[' + request.getParameter("goodId") + ']';
-
-            Cookie cookie = null;
-            try {
-                cookie = new Cookie("backetGentl", URLEncoder.encode(strCook, "UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            if (!flag)
+                listValue.add(goodId);
+        }
+        Cookie cookie = null;
+        try {
+            cookie = new Cookie("backetGentl", URLEncoder.encode(String.join("-", listValue), "utf8"));
             cookie.setMaxAge(365 * 24 * 60 * 60);
-           cookie.setPath("/");
+            cookie.setPath("/");
             response.addCookie(cookie);
-            count = 1;
-
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
 
-        return String.valueOf(count);
+        return String.valueOf(listValue.size());
 
 
     }
@@ -102,34 +90,18 @@ public class BasketController {
     public
     @ResponseBody
     String getCookie(@CookieValue(value = "backetGentl", required = false) Cookie myCookie, HttpServletRequest request, HttpServletResponse response) {
+        if (myCookie != null && myCookie.getValue().length() > 0)
+            return String.valueOf(StringUtils.countOccurrencesOf(myCookie.getValue(), "-") + 1);
+        else return "0";
 
-        int count = 0;
-        if (myCookie != null) {
-            String cook = null;
-            try {
-                cook = URLDecoder.decode(myCookie.getValue(), "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-
-                e.printStackTrace();
-            }
-
-
-            if (cook != null && cook.length() > 2 && (cook.contains("[")) && (cook.contains("]")))
-            {
-                count = StringUtils.countOccurrencesOf(cook, ",") + 1;
-            } else count = 0;
-
-        } else count = 0;
-        return String.valueOf(count);
 
     }
 
 
     static String getCountBasket(HttpServletRequest request) {
-        int count = 0;
+
         Cookie[] cookies = request.getCookies();
-        if(cookies != null)
-        {
+        if (cookies != null) {
             Cookie myCookie = null;
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("backetGentl")) {
@@ -140,70 +112,36 @@ public class BasketController {
             }
 
 
-            if (myCookie != null) {
-                String cook = null;
-                try {
-                    cook = URLDecoder.decode(myCookie.getValue(), "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-
-                    e.printStackTrace();
-                }
-
-                if (cook != null && cook.length() > 2 && (cook.contains("[")) && (cook.contains("]")))
-                {
-                    count = StringUtils.countOccurrencesOf(cook, ",") + 1;
-                } else count = 0;
-
-            } else count = 0;
-
-        }
-
-        return String.valueOf(count);
+            if (myCookie != null && myCookie.getValue().length() > 0)
+                return String.valueOf(StringUtils.countOccurrencesOf(myCookie.getValue(), "-") + 1);
+            else return "0";
+        } else return "0";
 
     }
 
 
     @RequestMapping(value = "/{lang}/shopping-cart", method = RequestMethod.GET)
-    public String shopCart(ModelMap model, HttpServletRequest request, HttpServletResponse response,
+    public String shopCart(@CookieValue(value = "backetGentl", required = false) Cookie myCookie,
+                           ModelMap model, HttpServletRequest request, HttpServletResponse response,
                            @PathVariable("lang") String lang) {
-        Cookie[] cookies = request.getCookies();
-        Cookie myCookie = null;
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("backetGentl")) {
-                myCookie = cookie;
-                break;
-            }
 
-        }
         int count = 0;
-        if (myCookie != null) {
-            String cook = null;
-            try {
-                cook = URLDecoder.decode(myCookie.getValue(), "UTF-8");
-            } catch (UnsupportedEncodingException e) {
+        if (myCookie != null && myCookie.getValue().length() > 0) {
+            List<String> listValue = new ArrayList<String>();
+            listValue = new ArrayList<String>(Arrays.asList(myCookie.getValue().split("-")));
+            if (listValue.size() > 0) {
+                List<Good> outList = null;
+                List<Integer> list2 = new ArrayList<Integer>();
+                for (String str : listValue)
+                    list2.add(Integer.valueOf(str));
 
-                e.printStackTrace();
-            }
-
-            ArrayList<Integer>listBasket = new ArrayList<Integer>();
-            if (cook != null && cook.length() > 0) {
-
-                String str = cook.substring(1,cook.length()-1);
-                str = str.replaceAll(" ","");
-               String []ar = str.split(",");
-                for (String ch: ar) {
-                    listBasket.add( Integer.parseInt(ch));
-                }
-
-
-                List<Good> outList = goodService.getListGoods(listBasket);
-
+                outList = goodService.getListGoods(list2);
                 model.addAttribute("listBasket", outList);
-                count = listBasket.size();
+                count = listValue.size();
             } else count = 0;
 
+        } else count = 0;
 
-        }
 
         model.addAttribute("countInBasket", count);
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
@@ -217,56 +155,37 @@ public class BasketController {
     public String deleteFrom(@CookieValue(value = "backetGentl", required = false) Cookie myCookie,
                              ModelMap model, HttpServletRequest request, HttpServletResponse response) {
         int count = 0;
-        if (myCookie != null) {
-            String cook = null;
+
+        if (myCookie != null && myCookie.getValue().length() > 0) {
+            List<String> listValue = new ArrayList<String>();
+            listValue = new ArrayList<String>(Arrays.asList(myCookie.getValue().split("-")));
+
+            listValue.remove(request.getParameter("id"));
+
+            Cookie cookie = null;
             try {
-                cook = URLDecoder.decode(myCookie.getValue(), "UTF-8");
+                cookie = new Cookie("backetGentl", URLEncoder.encode(String.join("-", listValue), "utf8"));
+                cookie.setMaxAge(365 * 24 * 60 * 60);
+                cookie.setPath("/");
+                response.addCookie(cookie);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            if (cook.length() <= 3) {
-                //remove cookie
-                Cookie cookie = new Cookie("backetGentl", "");
-                cookie.setMaxAge(-1);
-                cookie.setPath("/");
-                response.addCookie(cookie);
-            } else {
-                String strCook = null;
-                String id = request.getParameter("id");
-                ArrayList<Integer> listBasket = new ArrayList<Integer>();
-                if (cook != null && cook.length() > 0) {
-                    String str = cook.substring(1, cook.length() - 1);
-                    str = str.replaceAll(" ", "");
-                    String[] ar = str.split(",");
-                    for (String ch : ar)
-                        listBasket.add(Integer.valueOf(ch));
 
-                    listBasket.remove(listBasket.indexOf(Integer.valueOf(id)));
-                    strCook = listBasket.toString();
-                }
+            if (listValue.size() > 0) {
+                List<Good> outList = null;
+                List<Integer> list2 = new ArrayList<Integer>();
+                for (String str : listValue)
+                    list2.add(Integer.valueOf(str));
 
-                Cookie cookie = null;
-                if (listBasket.size() > 0) {
-                    try {
-                        cookie = new Cookie("backetGentl", URLEncoder.encode(strCook, "UTF-8"));
-                        cookie.setMaxAge(365 * 24 * 60 * 60);
-                        cookie.setPath("/");
-                        response.addCookie(cookie);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    cookie = new Cookie("backetGentl", "");
-                    cookie.setMaxAge(-1);
-                    cookie.setPath("/");
-                    response.addCookie(cookie);
-                }
-                List<Good> outList = goodService.getListGoods(listBasket);
+                outList = goodService.getListGoods(list2);
                 model.addAttribute("listBasket", outList);
-                 count = listBasket.size();
-            }
+                count = listValue.size();
+            } else count = 0;
 
-        }
+
+        } else count = 0;
+
 
         model.addAttribute("countInBasket", count);
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());

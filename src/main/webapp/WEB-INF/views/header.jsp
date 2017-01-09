@@ -53,8 +53,8 @@
 
                         </c:if>
                         <c:if test="${pageContext.request.getParameter('id') != null}">
-                            <li><a href="${pageContext.request.contextPath}?lang=uk&${pageContext.request.queryString}"><img class="flag" src="<c:url value="/resources/images/ukraine-flag.png"/>" ></a></li>
-                            <li><a href="${pageContext.request.contextPath}?lang=ru&${pageContext.request.queryString}"><img class="flag" src="<c:url value="/resources/images/rus-flag.png"/>" ></a></li>
+                            <li><a href="${pageContext.request.contextPath}?lang=uk&${pageContext.request.queryString}"><img class="flag" src="<c:url value="/resources/images/ukraine-flag1.png"/>" ></a></li>
+                            <li><a href="${pageContext.request.contextPath}?lang=ru&${pageContext.request.queryString}"><img class="flag" src="<c:url value="/resources/images/rus-flag.png1"/>" ></a></li>
 
                         </c:if>
                          <c:if test="${pageContext.request.userPrincipal.name != null}">

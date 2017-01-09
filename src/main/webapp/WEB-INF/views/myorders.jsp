@@ -26,7 +26,9 @@
     <jsp:include page="header.jsp" />
     <div class="mainContent">
         <div class="topBox">
+            <h2>${msg}</h2>
             <div class="whiteBack">
+
         <h1><spring:message code="searchByPhone"/></h1>
         <form:form cssClass="form-horizontal" action="/getByPhone" id="formNewOrder" method="post" commandName="phone">
             <div class="form-group">
