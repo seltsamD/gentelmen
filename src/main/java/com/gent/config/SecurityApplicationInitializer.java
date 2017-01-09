@@ -10,12 +10,11 @@ import javax.servlet.ServletContext;
 /**
  * Created by daria on 27.10.2016.
  */
-public class SecurityApplicationInitializer  extends AbstractSecurityWebApplicationInitializer {
+public class SecurityApplicationInitializer extends AbstractSecurityWebApplicationInitializer {
 
     @Override
     protected void beforeSpringSecurityFilterChain(ServletContext servletContext) {
         insertFilters(servletContext, new CharacterFilter());
         insertFilters(servletContext, new MultipartFilter());
-
     }
 }

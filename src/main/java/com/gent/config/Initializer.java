@@ -1,4 +1,5 @@
 package com.gent.config;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -11,7 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
 
 
-public class  Initializer implements WebApplicationInitializer{
+public class Initializer implements WebApplicationInitializer {
     @Autowired
 
 

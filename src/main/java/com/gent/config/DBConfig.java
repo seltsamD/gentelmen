@@ -1,6 +1,7 @@
 package com.gent.config;
 
 import javax.sql.DataSource;
+
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import java.io.IOException;
 import java.util.Properties;
 
@@ -24,10 +26,12 @@ import java.util.Properties;
 public class DBConfig {
     @Autowired
     private Environment env;
+
     @Bean
     public HibernateTemplate hibernateTemplate() { //РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Р№ РєР»Р°СЃСЃ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ hibernate-РјРµС‚РѕРґРѕРІ
         return new HibernateTemplate(sessionFactory());
     }
+
     @Bean
     public SessionFactory sessionFactory() {
         LocalSessionFactoryBean lsfb = new LocalSessionFactoryBean();
@@ -44,7 +48,6 @@ public class DBConfig {
 
     @Bean
     public DataSource getDataSource() {
-
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(env.getProperty("database.driver"));
         dataSource.setUrl(env.getProperty("database.url"));
@@ -52,10 +55,12 @@ public class DBConfig {
         dataSource.setPassword(env.getProperty("database.password"));
         return dataSource;
     }
+
     @Bean
-    public HibernateTransactionManager hibTransMan(){
+    public HibernateTransactionManager hibTransMan() {
         return new HibernateTransactionManager(sessionFactory());
     }
+
     private Properties hibernateProperties() {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
@@ -64,8 +69,6 @@ public class DBConfig {
         properties.put("hibernate.connection.CharSet", "UTF-8");
         properties.put("hibernate.connection.useUnicode", true);
         properties.put("hibernate.connection.characterEncoding", "UTF-8");
-
-
         properties.put("mapping.class", "com.gent.model.Orders");
         properties.put("mapping.class", "com.gent.model.Good");
         return properties;

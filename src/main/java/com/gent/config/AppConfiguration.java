@@ -23,6 +23,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import javax.annotation.PostConstruct;
 import javax.servlet.MultipartConfigElement;
 import java.util.Locale;
+
 /**
  * Created by daria on 30.09.2016.
  */
@@ -49,12 +50,13 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public CommonsMultipartResolver multipartResolver(){
+    public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
         multipartResolver.setDefaultEncoding("UTF-8");
         multipartResolver.setMaxUploadSize(-1);
         return multipartResolver;
     }
+
     @Autowired
     private RequestMappingHandlerAdapter requestMappingHandlerAdapter;
 
@@ -63,8 +65,9 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
     public void init() {
         requestMappingHandlerAdapter.setIgnoreDefaultModelOnRedirect(true);
     }
+
     @Bean
-    public InternalResourceViewResolver viewResolver(){
+    public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setPrefix("/WEB-INF/views/");
         resolver.setSuffix(".jsp");
@@ -73,7 +76,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public MessageSource messageSource(){
+    public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("/i18/usermsg");
         messageSource.setDefaultEncoding("UTF-8");
@@ -82,7 +85,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
 
 
     @Bean
-    public LocaleResolver localeResolver(){
+    public LocaleResolver localeResolver() {
         CookieLocaleResolver resolver = new CookieLocaleResolver();
         resolver.setDefaultLocale(new Locale("ru"));
         resolver.setCookieName("localeCookie");
@@ -92,7 +95,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry){
+    public void addInterceptors(InterceptorRegistry registry) {
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
         interceptor.setParamName("lang");
         registry.addInterceptor(interceptor);
@@ -102,13 +105,11 @@ public class AppConfiguration extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/WEB-INF/resources/");
-        //        registry.addResourceHandler("/images/**").addResourceLocations("file:///home/daria/gent/goods/");
-       registry.addResourceHandler("/images/**").addResourceLocations(urlReadImages);
-       registry.addResourceHandler("/robots.txt").addResourceLocations(urlReadImages+"/robots.txt");
-        registry.addResourceHandler("/sitemap.xml").addResourceLocations(urlReadImages+"/sitemap.xml");
+        registry.addResourceHandler("/images/**").addResourceLocations(urlReadImages);
+        registry.addResourceHandler("/robots.txt").addResourceLocations(urlReadImages + "/robots.txt");
+        registry.addResourceHandler("/sitemap.xml").addResourceLocations(urlReadImages + "/sitemap.xml");
 
     }
-
 
 
 }
