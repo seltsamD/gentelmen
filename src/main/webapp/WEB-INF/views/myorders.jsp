@@ -21,11 +21,10 @@
 
 
 <script  async src="<c:url value="/resources/js/jquery.maskedinput.min.js" />" type="text/javascript"></script>
-<jsp:include page="header.jsp" />
-<body>
-
 <div class="container">
-    <div class="main">
+
+    <jsp:include page="header.jsp" />
+    <div class="mainContent">
         <div class="topBox">
             <div class="whiteBack">
         <h1><spring:message code="searchByPhone"/></h1>

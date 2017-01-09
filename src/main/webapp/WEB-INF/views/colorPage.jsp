@@ -28,10 +28,10 @@
     </script>
 </head>
 <body>
-<jsp:include page="header.jsp" />
-
 <div class="container">
-    <div class="main">
+
+    <jsp:include page="header.jsp" />
+    <div class="mainContent">
 
         <div class="topBox">
             <div class="whiteBack">

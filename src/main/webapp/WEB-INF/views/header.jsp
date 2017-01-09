@@ -11,7 +11,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
-    <link href="https://fonts.googleapis.com/css?family=Merriweather|Pattaya|Playfair+Display+SC" rel="stylesheet">
         <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
         <link href="<c:url value="/resources/css/site.css" />" rel="stylesheet">
     <header>

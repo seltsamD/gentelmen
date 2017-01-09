@@ -3,10 +3,10 @@
     src: url("Oranienbaum-Regular.ttf");
 }
 body{
-    background: url("background2.jpg")center fixed;
-    background-size: cover;
+    background: url("background2.jpg")  no-repeat fixed center center / cover;
     font-size: 10pt;
     min-width: 240px;
+    height: 100%;
 }
 .container{
     font-family: "Baskerville Old Face";
@@ -20,8 +20,8 @@ h1, .h1{
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px) {
     body {
-        background: url("miniBack.jpg") center fixed;
-        background-size: cover;
+        background: url("miniBack.jpg")  no-repeat fixed center center / cover;
+        height: 100%;
         font-size: 10pt;
     }
 
