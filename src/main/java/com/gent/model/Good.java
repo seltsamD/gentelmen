@@ -140,36 +140,6 @@ public class Good implements Serializable{
         this.uaText = uaText;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//
-//        Good good = (Good) o;
-//
-//        if (id != good.id) return false;
-//        if (price != good.price) return false;
-//        if (countImg != good.countImg) return false;
-//        if (status != good.status) return false;
-//        if (!firm.equals(good.firm)) return false;
-//        if (color.getId() != (good.color.getId())) return false;
-//        if (category.getId() != (good.category.getId())) return false;
-//        return uaText.equals(good.uaText);
-//
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        int result = id;
-//        result = 31 * result + firm.hashCode();
-//        result = 31 * result + color.getId();
-//        result = 31 * result + category.getId();
-//        result = 31 * result + price;
-//        result = 31 * result + size.hashCode();
-//        result = 31 * result + countImg;
-//        return result;
-//    }
-//
     @Override
     public String toString() {
         return "Good{" +

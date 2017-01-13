@@ -34,8 +34,28 @@ $(document).ready(function() {
 
 
    
-}); 
+});
 
+$(document).ready(function() {
+    $.ajax({
+        contentType : 'application/json; charset=utf-8',
+        type : "GET",
+        url : "/order/api/getBasket",
+        dataType : 'json',
+
+        success : function(data) {
+            var jsonData = jQuery.parseJSON(data); // $.parseJSON(data);
+            $('#cartDiv').text(data);
+            console.log(data);
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {alert("ERROR:" + xhr.responseText+" - "+thrownError)},
+
+        done : function(e) {
+            console.log("DONE");
+        }
+    });
+});
 $(document).ready(function() {
 
     /* This is basic - uses default settings */
@@ -60,25 +80,6 @@ $(document).ready(function() {
 
 });
 
-$(document).ready(function() {
-    $.ajax({
-        contentType : 'application/json; charset=utf-8',
-        type : "GET",
-        url : "/order/api/getBasket",
-        dataType : 'json',
-    
-        success : function(data) {
-          var jsonData = jQuery.parseJSON(data); // $.parseJSON(data);
-          $('#cartDiv').text(data);
-           
-        },
-        error: function (xhr, ajaxOptions, thrownError) {alert("ERROR:" + xhr.responseText+" - "+thrownError)},
-    
-        done : function(e) {
-            console.log("DONE");
-        }
-    });
-});
 
 
 function tobasket(id) {

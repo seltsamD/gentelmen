@@ -135,7 +135,7 @@
                             <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
                                 <div class="panel-body">
                                     <p id="amount"></p>
-                                    <div id="slider-range"></div>
+                                    <div id="slider-range2"></div>
 
                                     <%--<form:form id="priceRange" action="/${lang}/catalogue/priceRange" method="POST">--%>
                                     <input type="hidden" id="amount1" name="amount1" />
@@ -163,63 +163,58 @@
                     <div class="row">
                         <c:forEach var="obj" items="${allData}">
                             <article>
-                            <div class="col-xs-6 col-sm-3 back" >
-                                <div class="infoBox">
-                                    <table id="table-index">
-                                        <tbody itemscope itemtype="http://schema.org/Product">
-                                        <tr>
-                                            <th>
+                                <div class="col-xs-6 col-sm-3 back">
+                                    <div class="infoBox">
+                                        <c:if test="${lang == 'uk'}">
+
+                                            <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.uaText}-${obj.firm}-${obj.color.uaText}/${obj.id}"><img
+                                                    itemprop="image" src="<c:url value="/images/${obj.id}_0_mini.jpg"/>"
+                                                    alt="${obj.firm} ${obj.category.uaText} ${obj.color.uaText}"/></a>
+                                        </c:if>
+                                        <c:if test="${lang == 'ru'}">
+                                            <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.ruText}-${obj.firm}-${obj.color.ruText}/${obj.id}"><img
+                                                    itemprop="image" src="<c:url value="/images/${obj.id}_0_mini.jpg"/>"
+                                                    alt="${obj.firm} ${obj.category.ruText} ${obj.color.ruText}"/></a>
+                                        </c:if>
+                                        <div class="priceInfo">
+                                            <p>
                                                 <c:if test="${lang == 'uk'}">
 
-                                                    <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.uaText}-${obj.firm}-${obj.color.uaText}/${obj.id}"><img itemprop="image"  src="<c:url value="/images/${obj.id}_0_mini.jpg"/>" alt="${obj.firm} ${obj.category.uaText} ${obj.color.uaText}"/></a>
+                                                    <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.uaText}-${obj.firm}-${obj.color.uaText}/${obj.id}">
+                                                        <span itemprop="name"><c:out
+                                                                value="${obj.category.uaText}"/></span>
+                                                    <span itemprop="brand" itemscope itemtype="http://schema.org/Brand">
+                                                    <span itemprop="name"><c:out value="${obj.firm}"/> </span>
+                                                    </span>
+                                                    </a>
                                                 </c:if>
                                                 <c:if test="${lang == 'ru'}">
-                                                    <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.ruText}-${obj.firm}-${obj.color.ruText}/${obj.id}"><img itemprop="image"  src="<c:url value="/images/${obj.id}_0_mini.jpg"/>" alt="${obj.firm} ${obj.category.ruText} ${obj.color.ruText}"/></a>
+                                                    <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.ruText}-${obj.firm}-${obj.color.ruText}/${obj.id}">
+                                                        <span itemprop="name"><c:out
+                                                                value="${obj.category.ruText}"/></span>
+                                                    <span itemprop="brand" itemscope itemtype="http://schema.org/Brand">
+                                                    <span itemprop="name"><c:out value="${obj.firm}"/> </span>
+                                                    </span>
+                                                    </a>
                                                 </c:if>
+                                            </p>
+                                        <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                        <p itemprop="price" class="price">${obj.price}грн.</p>
+                                        </span>
+                                            <div class="btnForm">
+                                                <form:form id="baskForm${obj.id}" action="addToBasket" method="POST">
+                                                    <input type="hidden" name="goodId" value="${obj.id}">
+                                                    <input type="button" onclick="tobasket(${obj.id})"
+                                                           value="<spring:message code="basket.add"/>"
+                                                           id="btn-basket-add"
+                                                           class="btn btn-success">
+                                                </form:form>
+                                            </div>
+                                        </div>
 
-
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="priceInfo">
-                                                    <p>
-                                                        <c:if test="${lang == 'uk'}">
-
-                                                            <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.uaText}-${obj.firm}-${obj.color.uaText}/${obj.id}">
-                                                                <span itemprop="name"><c:out value="${obj.category.uaText}"/></span>
-                                                <span itemprop="brand" itemscope itemtype="http://schema.org/Brand">
-                                                    <span itemprop="name"><c:out value="${obj.firm}"/> </span>
-                                                </span>
-                                                            </a>
-                                                        </c:if>
-                                                        <c:if test="${lang == 'ru'}">
-                                                            <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.ruText}-${obj.firm}-${obj.color.ruText}/${obj.id}">
-                                                                <span itemprop="name"><c:out value="${obj.category.ruText}"/></span>
-                                                <span itemprop="brand" itemscope itemtype="http://schema.org/Brand">
-                                                    <span itemprop="name"><c:out value="${obj.firm}"/> </span>
-                                                </span>
-                                                            </a>
-                                                        </c:if>
-                                                    </p>
-                                       <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                                           <p itemprop="price"  class="price">${obj.price}грн.</p>
-                                       </span>
-
-                                                    <form:form id="baskForm${obj.id}" action="addToBasket" method="POST">
-                                                        <input type="hidden" name="goodId" value="${obj.id}">
-                                                        <input type="button" onclick="tobasket(${obj.id})" value="<spring:message code="basket.add"/>" id="btn-basket-add" class="btn btn-success">
-                                                    </form:form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                        <%--<div class="infoBox">--%>
+                                    </div>
 
                                 </div>
-
-                            </div>
                             </article>
                         </c:forEach>
 
@@ -239,7 +234,7 @@
 <link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/jquery.fancybox.css" />" rel="stylesheet">
 <script  src="<c:url value="/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
-
+<script src="<c:url value="/resources/js/jquery-ui.js" />" type="text/javascript"></script>
 <script   src="<c:url value="/resources/js/bootstrap.min.js" />" type="text/javascript"></script>
 
 <script   src="<c:url value="/resources/js/jquery.fancybox.pack.js" />" type="text/javascript"></script>
@@ -258,7 +253,7 @@
 <script type="text/javascript">
 
     $(function() {
-        $( "#slider-range" ).slider({
+        $( "#slider-range2" ).slider({
             range: true,
             min: ${minPrice},
             max: ${maxPrice},
@@ -269,8 +264,8 @@
                 $( "#amount2" ).val(ui.values[ 1 ]);
             }
         });
-        $( "#amount" ).html( $( "#slider-range" ).slider( "values", 0 ) +
-                "грн. - " + $( "#slider-range" ).slider( "values", 1 ) )+"грн.";
+        $( "#amount" ).html( $( "#slider-range2" ).slider( "values", 0 ) +
+                "грн. - " + $( "#slider-range2" ).slider( "values", 1 ) )+"грн.";
     });
 </script>
 

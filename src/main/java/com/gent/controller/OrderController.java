@@ -45,28 +45,21 @@ public class OrderController {
     IGoodService goodService;
 
     @RequestMapping(value = "addToBasket", method = RequestMethod.POST)
-    public void addToBasket(ModelMap model, HttpServletResponse response, HttpServletRequest request, @RequestParam("goodId") String goodId) throws UnsupportedEncodingException {
+    public void addToBasket(ModelMap model, HttpServletResponse response, HttpServletRequest request,
+                            @RequestParam("goodId") String goodId) throws UnsupportedEncodingException {
 
 
     }
 
     @RequestMapping(value = "/{lang}/newOrder", method = RequestMethod.POST)
     public String addColor(@ModelAttribute("order") @Valid Orders newOrder, BindingResult result,
+                           @CookieValue(value = "cart", required = false) Cookie myCookie,
                            ModelMap model, HttpServletRequest request, HttpServletResponse response) {
         if (!result.hasErrors()) {
-            Cookie[] cookies = request.getCookies();
-            Cookie myCookie = null;
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("backetGentl")) {
-                    myCookie = cookie;
-                    break;
-                }
 
-            }
             if (myCookie != null && myCookie.getValue().length() > 0) {
                 List<String> listValue = new ArrayList<String>();
                 listValue = new ArrayList<String>(Arrays.asList(myCookie.getValue().split("-")));
-
 
                 if (listValue.size() > 0) {
                     List<Good> outList = null;
@@ -89,20 +82,21 @@ public class OrderController {
                 }
 
 
-                Cookie cookie = new Cookie("backetGentl", "");
+                Cookie cookie = new Cookie("cart", "");
                 cookie.setMaxAge(-1);
                 cookie.setPath("/");
                 response.addCookie(cookie);
             }
 
+            if (LocaleContextHolder.getLocale().getLanguage().equals("uk"))
+                model.addAttribute("msg", "Замовлення успішно оформлено!");
+            else if (LocaleContextHolder.getLocale().getLanguage().equals("ru"))
+                model.addAttribute("msg", "Заказ успешно оформлен!");
+
         }
 
 
-       if(LocaleContextHolder.getLocale().getLanguage().equals("uk"))
-           model.addAttribute("msg", "Замовлення успішно оформлено!");
-       else
-       if(LocaleContextHolder.getLocale().getLanguage().equals("ru"))
-           model.addAttribute("msg", "Заказ успешно оформлен!");
+
 
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
         return "myorders";
@@ -121,7 +115,7 @@ public class OrderController {
         else if (locale.getLanguage().equals("ru"))
             model.addAttribute("lang_code", "ruText");
 
-        Cookie cookie = new Cookie("backetGentl", "");
+        Cookie cookie = new Cookie("cart", "");
         cookie.setMaxAge(-1);
         cookie.setPath("/");
         response.addCookie(cookie);
@@ -143,7 +137,7 @@ public class OrderController {
 
     }
 
-    @RequestMapping(value = "getByPhone", method = RequestMethod.POST)
+    @RequestMapping(value = "/{lang}/getByPhone", method = RequestMethod.POST)
     public String orderByPhone(ModelMap model, HttpServletRequest request) {
 
 
@@ -155,9 +149,9 @@ public class OrderController {
         model.addAttribute("ordersData", listOrders);
         Locale locale = LocaleContextHolder.getLocale();
         if (locale.getLanguage().equals("uk"))
-            model.addAttribute("lang_code", "uaText");
+            model.addAttribute("lang", "uk");
         else if (locale.getLanguage().equals("ru"))
-            model.addAttribute("lang_code", "ruText");
+            model.addAttribute("lang", "ru");
 
         return redirectWithLang(request, "myorders", model, "myorders");
 

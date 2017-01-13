@@ -49,7 +49,7 @@ public class BasketController {
     @RequestMapping(value = "order/api/getCountBasket", params = {"goodId"})
     public
     @ResponseBody
-    String writeCookie(@CookieValue(value = "backetGentl", required = false) Cookie myCookie,
+    String writeCookie(@CookieValue(value = "cart", required = false) Cookie myCookie,
                        @RequestParam(value = "goodId") String goodId, HttpServletRequest request,
                        HttpServletResponse response) {
 
@@ -72,7 +72,7 @@ public class BasketController {
         }
         Cookie cookie = null;
         try {
-            cookie = new Cookie("backetGentl", URLEncoder.encode(String.join("-", listValue), "utf8"));
+            cookie = new Cookie("cart", URLEncoder.encode(String.join("-", listValue), "utf8"));
             cookie.setMaxAge(365 * 24 * 60 * 60);
             cookie.setPath("/");
             response.addCookie(cookie);
@@ -89,7 +89,7 @@ public class BasketController {
     @RequestMapping(value = "order/api/getBasket")
     public
     @ResponseBody
-    String getCookie(@CookieValue(value = "backetGentl", required = false) Cookie myCookie, HttpServletRequest request, HttpServletResponse response) {
+    String getCookie(@CookieValue(value = "cart", required = false) Cookie myCookie, HttpServletRequest request, HttpServletResponse response) {
         if (myCookie != null && myCookie.getValue().length() > 0)
             return String.valueOf(StringUtils.countOccurrencesOf(myCookie.getValue(), "-") + 1);
         else return "0";
@@ -104,7 +104,7 @@ public class BasketController {
         if (cookies != null) {
             Cookie myCookie = null;
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("backetGentl")) {
+                if (cookie.getName().equals("cart")) {
                     myCookie = cookie;
                     break;
                 }
@@ -121,7 +121,7 @@ public class BasketController {
 
 
     @RequestMapping(value = "/{lang}/shopping-cart", method = RequestMethod.GET)
-    public String shopCart(@CookieValue(value = "backetGentl", required = false) Cookie myCookie,
+    public String shopCart(@CookieValue(value = "cart", required = false) Cookie myCookie,
                            ModelMap model, HttpServletRequest request, HttpServletResponse response,
                            @PathVariable("lang") String lang) {
 
@@ -152,7 +152,7 @@ public class BasketController {
     }
 
     @RequestMapping(value = "/{lang}/shopping-cart/deleteFromBasket")
-    public String deleteFrom(@CookieValue(value = "backetGentl", required = false) Cookie myCookie,
+    public String deleteFrom(@CookieValue(value = "cart", required = false) Cookie myCookie,
                              ModelMap model, HttpServletRequest request, HttpServletResponse response) {
         int count = 0;
 
@@ -164,7 +164,7 @@ public class BasketController {
 
             Cookie cookie = null;
             try {
-                cookie = new Cookie("backetGentl", URLEncoder.encode(String.join("-", listValue), "utf8"));
+                cookie = new Cookie("cart", URLEncoder.encode(String.join("-", listValue), "utf8"));
                 cookie.setMaxAge(365 * 24 * 60 * 60);
                 cookie.setPath("/");
                 response.addCookie(cookie);

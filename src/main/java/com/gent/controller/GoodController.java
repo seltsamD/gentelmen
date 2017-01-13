@@ -1,12 +1,8 @@
 package com.gent.controller;
 
-import com.gent.config.AppConfiguration;
-import com.gent.model.Color;
-import com.gent.model.Description;
 import com.gent.model.Good;
 import com.gent.service.ICategoryService;
 import com.gent.service.IColorService;
-import com.gent.service.IDescriptionService;
 import com.gent.service.IGoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -26,8 +22,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
-
-
 import java.net.URLEncoder;
 import java.util.Locale;
 
@@ -53,25 +47,22 @@ public class GoodController {
     @Autowired
     private ICategoryService categoryService;
     @Autowired
-    private IDescriptionService descriptionService;
-    @Autowired
+
     ServletContext servletContext;
-    @RequestMapping(value="/admin/goodform")
-    public String good(ModelMap model, HttpServletRequest request){
 
-        model.addAttribute("good",new Good());
+    @RequestMapping(value = "/admin/goodform")
+    public String good(ModelMap model, HttpServletRequest request) {
+        model.addAttribute("good", new Good());
         model.addAttribute("allData", goodService.getAllGoods());
-
         setPageData(model);
-        return "goodform"; //call function for redirect
+        return "goodform";
 
     }
 
-    @RequestMapping(value="/admin/addGood", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/addGood", method = RequestMethod.POST)
     public String addGood(@ModelAttribute("good") @Valid Good good, BindingResult result,
-                            ModelMap model, HttpServletRequest request,  @RequestParam("file") MultipartFile[] files) {
-        if(!result.hasErrors()) {
-
+                          ModelMap model, HttpServletRequest request, @RequestParam("file") MultipartFile[] files) {
+        if (!result.hasErrors()) {
 
 
             good.setColor(colorService.getColorById(good.getColor().getId()));
@@ -79,24 +70,17 @@ public class GoodController {
             good.setStatus(1);
             boolean flag = goodService.addGood(good);
             model.addAttribute(new Good());
-            String fileName = null;
-            String msg = "";
-
 
             if (files.length > 0) {
-                for(int i =0 ;i< files.length; i++){
+                for (int i = 0; i < files.length; i++) {
                     try {
-                        fileName = files[i].getOriginalFilename();
+
                         byte[] bytes = files[i].getBytes();
-
-//                        String path = "C:/jav/i18n/goods/";
-
-//                        String path = "/home/daria/gent/goods/";
+                        String path = "/home/daria/gent/goods/";
                         BufferedOutputStream buffStream =
-                                new BufferedOutputStream(new FileOutputStream(new File(urlWriteImages + good.getId()+"_"+i+".jpg")));
+                                new BufferedOutputStream(new FileOutputStream(new File(urlWriteImages + good.getId() + "_" + i + ".jpg")));
                         buffStream.write(bytes);
                         buffStream.close();
-
 
 
                     } catch (Exception e) {
@@ -112,58 +96,54 @@ public class GoodController {
         return "goodform";
 
     }
-    @RequestMapping(value="/{lang}/good/{category}-{firm}-{color}/{id}", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/{lang}/good/{category}-{firm}-{color}/{id}", method = RequestMethod.GET)
     public String getInfoGood(ModelMap model, HttpServletRequest request, @PathVariable("lang") String lang
             , @PathVariable("category") String category, @PathVariable("firm") String firm,
                               @PathVariable("color") String color, @PathVariable("id") int id) {
 
         Good good = goodService.getGoodById(id);
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
-        model.addAttribute("info",good);
+        model.addAttribute("info", good);
         setPageData(model);
-        String url2 ="";
+        String url2 = "";
         String altUrl = "";
         String description = "";
         boolean flag = false;
         String title = "";
-        if(request.getParameter("lang") != null)
-            if(request.getParameter("lang").equals("uk")) {
+        if (request.getParameter("lang") != null)
+            if (request.getParameter("lang").equals("uk")) {
                 lang = "uk";
                 flag = true;
-            }
-            else
-            if(request.getParameter("lang").equals("ru")) {
+            } else if (request.getParameter("lang").equals("ru")) {
                 lang = "ru";
                 flag = true;
             }
 
-        if (lang.equals("uk"))
-        {
+        if (lang.equals("uk")) {
             try {
 
-                altUrl = "good/"+URLEncoder.encode(good.getCategory().getRuText().replaceAll(" ", "-"), "UTF-8")+"-"+good.getFirm().replaceAll(" ", "-")+"-"+URLEncoder.encode(good.getColor().getRuText(), "UTF-8")+"/"+good.getId();
-                description = good.getCategory().getUaText() + " фірми "+good.getFirm()+" придбати за низькою ціною з доставкою. "+good.getColor().getUaText()+" колір, розмір "+good.getSize();
-                if(flag)
-                    url2 = "good/"+URLEncoder.encode(good.getCategory().getUaText().replaceAll(" ", "-"), "UTF-8")+"-"+good.getFirm().replaceAll(" ", "-")+"-"+URLEncoder.encode(good.getColor().getUaText(), "UTF-8")+"/"+good.getId();
+                altUrl = "good/" + URLEncoder.encode(good.getCategory().getRuText().replaceAll(" ", "-"), "UTF-8") + "-" + good.getFirm().replaceAll(" ", "-") + "-" + URLEncoder.encode(good.getColor().getRuText(), "UTF-8") + "/" + good.getId();
+                description = good.getCategory().getUaText() + " фірми " + good.getFirm() + " придбати за низькою ціною з доставкою. " + good.getColor().getUaText() + " колір, розмір " + good.getSize();
+                if (flag)
+                    url2 = "good/" + URLEncoder.encode(good.getCategory().getUaText().replaceAll(" ", "-"), "UTF-8") + "-" + good.getFirm().replaceAll(" ", "-") + "-" + URLEncoder.encode(good.getColor().getUaText(), "UTF-8") + "/" + good.getId();
                 else url2 = "goodInfo";
-                title = "Купити "+good.getCategory().getUaText()+" "+good.getFirm()+" "+good.getColor().getUaText()+" у інтернет-магазині джентльмен.in.ua";
+                title = "Купити " + good.getCategory().getUaText() + " " + good.getFirm() + " " + good.getColor().getUaText() + " у інтернет-магазині джентльмен.in.ua";
 
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
 
 
-        }else
-        if (lang.equals("ru"))
-        {
+        } else if (lang.equals("ru")) {
 
             try {
-                altUrl = "good/"+URLEncoder.encode(good.getCategory().getUaText().replaceAll(" ", "-"), "UTF-8")+"-"+good.getFirm().replaceAll(" ", "-")+"-"+URLEncoder.encode(good.getColor().getUaText(), "UTF-8")+"/"+good.getId();
-                description = good.getCategory().getRuText() + " фирмы "+URLEncoder.encode(good.getFirm(), "UTF-8")+" купить по низкой цене. "+good.getColor().getRuText()+" цвет, размер "+URLEncoder.encode(good.getSize(), "UTF-8");
-                if(flag)
-                    url2 = "good/"+URLEncoder.encode(good.getCategory().getRuText().replaceAll(" ", "-"), "UTF-8")+"-"+good.getFirm().replaceAll(" ", "-")+"-"+URLEncoder.encode(good.getColor().getRuText(), "UTF-8")+"/"+good.getId();
+                altUrl = "good/" + URLEncoder.encode(good.getCategory().getUaText().replaceAll(" ", "-"), "UTF-8") + "-" + good.getFirm().replaceAll(" ", "-") + "-" + URLEncoder.encode(good.getColor().getUaText(), "UTF-8") + "/" + good.getId();
+                description = good.getCategory().getRuText() + " фирмы " + URLEncoder.encode(good.getFirm(), "UTF-8") + " купить по низкой цене. " + good.getColor().getRuText() + " цвет, размер " + URLEncoder.encode(good.getSize(), "UTF-8");
+                if (flag)
+                    url2 = "good/" + URLEncoder.encode(good.getCategory().getRuText().replaceAll(" ", "-"), "UTF-8") + "-" + good.getFirm().replaceAll(" ", "-") + "-" + URLEncoder.encode(good.getColor().getRuText(), "UTF-8") + "/" + good.getId();
                 else url2 = "goodInfo";
-                title = "Купить "+good.getCategory().getRuText()+" "+good.getFirm()+" "+good.getColor().getRuText()+" в интернет-магазине джентльмен.in.ua";
+                title = "Купить " + good.getCategory().getRuText() + " " + good.getFirm() + " " + good.getColor().getRuText() + " в интернет-магазине джентльмен.in.ua";
 
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
@@ -172,19 +152,20 @@ public class GoodController {
         model.addAttribute("description", description);
         model.addAttribute("title", title);
 
-       return redirectWithLang(request, url2, model, altUrl); //call function for redirect
+        return redirectWithLang(request, url2, model, altUrl); //call function for redirect
     }
 
-    @RequestMapping(value="/admin/goodInfo")
+    @RequestMapping(value = "/admin/goodInfo")
     public String getInfo(ModelMap model, HttpServletRequest request) {
         int pid = Integer.parseInt(request.getParameter("id"));
         Good good = goodService.getGoodById(pid);
 
-        model.addAttribute("info",good);
+        model.addAttribute("info", good);
         setPageData(model);
         return "goodInfo";
     }
-    @RequestMapping(value="/admin/goodById")
+
+    @RequestMapping(value = "/admin/goodById")
     public String getGoodById(ModelMap model, HttpServletRequest request) {
         int pid = Integer.parseInt(request.getParameter("id"));
         Good good = goodService.getGoodById(pid);
@@ -192,38 +173,29 @@ public class GoodController {
         model.addAttribute(good);
         return "goodform";
     }
-    @RequestMapping(value="/admin/updateGood", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/admin/updateGood", method = RequestMethod.POST)
     public String updateGood(@ModelAttribute("good") @Valid Good good, BindingResult result,
-                               ModelMap model, HttpServletRequest request,  @RequestParam("file") MultipartFile[] files, @RequestParam("flagImg") String flag) {
+                             ModelMap model, HttpServletRequest request, @RequestParam("file") MultipartFile[] files, @RequestParam("flagImg") String flag) {
 
-        if(!result.hasErrors()) {
-            System.out.println("@@@@@@@@@@"+flag);
+        if (!result.hasErrors()) {
+            if (flag.equals("1")) {
 
-            if(flag.equals("1"))
-            {
-//                String path = "/home/daria/gent/goods/";
-//                String path = "C:/jav/i18n/goods/";
-                for(int i=0; i<goodService.getGoodById(good.getId()).getCountImg(); i++)
-                {
+                for (int i = 0; i < goodService.getGoodById(good.getId()).getCountImg(); i++) {
 
-                    File file = new File(urlWriteImages + good.getId()+"_"+i+".jpg");
+                    File file = new File(urlWriteImages + good.getId() + "_" + i + ".jpg");
                     file.delete();
                 }
-                String fileName = null;
-                String msg = "";
 
-                if (files != null && files.length >0) {
-                    for(int i =0 ;i< files.length; i++){
+                if (files != null && files.length > 0) {
+                    for (int i = 0; i < files.length; i++) {
                         try {
-                            fileName = files[i].getOriginalFilename();
                             byte[] bytes = files[i].getBytes();
-
-
                             BufferedOutputStream buffStream =
-                                    new BufferedOutputStream(new FileOutputStream(new File(urlWriteImages + good.getId()+"_"+i+".jpg")));
+                                    new BufferedOutputStream(new FileOutputStream(new File(urlWriteImages + good.getId() + "_" + i + ".jpg")));
                             buffStream.write(bytes);
                             buffStream.close();
-                            System.out.println(urlWriteImages + good.getId()+"_"+i+".jpg");
+                            System.out.println(urlWriteImages + good.getId() + "_" + i + ".jpg");
 
                         } catch (Exception e) {
 
@@ -234,27 +206,21 @@ public class GoodController {
             }
 
             goodService.updateGood(good);
-             model.addAttribute(new Good());
+            model.addAttribute(new Good());
             model.addAttribute("msg", getMsg("updated", request));
-        }
-        else
-        System.out.println(result.getAllErrors().toString());
+        } else
+            System.out.println(result.getAllErrors().toString());
         setPageData(model);
         return "goodform";
     }
-    @RequestMapping(value="/admin/deleteGood")
+
+    @RequestMapping(value = "/admin/deleteGood")
     public String deleteGood(ModelMap model, HttpServletRequest request) {
         int pid = Integer.parseInt(request.getParameter("id"));
 
+        for (int i = 0; i < goodService.getGoodById(pid).getCountImg(); i++) {
 
-
-
-//        String path = "/home/daria/gent/goods/";
-//        String path = "C:/jav/i18n/goods/";
-        for(int i=0; i<goodService.getGoodById(pid).getCountImg(); i++)
-        {
-
-            File file = new File(urlWriteImages + pid+"_"+i+".jpg");
+            File file = new File(urlWriteImages + pid + "_" + i + ".jpg");
             file.delete();
         }
 
@@ -265,19 +231,18 @@ public class GoodController {
         setPageData(model);
         return "goodform";
     }
+
     private void setPageData(ModelMap model) {
         model.addAttribute("allData", goodService.getAllGoods());
-        Locale locale = LocaleContextHolder.getLocale();
-
         model.addAttribute("colors", colorService.getAllColor());
         model.addAttribute("categories", categoryService.getSecondLevel());
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage()); //get locale language
-        if(LocaleContextHolder.getLocale().getLanguage().equals("uk"))
-            model.addAttribute("lang_code","uaText");
-        else
-        if(LocaleContextHolder.getLocale().getLanguage().equals("ru"))
-            model.addAttribute("lang_code","ruText");
+        if (LocaleContextHolder.getLocale().getLanguage().equals("uk"))
+            model.addAttribute("lang_code", "uaText");
+        else if (LocaleContextHolder.getLocale().getLanguage().equals("ru"))
+            model.addAttribute("lang_code", "ruText");
     }
+
     private String getMsg(String key, HttpServletRequest request) {
         return messageSource.getMessage(key, null, localeResolver.resolveLocale(request));
     }

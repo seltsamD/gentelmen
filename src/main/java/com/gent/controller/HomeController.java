@@ -39,8 +39,7 @@ import static com.gent.controller.BasketController.getCountBasket;
 public class HomeController {
     @Autowired
     private IGoodService goodService;
-    @Autowired
-    private IOrdersService orderService;
+
     @Autowired
     private IColorService colorService;
     @Autowired
