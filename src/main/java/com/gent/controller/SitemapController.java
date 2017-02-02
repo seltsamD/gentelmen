@@ -5,6 +5,7 @@ import com.gent.model.Good;
 import com.gent.service.ICategoryService;
 import com.gent.service.IGoodService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
@@ -25,7 +26,10 @@ import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static com.gent.config.AppConfiguration.urlReadImages;
@@ -43,15 +47,15 @@ public class SitemapController {
     @Autowired
     private IGoodService goodService;
 
-    @RequestMapping(value="/{lang}/admin/getsitemap", method = RequestMethod.GET)
+    @RequestMapping(value = "/{lang}/admin/getsitemap", method = RequestMethod.GET)
     public String getSitemap(ModelMap model) throws ParserConfigurationException, IOException, SAXException {
-        File fXmlFile = new File(urlWriteImages+"/sitemap.xml");
+        File fXmlFile = new File(urlWriteImages + "/sitemap.xml");
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = null;
         dBuilder = dbFactory.newDocumentBuilder();
 
 
-        Document doc  = null;
+        Document doc = null;
 
         doc = dBuilder.parse(fXmlFile);
 
@@ -80,18 +84,18 @@ public class SitemapController {
         Node urlSet = doc.getElementsByTagName("urlset").item(0);
 
         List<Good> listGood = goodService.getAllGoods();
-        for (Good item : listGood){
+        for (Good item : listGood) {
             Element url = doc.createElement("url");
             urlSet.appendChild(url);
 
             Element loc = doc.createElement("loc");
-            loc.appendChild(doc.createTextNode("http://xn--d1acac0agfd5bxg.in.ua/uk/good/"+item.getCategory().getUaText()+"-"+item.getFirm().replaceAll(" ","-")+"-"+item.getColor().getUaText()+"/"+item.getId()));
+            loc.appendChild(doc.createTextNode("http://xn--d1acac0agfd5bxg.in.ua/uk/good/" + item.getCategory().getUaText() + "-" + item.getFirm().replaceAll(" ", "-") + "-" + item.getColor().getUaText() + "/" + item.getId()));
             url.appendChild(loc);
 
             Element xhtml = doc.createElement("xhtml:link");
             xhtml.setAttribute("rel", "alternate");
             xhtml.setAttribute("hreflang", "ru");
-            xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/uk/good/"+item.getCategory().getRuText()+"-"+item.getFirm().replaceAll(" ","-")+"-"+item.getColor().getRuText()+"/"+item.getId());
+            xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/uk/good/" + item.getCategory().getRuText() + "-" + item.getFirm().replaceAll(" ", "-") + "-" + item.getColor().getRuText() + "/" + item.getId());
             url.appendChild(xhtml);
         }
 
@@ -99,21 +103,27 @@ public class SitemapController {
         try {
             Transformer transformer = transformerFactory.newTransformer();
 
-        DOMSource source = new DOMSource(doc);
-        StreamResult result = new StreamResult(new File(urlWriteImages+"/sitemap.xml"));
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File(urlWriteImages + "/sitemap.xml"));
             transformer.setOutputProperty(OutputKeys.METHOD, "xml");
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.transform(source, result);
-    } catch (TransformerConfigurationException e) {
-        e.printStackTrace();
-    } catch (TransformerException e) {
+            transformer.transform(source, result);
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
             e.printStackTrace();
         }
         model.addAttribute("info", info);
         return "sitemap";
     }
 
-    @RequestMapping(value="/{lang}/admin/sitemap", method = RequestMethod.GET)
+    private static String w3cDateTime(Date date) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        String formated = df.format(date);
+        return formated.substring(0, 22) + ":" + formated.substring(22);
+    }
+
+    @RequestMapping(value = "/admin/sitemap", method = RequestMethod.GET)
     public String newSitemap(ModelMap model) throws ParserConfigurationException, IOException, SAXException {
 
         //create document
@@ -128,36 +138,51 @@ public class SitemapController {
         doc.appendChild(rootElement);
 
         List<Category> listCategory = categoryService.getSecondLevel();
-        for (Category item : listCategory){
+        for (Category item : listCategory) {
             Element url = doc.createElement("url");
             rootElement.appendChild(url);
 
             Element loc = doc.createElement("loc");
-            loc.appendChild(doc.createTextNode("http://xn--d1acac0agfd5bxg.in.ua/uk/"+URLEncoder.encode("каталог","UTF-8")+"/"+URLEncoder.encode(item.getUaText().replaceAll(" ","-"), "UTF-8")+"/"+item.getId()));
-
+            loc.appendChild(doc.createTextNode("http://xn--d1acac0agfd5bxg.in.ua/uk/" + URLEncoder.encode("каталог", "UTF-8") + "/" + URLEncoder.encode(item.getUaText().replaceAll(" ", "-"), "UTF-8") + "/" + item.getId()));
             url.appendChild(loc);
+
+            Element priority = doc.createElement("priority");
+            priority.appendChild(doc.createTextNode("0.7"));
+            url.appendChild(priority);
+
+            Element lastmod = doc.createElement("lastmod");
+            lastmod.appendChild(doc.createTextNode(w3cDateTime(item.getData())));
+            url.appendChild(lastmod);
 
             Element xhtml = doc.createElement("xhtml:link");
             xhtml.setAttribute("rel", "alternate");
             xhtml.setAttribute("hreflang", "ru");
-            xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/ru/"+URLEncoder.encode("каталог","UTF-8")+"/"+URLEncoder.encode(item.getRuText().replaceAll(" ","-"), "UTF-8")+"/"+item.getId());
+            xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/ru/" + URLEncoder.encode("каталог", "UTF-8") + "/" + URLEncoder.encode(item.getRuText().replaceAll(" ", "-"), "UTF-8") + "/" + item.getId());
             url.appendChild(xhtml);
         }
 
 
         List<Good> listGood = goodService.getAllGoods();
-        for (Good item : listGood){
+        for (Good item : listGood) {
             Element url = doc.createElement("url");
             rootElement.appendChild(url);
 
             Element loc = doc.createElement("loc");
-            loc.appendChild(doc.createTextNode("http://xn--d1acac0agfd5bxg.in.ua/uk/good/"+URLEncoder.encode(item.getCategory().getUaText().replaceAll(" ","-"), "UTF-8")+"-"+item.getFirm().replaceAll(" ","-")+"-"+URLEncoder.encode(item.getColor().getUaText(), "UTF-8")+"/"+item.getId()));
+            loc.appendChild(doc.createTextNode("http://xn--d1acac0agfd5bxg.in.ua/uk/good/" + URLEncoder.encode(item.getCategory().getUaText().replaceAll(" ", "-"), "UTF-8") + "-" + item.getFirm().replaceAll(" ", "-") + "-" + URLEncoder.encode(item.getColor().getUaText(), "UTF-8") + "/" + item.getId()));
             url.appendChild(loc);
+
+            Element priority = doc.createElement("priority");
+            priority.appendChild(doc.createTextNode("0.9"));
+            url.appendChild(priority);
+
+            Element lastmod = doc.createElement("lastmod");
+            lastmod.appendChild(doc.createTextNode(w3cDateTime(item.getData())));
+            url.appendChild(lastmod);
 
             Element xhtml = doc.createElement("xhtml:link");
             xhtml.setAttribute("rel", "alternate");
             xhtml.setAttribute("hreflang", "ru");
-            xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/ru/good/"+URLEncoder.encode(item.getCategory().getRuText().replaceAll(" ","-"), "UTF-8")+"-"+item.getFirm().replaceAll(" ","-")+"-"+URLEncoder.encode(item.getColor().getRuText(), "UTF-8")+"/"+item.getId());
+            xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/ru/good/" + URLEncoder.encode(item.getCategory().getRuText().replaceAll(" ", "-"), "UTF-8") + "-" + item.getFirm().replaceAll(" ", "-") + "-" + URLEncoder.encode(item.getColor().getRuText(), "UTF-8") + "/" + item.getId());
 
             url.appendChild(xhtml);
         }
@@ -167,12 +192,10 @@ public class SitemapController {
             Transformer transformer = transformerFactory.newTransformer();
 
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(urlWriteImages+"/sitemap.xml"));
+            StreamResult result = new StreamResult(new File(urlWriteImages + "/sitemap.xml"));
             transformer.setOutputProperty(OutputKeys.METHOD, "xml");
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.transform(source, result);
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
         } catch (TransformerException e) {
             e.printStackTrace();
         }
@@ -181,5 +204,127 @@ public class SitemapController {
 
 
     }
+
+    public static boolean addCategoryToSitemap(Category item) {
+        File f = new File(urlWriteImages + "/sitemap.xml");
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = null;
+        try {
+            builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(f);
+            Element root = doc.getDocumentElement();
+
+            Element url = doc.createElement("url");
+
+
+            Element loc = doc.createElement("loc");
+            loc.appendChild(doc.createTextNode("http://xn--d1acac0agfd5bxg.in.ua/uk/" + URLEncoder.encode("каталог", "UTF-8") + "/" + URLEncoder.encode(item.getUaText().replaceAll(" ", "-"), "UTF-8") + "/" + item.getId()));
+            url.appendChild(loc);
+
+            Element priority = doc.createElement("priority");
+            priority.appendChild(doc.createTextNode("0.7"));
+            url.appendChild(priority);
+
+            Element lastmod = doc.createElement("lastmod");
+            lastmod.appendChild(doc.createTextNode(w3cDateTime(item.getData())));
+            url.appendChild(lastmod);
+
+            Element xhtml = doc.createElement("xhtml:link");
+            xhtml.setAttribute("rel", "alternate");
+            xhtml.setAttribute("hreflang", "ru");
+            xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/ru/" + URLEncoder.encode("каталог", "UTF-8") + "/" + URLEncoder.encode(item.getRuText().replaceAll(" ", "-"), "UTF-8") + "/" + item.getId());
+            url.appendChild(xhtml);
+
+
+            root.appendChild(url);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File(urlWriteImages + "/sitemap.xml"));
+            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.transform(source, result);
+
+
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
+
+
+        return true;
+    }
+
+   public static boolean addGoodToSitemap(Good item) {
+        File f = new File(urlWriteImages + "/sitemap.xml");
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = null;
+        try {
+            builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(f);
+            Element root = doc.getDocumentElement();
+
+            Element url = doc.createElement("url");
+
+            Element loc = doc.createElement("loc");
+            loc.appendChild(doc.createTextNode("http://xn--d1acac0agfd5bxg.in.ua/uk/good/" + URLEncoder.encode(item.getCategory().getUaText().replaceAll(" ", "-"), "UTF-8") + "-" + item.getFirm().replaceAll(" ", "-") + "-" + URLEncoder.encode(item.getColor().getUaText(), "UTF-8") + "/" + item.getId()));
+            url.appendChild(loc);
+
+            Element priority = doc.createElement("priority");
+            priority.appendChild(doc.createTextNode("0.9"));
+            url.appendChild(priority);
+
+            Element lastmod = doc.createElement("lastmod");
+            lastmod.appendChild(doc.createTextNode(w3cDateTime(item.getData())));
+            url.appendChild(lastmod);
+
+            Element xhtml = doc.createElement("xhtml:link");
+            xhtml.setAttribute("rel", "alternate");
+            xhtml.setAttribute("hreflang", "ru");
+            xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/ru/good/" + URLEncoder.encode(item.getCategory().getRuText().replaceAll(" ", "-"), "UTF-8") + "-" + item.getFirm().replaceAll(" ", "-") + "-" + URLEncoder.encode(item.getColor().getRuText(), "UTF-8") + "/" + item.getId());
+
+            url.appendChild(xhtml);
+
+            root.appendChild(url);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File(urlWriteImages + "/sitemap.xml"));
+            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.transform(source, result);
+
+
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
+
+
+        return true;
+    }
+
 
 }

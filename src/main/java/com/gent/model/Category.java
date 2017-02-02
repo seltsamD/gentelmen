@@ -3,6 +3,7 @@ package com.gent.model;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by daria on 05.10.2016.
@@ -29,6 +30,17 @@ public class Category implements Serializable {
     @Column(name = "level")
     private int level;
 
+    @Column
+    private Date data = new Date();
+
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
     public int getParent() {
         return parent;
     }

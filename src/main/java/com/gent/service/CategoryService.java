@@ -1,6 +1,7 @@
 /*Dar 21.10*/
 package com.gent.service;
 
+import com.gent.controller.SitemapController;
 import com.gent.dao.ICategoryDAO;
 import com.gent.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,9 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public boolean addCategory(Category text) {
-        categoryDAO.addCategory(text);
+    public boolean addCategory(Category item) {
+        categoryDAO.addCategory(item);
+        SitemapController.addCategoryToSitemap(item);
         return true;
     }
 

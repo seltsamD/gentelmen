@@ -1,5 +1,6 @@
 package com.gent.service;
 
+import com.gent.controller.SitemapController;
 import com.gent.dao.IGoodDAO;
 import com.gent.model.Good;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class GoodService implements IGoodService {
     @Override
     public boolean addGood(Good good) {
         goodDAO.addGood(good);
+        SitemapController.addGoodToSitemap(good);
         return true;
     }
 

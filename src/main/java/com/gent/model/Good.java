@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -59,6 +60,17 @@ public class Good implements Serializable{
     @Column(name = "uaText")
     private String uaText;
 
+    @Column
+    private Date data = new Date();
+
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
 
     public void setStatus(int status) {
         this.status = status;
