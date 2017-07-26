@@ -8,7 +8,7 @@
     src: url("Pattaya-Regular.ttf");
 }
 body{
-    background: url("background2.jpg")  no-repeat fixed center center / cover;
+    /*background: url("background2.jpg")  no-repeat fixed center center / cover;*/
     font-size: 12pt;
     min-width: 240px;
     height: 100%;
@@ -33,7 +33,7 @@ h1, .h1{
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px) {
     body {
-        background: url("miniBack.jpg")  no-repeat fixed center center / cover;
+        /*background: url("miniBack.jpg")  no-repeat fixed center center / cover;*/
         height: 100%;
         font-size: 10pt;
     }
@@ -190,24 +190,38 @@ ol{
     margin-right: auto;
 }
 
+.mainImg {
+    max-height: 400px;
+    display: block;
+}
+
+.indexImg {
+    height: 200px;
+    display: block;
+    object-fit: contain
+}
+
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus,
 .navbar-default .navbar-nav>.active>a:hover {
-    color: #fcf8e3;
-    background-color: #5b7538;
+    color: #ffffff;
+    background-color: #2c3756;
     font-family: celticFont, serif;
     font-size: medium;
 }
 
 .navbar-default {
-    background-color: #5b7538;
+    /*background-color: #5b7538;*/
+    background-color: #2c3756;
 }
 .navbar-default .navbar-brand {
-    color: #fcf8e3;
+    color: #e6f0bb;
     font-weight: bolder;
     font-variant: small-caps;
+    font-size: 18pt;
 }
 .navbar-brand{
-    background-color: #5b7538;
+    background-color: #2c3756;
+    color: #e6f0bb;
 }
 
 .div404{

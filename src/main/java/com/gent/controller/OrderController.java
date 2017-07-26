@@ -1,19 +1,15 @@
 package com.gent.controller;
 
 
-import com.gent.model.Color;
 import com.gent.model.Good;
 import com.gent.model.Orders;
 import com.gent.service.IGoodService;
 import com.gent.service.IOrdersService;
-import com.gent.service.IOrdersService;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,13 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static com.gent.config.ChangeLang.redirectWithLang;
+import static com.gent.util.Constants.RU_LANG;
+import static com.gent.util.Constants.UK_LANG;
 
 /**
  * Created by daria on 15.10.2016.
@@ -88,9 +82,9 @@ public class OrderController {
                 response.addCookie(cookie);
             }
 
-            if (LocaleContextHolder.getLocale().getLanguage().equals("uk"))
+            if (LocaleContextHolder.getLocale().getLanguage().equals(UK_LANG))
                 model.addAttribute("msg", "Замовлення успішно оформлено!");
-            else if (LocaleContextHolder.getLocale().getLanguage().equals("ru"))
+            else if (LocaleContextHolder.getLocale().getLanguage().equals(RU_LANG))
                 model.addAttribute("msg", "Заказ успешно оформлен!");
 
         }
@@ -110,9 +104,9 @@ public class OrderController {
 
         model.addAttribute("ordersData", listOrders);
         Locale locale = LocaleContextHolder.getLocale();
-        if (locale.getLanguage().equals("uk"))
+        if (locale.getLanguage().equals(UK_LANG))
             model.addAttribute("lang_code", "uaText");
-        else if (locale.getLanguage().equals("ru"))
+        else if (locale.getLanguage().equals(RU_LANG))
             model.addAttribute("lang_code", "ruText");
 
         Cookie cookie = new Cookie("cart", "");
@@ -148,10 +142,10 @@ public class OrderController {
         model.addAttribute("count", listOrders.size());
         model.addAttribute("ordersData", listOrders);
         Locale locale = LocaleContextHolder.getLocale();
-        if (locale.getLanguage().equals("uk"))
-            model.addAttribute("lang", "uk");
-        else if (locale.getLanguage().equals("ru"))
-            model.addAttribute("lang", "ru");
+        if (locale.getLanguage().equals(UK_LANG))
+            model.addAttribute("lang", UK_LANG);
+        else if (locale.getLanguage().equals(RU_LANG))
+            model.addAttribute("lang", RU_LANG);
 
         return redirectWithLang(request, "myorders", model, "myorders");
 

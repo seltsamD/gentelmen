@@ -30,219 +30,97 @@
     </c:if>
 
     <link rel="alternate" hreflang="${alternativeLang}" href="${alternativeHref}"/>
-
-
-    <meta name="yandex-verification" content="3d522b3830a4aa99"/>
-
 </head>
 <body>
+
 <div class="container">
 
     <jsp:include page="header.jsp"/>
     <div class="mainContent">
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="leftMenu">
-                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingNull">
-                                <h4 class="panel-title">
-                                    <a href="${pageContext.request.contextPath}/${lang}/каталог"> <spring:message
-                                            code="good.all"/>
-                                    </a>
-
-                                </h4>
-                            </div>
-
+        <div class="container">
+            <div class="row">
+                <%--<div class="col-md-9 col-sm-12 mainImg">--%>
+                <%--<img src="<c:url value="/images/images/top.jpg"/>" class="img-responsive">--%>
+                <%--</div>--%>
+                <div class="col-md-12 col-sm-12">
+                    <div class="img"><img class="mainImg" src="<c:url value="/images/images/top.jpg"/>" alt="img"></div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6  marginImg">
+                    <div class="ih-item circle colored effect17">
+                        <c:if test="${lang == 'uk'}">
+                            <a href="${pageContext.request.contextPath}/${lang}/каталог/краватка/4"/>
+                        </c:if>
+                        <c:if test="${lang == 'ru'}">
+                            <a href="${pageContext.request.contextPath}/${lang}/каталог/галстук/4"/>
+                        </c:if>
+                        <div class="img"><img src="<c:url value="/images/images/0_mini.jpg"/>" alt="img"></div>
+                        <div class="info">
+                            <h3><spring:message code="ties"/></h3>
                         </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingOne">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" role="button" data-toggle="collapse" href="#collapseOne"
-                                       aria-expanded="true" aria-controls="collapseOne">
-                                        <spring:message code="category"/>
-                                    </a>
-                                </h4>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 marginImg">
+                    <div class="ih-item circle colored effect17">
+                        <a href="#">
+                            <div class="img"><img src="<c:url value="/images/images/1_mini.jpg"/>" alt="img"></div>
+                            <div class="info">
+                                <h3><spring:message code="sweaters"/></h3>
                             </div>
-                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel"
-                                 aria-labelledby="headingOne">
-                                <div class="panel-body">
-                                    <ol>
-                                        <c:forEach var="cat" items="${firstLevel}">
-
-                                            <c:if test="${lang == 'uk'}">
-                                                <li>
-                                                    <c:out value="${cat.uaText}"/>
-                                                    <ol type="I">
-                                                        <c:forEach var="secLevel" items="${secondLevel}">
-                                                            <c:if test="${secLevel.parent == cat.id}">
-                                                                <li>
-                                                                    <a href="${pageContext.request.contextPath}/${lang}/каталог/${secLevel.uaText}/${secLevel.id}">
-                                                                        <c:out value="${secLevel.uaText}"/></a></li>
-                                                                <%--<li> <a href="#" onclick="setParam('cat_id', ${secLevel.id});"><c:out value="${secLevel.uaText}"/></a></li>--%>
-                                                            </c:if>
-                                                        </c:forEach>
-                                                    </ol>
-                                                </li>
-                                            </c:if>
-                                            <c:if test="${lang == 'ru'}">
-                                                <li>
-                                                    <c:out value="${cat.ruText}"/>
-                                                    <ol type="I">
-                                                        <c:forEach var="secLevel" items="${secondLevel}">
-                                                            <c:if test="${secLevel.parent == cat.id}">
-                                                                <li>
-                                                                    <a href="${pageContext.request.contextPath}/${lang}/каталог/${secLevel.ruText}/${secLevel.id}">
-                                                                        <c:out value="${secLevel.ruText}"/></a></li>
-                                                                <%--<li> <a href="#" onclick="setParam('cat_id', ${secLevel.id});"><c:out value="${secLevel.ruText}"/></a></li>--%>
-                                                            </c:if>
-                                                        </c:forEach>
-                                                    </ol>
-                                                </li>
-                                            </c:if>
-
-
-                                        </c:forEach>
-                                    </ol>
-
-
-                                </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 marginImg">
+                    <div class="ih-item circle colored effect17">
+                        <a href="#">
+                            <div class="img"><img src="<c:url value="/images/images/2_mini.jpg"/>" alt="img"></div>
+                            <div class="info">
+                                <h3><spring:message code="jacket"/></h3>
                             </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingTwo">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
-                                       href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        <spring:message code="color"/>
-                                    </a>
-                                </h4>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3  col-sm-4 col-xs-6  marginImg">
+                    <div class="ih-item circle colored effect17">
+                        <a href="#">
+                            <div class="img"><img src="<c:url value="/images/images/3_mini.jpg"/>" alt="img"></div>
+                            <div class="info">
+                                <h3><spring:message code="shirts"/></h3>
                             </div>
-                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
-                                 aria-labelledby="headingTwo">
-                                <div class="panel-body">
-                                    <ol type="I">
-                                        <c:forEach var="color" items="${colors}">
-
-                                            <c:if test="${lang == 'uk'}">
-                                                <li>
-                                                    <a href="#" onclick="setParam('color_id', ${color.id});">
-                                                        <c:out value="${color.uaText}"/></a>
-                                                </li>
-                                            </c:if>
-                                            <c:if test="${lang == 'ru'}">
-                                                <li><a href="#" onclick="setParam('color_id', ${color.id});">
-                                                    <c:out value="${color.ruText}"/>
-                                                </a></li>
-                                            </c:if>
-
-                                        </c:forEach>
-                                    </ol>
-                                </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 marginImg">
+                    <div class="ih-item circle colored effect17">
+                        <a href="#">
+                            <div class="img"><img src="<c:url value="/images/images/4_mini.jpg"/>" alt="img"></div>
+                            <div class="info">
+                                <h3><spring:message code="pajamas"/></h3>
                             </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingFour">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
-                                       href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                        <spring:message code="price_range"/>
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel"
-                                 aria-labelledby="headingFour">
-                                <div class="panel-body">
-                                    <p id="amount"></p>
-                                    <div id="slider-range"></div>
-
-                                    <%--<form:form id="priceRange" action="/${lang}/catalogue/priceRange" method="POST">--%>
-                                    <input type="hidden" id="amount1" name="amount1"/>
-                                    <input type="hidden" id="amount2" name="amount2"/>
-                                    <input type="button" onclick="setParamPrice();" name="submit_range"
-                                           value="<spring:message code="search"/>"/>
-                                    <%--</form:form>--%>
-
-                                </div>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
-            <section>
-                <div class="col-sm-9">
-                    <div class="row index">
-                        <c:forEach var="obj" items="${allData}">
-                            <article>
-                                <div class="col-xs-6 col-sm-3 back">
-                                    <div class="infoBox">
-                                        <c:if test="${lang == 'uk'}">
-
-                                            <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.uaText}-${obj.firm}-${obj.color.uaText}/${obj.id}"><img
-                                                    itemprop="image" src="<c:url value="/images/${obj.id}_0_mini.jpg"/>"
-                                                    alt="${obj.firm} ${obj.category.uaText} ${obj.color.uaText}"/></a>
-                                        </c:if>
-                                        <c:if test="${lang == 'ru'}">
-                                            <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.ruText}-${obj.firm}-${obj.color.ruText}/${obj.id}"><img
-                                                    itemprop="image" src="<c:url value="/images/${obj.id}_0_mini.jpg"/>"
-                                                    alt="${obj.firm} ${obj.category.ruText} ${obj.color.ruText}"/></a>
-                                        </c:if>
-                                        <div class="priceInfo">
-                                            <p>
-                                                <c:if test="${lang == 'uk'}">
-
-                                                    <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.uaText}-${obj.firm}-${obj.color.uaText}/${obj.id}">
-                                                        <span itemprop="name"><c:out
-                                                                value="${obj.category.uaText}"/></span>
-                                                    <span itemprop="brand" itemscope itemtype="http://schema.org/Brand">
-                                                    <span itemprop="name"><c:out value="${obj.firm}"/> </span>
-                                                    </span>
-                                                    </a>
-                                                </c:if>
-                                                <c:if test="${lang == 'ru'}">
-                                                    <a href="${pageContext.request.contextPath}/${lang}/good/${obj.category.ruText}-${obj.firm}-${obj.color.ruText}/${obj.id}">
-                                                        <span itemprop="name"><c:out
-                                                                value="${obj.category.ruText}"/></span>
-                                                    <span itemprop="brand" itemscope itemtype="http://schema.org/Brand">
-                                                    <span itemprop="name"><c:out value="${obj.firm}"/> </span>
-                                                    </span>
-                                                    </a>
-                                                </c:if>
-                                            </p>
-                                        <span itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                                        <p itemprop="price" class="price">${obj.price}грн.</p>
-                                        </span>
-                                            <div class="btnForm">
-                                                <form:form id="baskForm${obj.id}" action="addToBasket" method="POST">
-                                                    <input type="hidden" name="goodId" value="${obj.id}">
-                                                    <input type="button" onclick="tobasket(${obj.id})"
-                                                           value="<spring:message code="basket.add"/>"
-                                                           id="btn-basket-add"
-                                                           class="btn btn-success">
-                                                </form:form>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </article>
-                        </c:forEach>
-
-                    </div>
-                </div>
-            </section>
         </div>
+        <section>
+            <div class="goodIndex">
+                <h2><spring:message code="ourGoods"/></h2>
+            </div>
+            <div class="row" id="indexGoods">
+            </div>
+        </section>
     </div>
-</div>
-<jsp:include page="footer.jsp"/>
+    <jsp:include page="footer.jsp"/>
 
 
 </body>
-
-<link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
+<%--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">--%>
+<link href="<c:url value="/resources/css/new.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/hover.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/jquery-ui.min.css" />" rel="stylesheet">
 <script src="<c:url value="/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
-
+<script src="<c:url value="/resources/js/index.js" />" type="text/javascript"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />" type="text/javascript"></script>
 <script>
     (function (i, s, o, g, r, a, m) {
@@ -261,102 +139,6 @@
     ga('send', 'pageview');
 
 </script>
-<script type="text/javascript">
-
-    $(function () {
-        $("#slider-range").slider({
-            range: true,
-            min: ${minPrice},
-            max: ${maxPrice},
-            values: [${minPrice}, ${maxPrice}],
-            slide: function (event, ui) {
-                $("#amount").html(ui.values[0] + "грн. - " + ui.values[1] + "грн.");
-                $("#amount1").val(ui.values[0]);
-                $("#amount2").val(ui.values[1]);
-            }
-        });
-        $("#amount").html($("#slider-range").slider("values", 0) +
-                "грн. - " + $("#slider-range").slider("values", 1)) + "грн.";
-    });
-</script>
-
-<script src="<c:url value="/resources/js/jquery-ui.js" />" type="text/javascript"></script>
+<script src="<c:url value="/resources/js/jquery-ui.min.js" />" type="text/javascript"></script>
 <script src="<c:url value="/resources/js/app.js" />" type="text/javascript"></script>
 </html>
-<script type="text/javascript">
-    $(function () {
-
-        $('.carousel').carousel({
-            interval: 5000
-        })
-    });
-
-    function setParam(type, id) {
-        var url = window.location.href;
-
-        if (url.indexOf('uk/index') == -1 && url.indexOf('ru/index') == -1) {
-
-            if (url.indexOf('?') == -1)
-                url = url + '${lang}/каталог?' + type + '=' + id;
-            else if (url.indexOf('?') >= 0)
-                url = url + '&' + type + '=' + id;
-        }
-        else {
-            if (url.indexOf('uk') >= 0) {
-                url = url.substr(0, url.indexOf('uk'));
-                if (url.indexOf('?') == -1)
-                    url = url + '${lang}/каталог?' + type + '=' + id;
-                else if (url.indexOf('?') >= 0)
-                    url = url + '&' + type + '=' + id;
-            }
-
-            else if (url.indexOf('ru') >= 0) {
-                url = url.substr(0, url.indexOf('ru'));
-                if (url.indexOf('?') == -1)
-                    url = url + '${lang}/каталог?' + type + '=' + id;
-                else if (url.indexOf('?') >= 0)
-                    url = url + '&' + type + '=' + id;
-            }
-        }
-
-
-        window.location.href = url;
-
-    }
-
-    function setParamPrice() {
-        var url = window.location.href;
-        var price1 = document.getElementById('amount1').value;
-        var price2 = document.getElementById('amount2').value;
-        if (url.indexOf('uk/index') == -1 && url.indexOf('ru/index') == -1) {
-
-            if (url.indexOf('?') == -1)
-                url = url + '${lang}/каталог?price1=' + price1 + '&price2=' + price2;
-            else if (url.indexOf('?') >= 0)
-                url = url + '&price1=' + price1 + '&price2=' + price2;
-        }
-        else {
-            if (url.indexOf('uk') >= 0) {
-                url = url.substr(0, url.indexOf('uk') + 2);
-                if (url.indexOf('?') == -1)
-                    url = url + '/каталог?price1=' + price1 + '&price2=' + price2;
-                else if (url.indexOf('?') >= 0)
-                    url = url + '&price1=' + price1 + '&price2=' + price2;
-            }
-
-            else if (url.indexOf('ru') >= 0) {
-                url = url.substr(0, url.indexOf('ru') + 2);
-                if (url.indexOf('?') == -1)
-                    url = url + '/каталог?price1=' + price1 + '&price2=' + price2;
-                else if (url.indexOf('?') >= 0)
-                    url = url + '&price1=' + price1 + '&price2=' + price2;
-            }
-        }
-
-
-        window.location.href = url;
-
-    }
-
-
-</script>

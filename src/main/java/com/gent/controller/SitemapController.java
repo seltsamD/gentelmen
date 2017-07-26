@@ -5,25 +5,23 @@ import com.gent.model.Good;
 import com.gent.service.ICategoryService;
 import com.gent.service.IGoodService;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -32,8 +30,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import static com.gent.config.AppConfiguration.urlReadImages;
 import static com.gent.config.AppConfiguration.urlWriteImages;
+import static com.gent.util.Constants.RU_LANG;
 
 /**
  * Created by daria on 05.12.2016.
@@ -94,7 +92,7 @@ public class SitemapController {
 
             Element xhtml = doc.createElement("xhtml:link");
             xhtml.setAttribute("rel", "alternate");
-            xhtml.setAttribute("hreflang", "ru");
+            xhtml.setAttribute("hreflang", RU_LANG);
             xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/uk/good/" + item.getCategory().getRuText() + "-" + item.getFirm().replaceAll(" ", "-") + "-" + item.getColor().getRuText() + "/" + item.getId());
             url.appendChild(xhtml);
         }
@@ -156,7 +154,7 @@ public class SitemapController {
 
             Element xhtml = doc.createElement("xhtml:link");
             xhtml.setAttribute("rel", "alternate");
-            xhtml.setAttribute("hreflang", "ru");
+            xhtml.setAttribute("hreflang", RU_LANG);
             xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/ru/" + URLEncoder.encode("каталог", "UTF-8") + "/" + URLEncoder.encode(item.getRuText().replaceAll(" ", "-"), "UTF-8") + "/" + item.getId());
             url.appendChild(xhtml);
         }
@@ -181,7 +179,7 @@ public class SitemapController {
 
             Element xhtml = doc.createElement("xhtml:link");
             xhtml.setAttribute("rel", "alternate");
-            xhtml.setAttribute("hreflang", "ru");
+            xhtml.setAttribute("hreflang", RU_LANG);
             xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/ru/good/" + URLEncoder.encode(item.getCategory().getRuText().replaceAll(" ", "-"), "UTF-8") + "-" + item.getFirm().replaceAll(" ", "-") + "-" + URLEncoder.encode(item.getColor().getRuText(), "UTF-8") + "/" + item.getId());
 
             url.appendChild(xhtml);
@@ -231,7 +229,7 @@ public class SitemapController {
 
             Element xhtml = doc.createElement("xhtml:link");
             xhtml.setAttribute("rel", "alternate");
-            xhtml.setAttribute("hreflang", "ru");
+            xhtml.setAttribute("hreflang", RU_LANG);
             xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/ru/" + URLEncoder.encode("каталог", "UTF-8") + "/" + URLEncoder.encode(item.getRuText().replaceAll(" ", "-"), "UTF-8") + "/" + item.getId());
             url.appendChild(xhtml);
 
@@ -291,7 +289,7 @@ public class SitemapController {
 
             Element xhtml = doc.createElement("xhtml:link");
             xhtml.setAttribute("rel", "alternate");
-            xhtml.setAttribute("hreflang", "ru");
+            xhtml.setAttribute("hreflang", RU_LANG);
             xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/ru/good/" + URLEncoder.encode(item.getCategory().getRuText().replaceAll(" ", "-"), "UTF-8") + "-" + item.getFirm().replaceAll(" ", "-") + "-" + URLEncoder.encode(item.getColor().getRuText(), "UTF-8") + "/" + item.getId());
 
             url.appendChild(xhtml);

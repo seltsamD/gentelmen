@@ -23,10 +23,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Locale;
 
 import static com.gent.config.AppConfiguration.urlWriteImages;
 import static com.gent.config.ChangeLang.redirectWithLang;
+import static com.gent.util.Constants.RU_LANG;
+import static com.gent.util.Constants.UK_LANG;
 
 /**
  * Created by daria on 30.09.2016.
@@ -112,15 +113,15 @@ public class GoodController {
         boolean flag = false;
         String title = "";
         if (request.getParameter("lang") != null)
-            if (request.getParameter("lang").equals("uk")) {
-                lang = "uk";
+            if (request.getParameter("lang").equals(UK_LANG)) {
+                lang = UK_LANG;
                 flag = true;
-            } else if (request.getParameter("lang").equals("ru")) {
-                lang = "ru";
+            } else if (request.getParameter("lang").equals(RU_LANG)) {
+                lang = RU_LANG;
                 flag = true;
             }
 
-        if (lang.equals("uk")) {
+        if (lang.equals(UK_LANG)) {
             try {
 
                 altUrl = "good/" + URLEncoder.encode(good.getCategory().getRuText().replaceAll(" ", "-"), "UTF-8") + "-" + good.getFirm().replaceAll(" ", "-") + "-" + URLEncoder.encode(good.getColor().getRuText(), "UTF-8") + "/" + good.getId();
@@ -135,7 +136,7 @@ public class GoodController {
             }
 
 
-        } else if (lang.equals("ru")) {
+        } else if (lang.equals(RU_LANG)) {
 
             try {
                 altUrl = "good/" + URLEncoder.encode(good.getCategory().getUaText().replaceAll(" ", "-"), "UTF-8") + "-" + good.getFirm().replaceAll(" ", "-") + "-" + URLEncoder.encode(good.getColor().getUaText(), "UTF-8") + "/" + good.getId();
@@ -237,9 +238,9 @@ public class GoodController {
         model.addAttribute("colors", colorService.getAllColor());
         model.addAttribute("categories", categoryService.getSecondLevel());
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage()); //get locale language
-        if (LocaleContextHolder.getLocale().getLanguage().equals("uk"))
+        if (LocaleContextHolder.getLocale().getLanguage().equals(UK_LANG))
             model.addAttribute("lang_code", "uaText");
-        else if (LocaleContextHolder.getLocale().getLanguage().equals("ru"))
+        else if (LocaleContextHolder.getLocale().getLanguage().equals(RU_LANG))
             model.addAttribute("lang_code", "ruText");
     }
 

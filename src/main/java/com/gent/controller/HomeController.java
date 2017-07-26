@@ -5,7 +5,6 @@ import com.gent.model.Good;
 import com.gent.service.ICategoryService;
 import com.gent.service.IColorService;
 import com.gent.service.IGoodService;
-import com.gent.service.IOrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -14,21 +13,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 
 import static com.gent.config.ChangeLang.redirectWithLang;
 import static com.gent.controller.BasketController.getCountBasket;
+import static com.gent.util.Constants.RU_LANG;
+import static com.gent.util.Constants.UK_LANG;
 
 /**
  * Created by daria on 30.09.2016.
@@ -88,10 +84,9 @@ public class HomeController {
         StringBuffer ur = request.getRequestURL();
 
         String altURL = "";
-        if(LocaleContextHolder.getLocale().getLanguage().equals("uk"))
+        if (LocaleContextHolder.getLocale().getLanguage().equals(UK_LANG))
             altURL = ur.substring(0, ur.indexOf("/", 10))+"/ru/";
-       else
-        if(LocaleContextHolder.getLocale().getLanguage().equals("ru"))
+       else if (LocaleContextHolder.getLocale().getLanguage().equals(RU_LANG))
             altURL = ur.substring(0, ur.indexOf("/", 10))+"/uk";
 
         return redirectWithLang(request, "index", model, altURL); //call function for redirect

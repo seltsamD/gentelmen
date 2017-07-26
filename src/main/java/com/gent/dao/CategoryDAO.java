@@ -1,13 +1,15 @@
 package com.gent.dao;
 
 import com.gent.model.Category;
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static com.gent.util.Constants.RU_LANG;
+import static com.gent.util.Constants.UK_LANG;
 
 /**
  * Created by daria on 05.10.2016.
@@ -83,12 +85,11 @@ public class CategoryDAO implements ICategoryDAO {
     public int getCategoryByName(String lang, String text) {
        int id = 0;
 
-        if(lang.equals("uk"))
+        if (lang.equals(UK_LANG))
             id = (Integer) sessionFactory.getCurrentSession().createQuery("select id from Category where uaText LIKE :text")
                 .setParameter("text", text)
                 .uniqueResult();
-        else
-        if(lang.equals("ru"))
+        else if (lang.equals(RU_LANG))
             id = (Integer) sessionFactory.getCurrentSession().createQuery("select id from Category where ruText LIKE :text")
                     .setParameter("text", text)
                     .uniqueResult();

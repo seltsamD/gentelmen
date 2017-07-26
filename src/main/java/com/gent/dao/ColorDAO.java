@@ -9,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.gent.util.Constants.RU_LANG;
+import static com.gent.util.Constants.UK_LANG;
+
 /**
  * Created by daria on 05.10.2016.
  */
@@ -61,12 +64,11 @@ public class ColorDAO implements IColorDAO {
     public int getColoryByName(String lang, String text) {
         int id = 0;
 
-        if(lang.equals("uk"))
+        if (lang.equals(UK_LANG))
             id = (Integer) sessionFactory.getCurrentSession().createQuery("select id from Color where uaText LIKE :text")
                     .setParameter("text", text)
                     .uniqueResult();
-        else
-        if(lang.equals("ru"))
+        else if (lang.equals(RU_LANG))
             id = (Integer) sessionFactory.getCurrentSession().createQuery("select id from Color where ruText LIKE :text")
                     .setParameter("text", text)
                     .uniqueResult();

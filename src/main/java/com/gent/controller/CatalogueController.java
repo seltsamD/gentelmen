@@ -18,9 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static com.gent.config.ChangeLang.redirectWithLang;
+import static com.gent.util.Constants.RU_LANG;
+import static com.gent.util.Constants.UK_LANG;
 
 /**
  * Created by daria on 22.10.2016.
@@ -135,11 +139,11 @@ public class CatalogueController {
         StringBuffer ur = request.getRequestURL();
         String altURL = "";
         String description = "";
-        if (lang.equals("uk")) {
+        if (lang.equals(UK_LANG)) {
             model.addAttribute("title", "Купити одяг та аксесуари, краватки та костюми у інтернет-магазині джентльмен.in.ua");
             altURL = "каталог";
             description = "Великий вибір одягу, аксесуарів та костюмів. Швидка доставка та низькі ціни у нашому інтернет-магазині.";
-        } else if (lang.equals("ru")) {
+        } else if (lang.equals(RU_LANG)) {
             model.addAttribute("title", "Купить одежду и аксессуары, галстуки и пиджаки в интернет-магазине джентльмен.in.ua");
             altURL = "каталог";
             description = "Большой выбор одежды, аксессуаров и костюмов. Быстрая доставка и низкие цены в нашем интернет-магазине.";
@@ -168,7 +172,7 @@ public class CatalogueController {
             String url2 = "";
 
             String cat = "";
-            if (request.getParameter("lang").equals("uk")) {
+            if (request.getParameter("lang").equals(UK_LANG)) {
 
                 if (catId != 0) {
                     listGood = goodService.getGoodsByCategorie(catId);
@@ -179,7 +183,7 @@ public class CatalogueController {
                             " Кольори та фасони на будь-який смак та розмір.";
                 }
 
-            } else if (request.getParameter("lang").equals("ru")) {
+            } else if (request.getParameter("lang").equals(RU_LANG)) {
 
 
                 if (catId != 0) {
@@ -203,11 +207,11 @@ public class CatalogueController {
                 model.addAttribute("allData", listGood);
                 setPageData(model);
 
-                if (lang.equals("uk")) {
+                if (lang.equals(UK_LANG)) {
                     altURL = URLEncoder.encode("каталог", "UTF-8") + "/" + URLEncoder.encode(categoryService.getCategoryById(catId).getRuText().replaceAll(" ", "-"), "UTF-8");
                     description = "Великий вибір " + categoryService.getCategoryById(catId).getUaText() + " відомих брендів за низькими цінами. " +
                             " Кольори та фасони на будь-який смак та розмір.";
-                } else if (lang.equals("ru")) {
+                } else if (lang.equals(RU_LANG)) {
                     altURL = URLEncoder.encode("каталог", "UTF-8") + "/" + URLEncoder.encode(categoryService.getCategoryById(catId).getUaText().replaceAll(" ", "-"), "UTF-8");
                     description = "Большой выбор " + categoryService.getCategoryById(catId).getRuText() + " известных брендов по низким ценам. " +
                             " Цвета и фасоны на любой вкус и размер.";
@@ -219,9 +223,9 @@ public class CatalogueController {
         }
 
         if (catId != 0) {
-            if (lang.equals("uk"))
+            if (lang.equals(UK_LANG))
                 model.addAttribute("title", "Купити " + categoryService.getCategoryById(catId).getUaText() + " у інтернет-магазині джентльмен.in.ua");
-            else if (lang.equals("ru"))
+            else if (lang.equals(RU_LANG))
                 model.addAttribute("title", "Купить " + categoryService.getCategoryById(catId).getRuText() + " в интернет-магазине джентльмен.in.ua");
         }
         model.addAttribute("description", description);
@@ -258,8 +262,8 @@ public class CatalogueController {
         if (request.getParameter("lang") != null) {
             setPageData(model);
             String cat;
-            if (request.getParameter("lang").equals("uk")) {
-                colorId = colorService.getColoryByName("ru", color);
+            if (request.getParameter("lang").equals(UK_LANG)) {
+                colorId = colorService.getColoryByName(RU_LANG, color);
                 if (colorId != 0) {
                     listGood = goodService.getGoodsByColor(colorId);
                     cat = URLEncoder.encode(colorService.getColorById(colorId).getUaText(), "UTF-8");
@@ -268,9 +272,9 @@ public class CatalogueController {
                     description = "Придбати одяг та аксесуари " + colorService.getColorById(colorId).getUaText() + " кольору. Великий вибір розмірів та фасоновів.";
                 }
 
-            } else if (request.getParameter("lang").equals("ru")) {
+            } else if (request.getParameter("lang").equals(RU_LANG)) {
                 if (colorId != 0) {
-                    colorId = categoryService.getCategoryByName("uk", color);
+                    colorId = categoryService.getCategoryByName(UK_LANG, color);
                     listGood = goodService.getGoodsByColor(colorId);
                     cat = URLEncoder.encode(colorService.getColorById(colorId).getRuText(), "UTF-8");
                     url2 = URLEncoder.encode("каталог", "UTF-8") + "/" + URLEncoder.encode("цвет", "UTF-8") + "/" + cat;
@@ -285,12 +289,12 @@ public class CatalogueController {
                 listGood = goodService.getGoodsByColor(colorId);
 
                 setPageData(model);
-                if (lang.equals("ru")) {
+                if (lang.equals(RU_LANG)) {
                     String cat = URLEncoder.encode(colorService.getColorById(colorId).getRuText(), "UTF-8");
                     altURL = URLEncoder.encode("каталог", "UTF-8") + "/" + URLEncoder.encode("колір", "UTF-8") + "/" + URLEncoder.encode(colorService.getColorById(colorId).getUaText(), "UTF-8");
                     model.addAttribute("title", "Купить " + colorService.getColorById(colorId).getRuText() + "одежду и аксессуары, галстуки и пиджаки в интернет-магазине джентльмен.in.ua");
                     description = "Купить одежду и аксессуары  " + colorService.getColorById(colorId).getRuText() + " цвета. Большой выбор размеров и фасонов.";
-                } else if (lang.equals("uk")) {
+                } else if (lang.equals(UK_LANG)) {
                     String cat = URLEncoder.encode(colorService.getColorById(colorId).getUaText(), "UTF-8");
                     altURL = URLEncoder.encode("каталог", "UTF-8") + "/" + URLEncoder.encode("цвет", "UTF-8") + "/" + URLEncoder.encode(colorService.getColorById(colorId).getRuText(), "UTF-8");
                     description = "Придбати одяг та аксесуари " + colorService.getColorById(colorId).getUaText() + " кольору. Великий вибір розмірів та фасоновів.";
@@ -346,9 +350,9 @@ public class CatalogueController {
         listGood = replaceGoodInfo(listGood);
         model.addAttribute("count", listGood.size());
         model.addAttribute("allData", listGood);
-        if (lang.equals("uk"))
+        if (lang.equals(UK_LANG))
             model.addAttribute("title", "Купити одяг та аксесуари за ціною від " + price1 + " до " + price2 + " у інтернет-магазині джентльмен.in.ua");
-        else if (lang.equals("ru"))
+        else if (lang.equals(RU_LANG))
             model.addAttribute("title", "Купить одежду и аксессуары, галстуки по цене от " + price1 + " до " + price2 + " гривен в интернет-магазине джентльмен.in.ua ");
 
         setPageData(model);
