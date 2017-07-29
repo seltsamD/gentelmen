@@ -1,5 +1,7 @@
 package com.gent.service;
 
+import com.gent.dto.GoodDTO;
+import com.gent.dto.MiniGoodDTO;
 import com.gent.model.Good;
 
 import java.util.List;
@@ -11,11 +13,13 @@ public interface IGoodService {
 
 //    List<Integer> listGood = new ArrayList<Integer>();
     List<Good> getAllGoods();
-    Good getGoodById(int id);
+
+    GoodDTO getGoodById(int id);
     boolean addGood(Good good);
     void updateGood(Good good);
     void deleteGood(int id);
-    List<Good> getRandomGoods();
+
+    List<MiniGoodDTO> getRandomGoods();
     List<Good> getListGoods(List<Integer> list);
     void changeStatus(int id, int status);
     List<Good> getGoodsByCategorie(int catId);
@@ -24,4 +28,6 @@ public interface IGoodService {
     int getMaxPrice();
     List<Good> getGoodBetweenPrice(int price1, int price2);
     List<Good> getGoodsBySize(String size);
+
+    List<MiniGoodDTO> getGoodsWithLimit(int page);
 }

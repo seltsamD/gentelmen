@@ -2,11 +2,16 @@ package com.gent.service;
 
 import com.gent.controller.SitemapController;
 import com.gent.dao.IGoodDAO;
+import com.gent.dto.GoodDTO;
+import com.gent.dto.MiniGoodDTO;
 import com.gent.model.Good;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.gent.dto.GoodDTO.convertToDTO;
+import static com.gent.dto.MiniGoodDTO.convertListToMiniDTO;
 
 /**
  * Created by daria on 30.09.2016.
@@ -25,9 +30,9 @@ public class GoodService implements IGoodService {
     }
 
     @Override
-    public Good getGoodById(int id) {
+    public GoodDTO getGoodById(int id) {
         Good obj = goodDAO.getGoodById(id);
-        return obj;
+        return convertToDTO(obj);
     }
 
     @Override
@@ -49,8 +54,8 @@ public class GoodService implements IGoodService {
     }
 
     @Override
-    public List<Good> getRandomGoods() {
-        return goodDAO.getRandomGoods();
+    public List<MiniGoodDTO> getRandomGoods() {
+        return convertListToMiniDTO(goodDAO.getRandomGoods());
     }
 
     @Override
@@ -92,6 +97,11 @@ public class GoodService implements IGoodService {
     @Override
     public List<Good> getGoodsBySize(String size) {
         return goodDAO.getGoodsBySize(size);
+    }
+
+    @Override
+    public List<MiniGoodDTO> getGoodsWithLimit(int page) {
+        return convertListToMiniDTO(goodDAO.getGoodsWithLimit(page));
     }
 
 }

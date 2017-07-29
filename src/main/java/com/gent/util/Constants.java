@@ -6,4 +6,6 @@ package com.gent.util;
 public class Constants {
     public static String UK_LANG = "uk";
     public static String RU_LANG = "ru";
+    public static String DOMAIN = "//xn--d1acac0agfd5bxg.in.ua/";
+    public static String SLASH = "/";
 }

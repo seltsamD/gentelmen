@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -20,6 +23,10 @@ public class GoodDAO implements IGoodDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
     @SuppressWarnings("unchecked")
     @Override
     public List<Good> getAllGoods() {
@@ -62,9 +69,9 @@ public class GoodDAO implements IGoodDAO {
     @Override
     public List<Good> getRandomGoods() {
 
-        List<Good> list = sessionFactory.getCurrentSession().createQuery("select o from Good o where o.status = 1 order by rand()")
+        List<Good> list = entityManager.createQuery("from Good o where o.status = 1 order by rand()")
                 .setMaxResults(10)
-                .list();
+                .getResultList();
         return list;
 
     }
@@ -140,5 +147,11 @@ public class GoodDAO implements IGoodDAO {
         return list;
     }
 
-
+    @Override
+    public List<Good> getGoodsWithLimit(int page) {
+        Query q = entityManager.createQuery("FROM Good p where p.status = 1 ");
+        q.setFirstResult(page);
+        q.setMaxResults(10);
+        return q.getResultList();
+    }
 }

@@ -6,7 +6,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.gent.util.Constants.UK_LANG;
+import static com.gent.util.Constants.*;
 
 /**
  * Created by daria on 25.07.2017.
@@ -15,6 +15,7 @@ public class MiniGoodDTO {
     protected int id;
     protected String firm;
     protected String categoryName;
+    protected String href;
 
     public int getId() {
         return id;
@@ -40,15 +41,29 @@ public class MiniGoodDTO {
         this.categoryName = categoryName;
     }
 
+    public String getHref() {
+        return href;
+    }
+
+    public void setHref(String href) {
+        this.href = href;
+    }
+
     public static MiniGoodDTO convertToMiniDTO(Good good) {
         MiniGoodDTO goodDTO = new MiniGoodDTO();
-        goodDTO.id = good.getId();
-        goodDTO.firm = good.getFirm();
+        goodDTO.setId(good.getId());
+        goodDTO.setFirm(good.getFirm());
+        String colorName = null;
         if (LocaleContextHolder.getLocale().getLanguage().equals(UK_LANG)) {
-            goodDTO.categoryName = good.getCategory().getUaText();
+            goodDTO.setCategoryName(good.getCategory().getUaText());
+            colorName = good.getColor().getUaText();
         } else {
-            goodDTO.categoryName = good.getCategory().getRuText();
+            goodDTO.setCategoryName(good.getCategory().getRuText());
+            colorName = good.getColor().getRuText();
         }
+        goodDTO.href = DOMAIN + LocaleContextHolder.getLocale().getLanguage() + SLASH + "good" + SLASH + goodDTO.categoryName.replaceAll(" ", "-") +
+                "-" + good.getFirm().replaceAll(" ", "-") + "-" + colorName.replaceAll(" ", "-") + SLASH + goodDTO.id;
+
         return goodDTO;
     }
 

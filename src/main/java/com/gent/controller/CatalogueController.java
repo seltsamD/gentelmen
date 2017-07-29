@@ -126,15 +126,16 @@ public class CatalogueController {
     }
 
     @RequestMapping(value = "/{lang}/каталог", method = RequestMethod.GET)
-    public String fullCatalogue(ModelMap model, HttpServletRequest request,
+    public String fullCatalogue(HttpServletRequest request,
                                 @PathVariable("lang") String lang) throws UnsupportedEncodingException {
-        List<Good> listGood = goodService.getAllGoods();
-        listGood = replaceGoodInfo(listGood);
-        setPageData(model);
-        listGood = getListFromRequest(listGood, request);
-
-        model.addAttribute("count", listGood.size());
-        model.addAttribute("allData", listGood);
+//        List<Good> listGood = goodService.getAllGoods();
+//        listGood = replaceGoodInfo(listGood);
+//        setPageData(model);
+//        listGood = getListFromRequest(listGood, request);
+//
+//        model.addAttribute("count", listGood.size());
+//        model.addAttribute("allData", listGood);
+        ModelMap model = new ModelMap();
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
         StringBuffer ur = request.getRequestURL();
         String altURL = "";
@@ -149,10 +150,10 @@ public class CatalogueController {
             description = "Большой выбор одежды, аксессуаров и костюмов. Быстрая доставка и низкие цены в нашем интернет-магазине.";
         }
 
-
         model.addAttribute("description", description);
         if (request.getParameter("lang") != null)
             return redirectWithLang(request, URLEncoder.encode("каталог", "UTF-8"), model, altURL);
+        else
         return redirectWithLang(request, "catalogue", model, altURL);
     }
 
@@ -194,13 +195,9 @@ public class CatalogueController {
                     description = "Большой выбор " + categoryService.getCategoryById(catId).getRuText() + " известных брендов по низким ценам. " +
                             " Цвета и фасоны на любой вкус и размер.";
                 }
-
-
             }
 
         } else {
-
-
             if (catId != 0) {
                 listGood = goodService.getGoodsByCategorie(catId);
                 model.addAttribute("count", listGood.size());
@@ -216,8 +213,6 @@ public class CatalogueController {
                     description = "Большой выбор " + categoryService.getCategoryById(catId).getRuText() + " известных брендов по низким ценам. " +
                             " Цвета и фасоны на любой вкус и размер.";
                 }
-
-
             }
 
         }

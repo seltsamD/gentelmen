@@ -1,6 +1,5 @@
 package com.gent.controller;
 
-import com.gent.model.Category;
 import com.gent.model.Good;
 import com.gent.service.ICategoryService;
 import com.gent.service.IColorService;
@@ -52,35 +51,27 @@ public class HomeController {
 
     @RequestMapping(value = {"index","/{lang}/index", "/"}, method = RequestMethod.GET)
     public String show (HttpServletRequest request, ModelMap model, HttpServletResponse response){
+//
+//        List<Good> list =goodService.getRandomGoods();
+//        for (Good good : list) {
+//            good.setFirm(good.getFirm().replace(' ', '-'));
+//            Category cat = good.getCategory();
+//            cat.setUaText(cat.getUaText().replace(' ', '-'));
+//            cat.setRuText(cat.getRuText().replace(' ', '-'));
+//            good.setCategory(cat);
+//
+//        }
+//
+//        List<Category> listSec = categoryService.getSecondLevel();
+//        for(Category cat: listSec)
+//        {
+//            cat.setUaText(cat.getUaText().replace(' ', '-'));
+//            cat.setRuText(cat.getRuText().replace(' ', '-'));
+//        }
 
-
-
-        List<Good> list =goodService.getRandomGoods();
-        for (Good good : list) {
-            good.setFirm(good.getFirm().replace(' ', '-'));
-            Category cat = good.getCategory();
-            cat.setUaText(cat.getUaText().replace(' ', '-'));
-            cat.setRuText(cat.getRuText().replace(' ', '-'));
-            good.setCategory(cat);
-
-        }
-
-        List<Category> listSec = categoryService.getSecondLevel();
-        for(Category cat: listSec)
-        {
-            cat.setUaText(cat.getUaText().replace(' ', '-'));
-            cat.setRuText(cat.getRuText().replace(' ', '-'));
-        }
-
-        model.addAttribute("allData", list ); //get 10 random goods
+        //model.addAttribute("allData", list ); //get 10 random goods
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage()); //get locale language
         model.addAttribute("countInBasket", getCountBasket(request)); //count good in the basket
-        model.addAttribute("maxPrice", goodService.getMaxPrice());
-        model.addAttribute("minPrice", goodService.getMinPrice());
-
-        model.addAttribute("colors", colorService.getAllColor());
-        model.addAttribute("secondLevel", listSec);
-        model.addAttribute("firstLevel", categoryService.getFirstLevel());
         StringBuffer ur = request.getRequestURL();
 
         String altURL = "";

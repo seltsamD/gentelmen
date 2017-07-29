@@ -25,11 +25,16 @@ public class GoodRestController {
 
     @GetMapping
     public GoodDTO findById(@PathVariable int id) {
-        return GoodDTO.convertToDTO(goodService.getGoodById(id));
+        return goodService.getGoodById(id);
     }
 
     @GetMapping("/random")
     public List<MiniGoodDTO> findForIndex() {
-        return MiniGoodDTO.convertListToMiniDTO(goodService.getRandomGoods());
+        return goodService.getRandomGoods();
+    }
+
+    @GetMapping("/{page}")
+    public List<MiniGoodDTO> findByPage(@PathVariable int page) {
+        return goodService.getGoodsWithLimit(page);
     }
 }

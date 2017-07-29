@@ -25,19 +25,19 @@ public class GoodDTO extends MiniGoodDTO implements Serializable {
 
     public static GoodDTO convertToDTO(Good good) {
         GoodDTO goodDTO = new GoodDTO();
-        goodDTO.id = good.getId();
-        goodDTO.firm = good.getFirm();
-        goodDTO.price = good.getPrice();
-        goodDTO.size = good.getSize();
-        goodDTO.countImg = good.getCountImg();
+        goodDTO.setId(good.getId());
+        goodDTO.setFirm(good.getFirm());
+        goodDTO.setPrice(good.getPrice());
+        goodDTO.setSize(good.getSize());
+        goodDTO.setCountImg(good.getCountImg());
         if (LocaleContextHolder.getLocale().getLanguage().equals(UK_LANG)) {
-            goodDTO.colorName = good.getColor().getUaText();
-            goodDTO.categoryName = good.getCategory().getUaText();
-            goodDTO.description = good.getUaText();
+            goodDTO.setColorName(good.getColor().getUaText());
+            goodDTO.setCategoryName(good.getCategory().getUaText());
+            goodDTO.setDescription(good.getUaText());
         } else {
-            goodDTO.colorName = good.getColor().getRuText();
-            goodDTO.categoryName = good.getCategory().getRuText();
-            goodDTO.description = good.getRuText();
+            goodDTO.setColorName(good.getColor().getRuText());
+            goodDTO.setCategoryName(good.getCategory().getRuText());
+            goodDTO.setDescription(good.getRuText());
         }
         return goodDTO;
     }
@@ -50,21 +50,6 @@ public class GoodDTO extends MiniGoodDTO implements Serializable {
         return goodDTOList;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getFirm() {
-        return firm;
-    }
-
-    public void setFirm(String firm) {
-        this.firm = firm;
-    }
 
     public String getColorName() {
         return colorName;
@@ -72,14 +57,6 @@ public class GoodDTO extends MiniGoodDTO implements Serializable {
 
     public void setColorName(String colorName) {
         this.colorName = colorName;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
     }
 
     public int getPrice() {
