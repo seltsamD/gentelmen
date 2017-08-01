@@ -1,7 +1,6 @@
 package com.gent.controller.rest;
 
 import com.gent.dto.GoodDTO;
-import com.gent.dto.MiniGoodDTO;
 import com.gent.service.IGoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -23,18 +22,18 @@ public class GoodRestController {
     @Autowired
     private IGoodService goodService;
 
-    @GetMapping
-    public GoodDTO findById(@PathVariable int id) {
-        return goodService.getGoodById(id);
-    }
+//    @GetMapping
+//    public GoodDTOExtend findById(@PathVariable int id) {
+//        return goodService.getGoodById(id);
+//    }
 
     @GetMapping("/random")
-    public List<MiniGoodDTO> findForIndex() {
+    public List<GoodDTO> findForIndex() {
         return goodService.getRandomGoods();
     }
 
     @GetMapping("/{page}")
-    public List<MiniGoodDTO> findByPage(@PathVariable int page) {
+    public List<GoodDTO> findByPage(@PathVariable int page) {
         return goodService.getGoodsWithLimit(page);
     }
 }

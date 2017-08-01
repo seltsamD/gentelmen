@@ -36,8 +36,9 @@ public class GoodDAO implements IGoodDAO {
     }
 
     @Override
+    @Transactional
     public Good getGoodById(int id) {
-        return (Good) sessionFactory.getCurrentSession().get(Good.class, id);
+        return (Good) entityManager.find(Good.class, id);
     }
 
     @Override
@@ -55,8 +56,9 @@ public class GoodDAO implements IGoodDAO {
         g.setCategory(good.getCategory());
         g.setCountImg(good.getCountImg());
         g.setSize(good.getSize());
-        g.setRuText(good.getRuText());
-        g.setUaText(good.getUaText());
+        g.setDescription(good.getDescription());
+        g.setNameRu(good.getNameRu());
+        g.setNameUa(good.getNameUa());
         sessionFactory.getCurrentSession().update(g);
     }
 

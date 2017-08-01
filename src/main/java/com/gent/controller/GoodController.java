@@ -1,5 +1,6 @@
 package com.gent.controller;
 
+import com.gent.dto.GoodDTOExtend;
 import com.gent.model.Good;
 import com.gent.service.ICategoryService;
 import com.gent.service.IColorService;
@@ -10,14 +11,18 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.LocaleResolver;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
-import static com.gent.util.Constants.RU_LANG;
-import static com.gent.util.Constants.UK_LANG;
+import static com.gent.config.ChangeLang.redirectWithLang;
+import static com.gent.util.Constants.*;
 
 /**
  * Created by daria on 30.09.2016.
@@ -88,63 +93,82 @@ public class GoodController {
 //
 //    }
 //
-//    @RequestMapping(value = "/{lang}/good/{category}-{firm}-{color}/{id}", method = RequestMethod.GET)
-//    public String getInfoGood(ModelMap model, HttpServletRequest request, @PathVariable("lang") String lang
-//            , @PathVariable("category") String category, @PathVariable("firm") String firm,
-//                              @PathVariable("color") String color, @PathVariable("id") int id) {
-//
-//        Good good = goodService.getGoodById(id);
-//        model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
-//        model.addAttribute("info", good);
-//        setPageData(model);
-//        String url2 = "";
-//        String altUrl = "";
-//        String description = "";
-//        boolean flag = false;
-//        String title = "";
-//        if (request.getParameter("lang") != null)
-//            if (request.getParameter("lang").equals(UK_LANG)) {
-//                lang = UK_LANG;
-//                flag = true;
-//            } else if (request.getParameter("lang").equals(RU_LANG)) {
-//                lang = RU_LANG;
-//                flag = true;
-//            }
-//
-//        if (lang.equals(UK_LANG)) {
-//            try {
-//
-//                altUrl = "good/" + URLEncoder.encode(good.getCategory().getRuText().replaceAll(" ", "-"), "UTF-8") + "-" + good.getFirm().replaceAll(" ", "-") + "-" + URLEncoder.encode(good.getColor().getRuText(), "UTF-8") + "/" + good.getId();
-//                description = good.getCategory().getUaText() + " фірми " + good.getFirm() + " придбати за низькою ціною з доставкою. " + good.getColor().getUaText() + " колір, розмір " + good.getSize();
-//                if (flag)
-//                    url2 = "good/" + URLEncoder.encode(good.getCategory().getUaText().replaceAll(" ", "-"), "UTF-8") + "-" + good.getFirm().replaceAll(" ", "-") + "-" + URLEncoder.encode(good.getColor().getUaText(), "UTF-8") + "/" + good.getId();
-//                else url2 = "goodInfo";
-//                title = "Купити " + good.getCategory().getUaText() + " " + good.getFirm() + " " + good.getColor().getUaText() + " у інтернет-магазині джентльмен.in.ua";
-//
-//            } catch (UnsupportedEncodingException e) {
-//                e.printStackTrace();
-//            }
-//
-//
-//        } else if (lang.equals(RU_LANG)) {
-//
-//            try {
-//                altUrl = "good/" + URLEncoder.encode(good.getCategory().getUaText().replaceAll(" ", "-"), "UTF-8") + "-" + good.getFirm().replaceAll(" ", "-") + "-" + URLEncoder.encode(good.getColor().getUaText(), "UTF-8") + "/" + good.getId();
-//                description = good.getCategory().getRuText() + " фирмы " + URLEncoder.encode(good.getFirm(), "UTF-8") + " купить по низкой цене. " + good.getColor().getRuText() + " цвет, размер " + URLEncoder.encode(good.getSize(), "UTF-8");
-//                if (flag)
-//                    url2 = "good/" + URLEncoder.encode(good.getCategory().getRuText().replaceAll(" ", "-"), "UTF-8") + "-" + good.getFirm().replaceAll(" ", "-") + "-" + URLEncoder.encode(good.getColor().getRuText(), "UTF-8") + "/" + good.getId();
-//                else url2 = "goodInfo";
-//                title = "Купить " + good.getCategory().getRuText() + " " + good.getFirm() + " " + good.getColor().getRuText() + " в интернет-магазине джентльмен.in.ua";
-//
-//            } catch (UnsupportedEncodingException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        model.addAttribute("description", description);
-//        model.addAttribute("title", title);
-//
-//        return redirectWithLang(request, url2, model, altUrl); //call function for redirect
-//    }
+@RequestMapping(value = "/{lang}/good/{category}-{firm}-{color}/{id}", method = RequestMethod.GET)
+public String getInfoGood(ModelMap model, HttpServletRequest request, @PathVariable("lang") String lang
+        , @PathVariable("category") String category, @PathVariable("firm") String firm,
+                          @PathVariable("color") String color, @PathVariable("id") int id) {
+
+    Good good = goodService.getGoodById(id);
+    model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
+    model.addAttribute("info", GoodDTOExtend.convertToDTO(good));
+    StringBuilder url2 = new StringBuilder();
+    StringBuilder altUrl = new StringBuilder();
+    StringBuilder description = new StringBuilder();
+    boolean flag = false;
+    StringBuilder title = new StringBuilder();
+    if (request.getParameter("lang") != null)
+        if (request.getParameter("lang").equals(UK_LANG)) {
+            lang = UK_LANG;
+            flag = true;
+        } else if (request.getParameter("lang").equals(RU_LANG)) {
+            lang = RU_LANG;
+            flag = true;
+        }
+
+    if (lang.equals(UK_LANG)) {
+        try {
+
+            altUrl.append(GOOD).append(SLASH).append(URLEncoder.encode(good.getCategory().getRuText().replaceAll(" ", "-"), "UTF-8"))
+                    .append(DASH).append(good.getFirm().replaceAll(" ", "-")).append(DASH)
+                    .append(URLEncoder.encode(good.getColor().getRuText(), "UTF-8")).append(SLASH).append(good.getId());
+
+            description.append(good.getCategory().getUaText()).append(" фірми ").append(good.getFirm())
+                    .append(" придбати за низькою ціною з доставкою. ").append(good.getColor().getUaText())
+                    .append(" колір, розмір ")
+                    .append(good.getSize());
+            if (flag)
+                url2.append(GOOD).append(SLASH).append(URLEncoder.encode(good.getCategory().getUaText().replaceAll(" ", "-"), "UTF-8"))
+                        .append(DASH).append(good.getFirm().replaceAll(" ", "-")).append(DASH)
+                        .append(URLEncoder.encode(good.getColor().getUaText(), "UTF-8")).append(SLASH).append(good.getId());
+            else url2.append("goodInfo");
+            title.append("Купити ").append(good.getCategory().getUaText()).append(" ").append(good.getFirm())
+                    .append(" ").append(good.getColor().getUaText()).append(" у інтернет-магазині джентльмен.in.ua");
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+
+    } else if (lang.equals(RU_LANG)) {
+
+        try {
+            altUrl.append(GOOD).append(SLASH).append(URLEncoder.encode(good.getCategory().getUaText().replaceAll(" ", "-"), "UTF-8"))
+                    .append(DASH).append(good.getFirm().replaceAll(" ", "-")).append(DASH)
+                    .append(URLEncoder.encode(good.getColor().getUaText(), "UTF-8")).append(SLASH).append(good.getId());
+
+            description.append(good.getCategory().getRuText()).append(" фирмы ").append(good.getFirm())
+                    .append(" купить по низкой цене. ").append(good.getColor().getUaText())
+                    .append(" цвет, размер ")
+                    .append(good.getSize());
+
+            if (flag)
+                url2.append(GOOD).append(SLASH).append(URLEncoder.encode(good.getCategory().getRuText().replaceAll(" ", "-"), "UTF-8"))
+                        .append(DASH).append(good.getFirm().replaceAll(" ", "-")).append(DASH)
+                        .append(URLEncoder.encode(good.getColor().getRuText(), "UTF-8")).append(SLASH).append(good.getId());
+            else url2.append("goodInfo");
+            title.append("Купить ").append(good.getCategory().getUaText()).append(" ").append(good.getFirm())
+                    .append(" ").append(good.getColor().getUaText()).append(" в интернет-магазине  джентльмен.in.ua");
+
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+    model.addAttribute("description", description);
+    model.addAttribute("title", title);
+
+    return redirectWithLang(request, url2.toString(), model, altUrl.toString()); //call function for redirect
+}
 //
 //    @RequestMapping(value = "/admin/goodInfo")
 //    public String getInfo(ModelMap model, HttpServletRequest request) {

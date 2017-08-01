@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -39,7 +41,8 @@ public class CatalogueController {
     private IColorService colorService;
     @Autowired
     private IGoodService goodService;
-
+    @Autowired
+    ServletContext servletContext;
     private List<Good> replaceGoodInfo(List<Good> goodList) {
         for (Good good : goodList) {
             good.setFirm(good.getFirm().replace(' ', '-'));
@@ -125,36 +128,18 @@ public class CatalogueController {
         return listGood;
     }
 
-    @RequestMapping(value = "/{lang}/каталог", method = RequestMethod.GET)
-    public String fullCatalogue(HttpServletRequest request,
-                                @PathVariable("lang") String lang) throws UnsupportedEncodingException {
-//        List<Good> listGood = goodService.getAllGoods();
-//        listGood = replaceGoodInfo(listGood);
-//        setPageData(model);
-//        listGood = getListFromRequest(listGood, request);
-//
-//        model.addAttribute("count", listGood.size());
-//        model.addAttribute("allData", listGood);
-        ModelMap model = new ModelMap();
-        model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
+    @RequestMapping(value = "/{lang}/catalogue", method = RequestMethod.GET)
+    public String show(HttpServletRequest request, ModelMap model, HttpServletResponse response) {
+
+        model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage()); //get locale language
         StringBuffer ur = request.getRequestURL();
         String altURL = "";
-        String description = "";
-        if (lang.equals(UK_LANG)) {
-            model.addAttribute("title", "Купити одяг та аксесуари, краватки та костюми у інтернет-магазині джентльмен.in.ua");
-            altURL = "каталог";
-            description = "Великий вибір одягу, аксесуарів та костюмів. Швидка доставка та низькі ціни у нашому інтернет-магазині.";
-        } else if (lang.equals(RU_LANG)) {
-            model.addAttribute("title", "Купить одежду и аксессуары, галстуки и пиджаки в интернет-магазине джентльмен.in.ua");
-            altURL = "каталог";
-            description = "Большой выбор одежды, аксессуаров и костюмов. Быстрая доставка и низкие цены в нашем интернет-магазине.";
-        }
+        if (LocaleContextHolder.getLocale().getLanguage().equals(UK_LANG))
+            altURL = ur.substring(0, ur.indexOf("/", 10)) + "/ru/";
+        else if (LocaleContextHolder.getLocale().getLanguage().equals(RU_LANG))
+            altURL = ur.substring(0, ur.indexOf("/", 10)) + "/uk";
 
-        model.addAttribute("description", description);
-        if (request.getParameter("lang") != null)
-            return redirectWithLang(request, URLEncoder.encode("каталог", "UTF-8"), model, altURL);
-        else
-        return redirectWithLang(request, "catalogue", model, altURL);
+        return redirectWithLang(request, "catalogue", model, altURL); //call function for redirect
     }
 
     @RequestMapping(value = "/{lang}/каталог/{category}/{id}")

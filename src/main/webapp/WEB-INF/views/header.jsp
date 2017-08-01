@@ -27,7 +27,7 @@
                                 href="<c:url value="//xn--d1acac0agfd5bxg.in.ua/${lang}/index"/>"><spring:message
                                 code="page.title"/></a></li>
                         <li class="active"><a
-                                href="<c:url value="//xn--d1acac0agfd5bxg.in.ua/${lang}/каталог"/>"><spring:message
+                                href="<c:url value="//xn--d1acac0agfd5bxg.in.ua//${lang}/каталог"/>"><spring:message
                                 code="page.catalogue"/></a></li>
 
 

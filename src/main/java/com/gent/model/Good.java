@@ -1,33 +1,26 @@
 package com.gent.model;
 
-
-
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * Created by daria on 30.09.2016.
  */
 @Entity
-@Table(name= "tbGood")
-public class Good implements Serializable{
+@Table(name = "tbGood")
+public class Good implements Serializable {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private int id;
 
-    @Size(min=2, max=255)
+    @Size(min = 2, max = 255)
     @Column(name = "Firm")
     private String firm;
-
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "color_id", nullable = false)
@@ -37,11 +30,15 @@ public class Good implements Serializable{
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "description_id", nullable = false)
+    private Description description;
+
     @Min(1)
     @Column(name = "Price")
     private int price;
 
-    @Size(min=1, max=50)
+    @Size(min = 1, max = 50)
     @Column(name = "Size")
     private String size;
 
@@ -52,13 +49,13 @@ public class Good implements Serializable{
     @Column(name = "Status")
     private int status;
 
-    @Size(min=2, max=1000)
-    @Column(name = "ruText")
-    private String ruText;
+    @Size(min = 2, max = 70)
+    @Column(name = "nameUa", unique = true)
+    private String nameUa;
 
-    @Size(min=2, max=1000)
-    @Column(name = "uaText")
-    private String uaText;
+    @Size(min = 2, max = 70)
+    @Column(name = "nameRu", unique = true)
+    private String nameRu;
 
     @Column
     private Date data = new Date();
@@ -136,38 +133,29 @@ public class Good implements Serializable{
         return status;
     }
 
-    public String getRuText() {
-        return ruText;
+    public Description getDescription() {
+        return description;
     }
 
-    public void setRuText(String ruText) {
-        this.ruText = ruText;
+    public void setDescription(Description description) {
+        this.description = description;
     }
 
-    public String getUaText() {
-        return uaText;
+    public String getNameUa() {
+        return nameUa;
     }
 
-    public void setUaText(String uaText) {
-        this.uaText = uaText;
+    public void setNameUa(String nameUa) {
+        this.nameUa = nameUa;
     }
 
-    @Override
-    public String toString() {
-        return "Good{" +
-                "id=" + id +
-                ", firm= " + firm +
-                ", color= " + color.getUaText() +
-                ", category= "  + category.getUaText() +
-                ", price= " + price +
-                ", size= " + size +
-                ", countImg= " + countImg +
-                ", status= " + status +
-                ", \nruText= " + ruText +
-                ", \nuaText= " + uaText +
-                '}';
+    public String getNameRu() {
+        return nameRu;
     }
 
+    public void setNameRu(String nameRu) {
+        this.nameRu = nameRu;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -176,28 +164,37 @@ public class Good implements Serializable{
 
         Good good = (Good) o;
 
-        if (id != good.id) return false;
         if (price != good.price) return false;
         if (countImg != good.countImg) return false;
         if (status != good.status) return false;
-        if (!firm.equals(good.firm)) return false;
-        if (color.getId() != good.color.getId()) return false;
-        if (category.getId() != good.category.getId()) return false;
-        if (!size.equals(good.size)) return false;
-        if (!ruText.equals(good.ruText)) return false;
-        return uaText.equals(good.uaText);
+        if (firm != null ? !firm.equals(good.firm) : good.firm != null) return false;
+        if (size != null ? !size.equals(good.size) : good.size != null) return false;
+        return data != null ? data.equals(good.data) : good.data == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + firm.hashCode();
+        int result = firm != null ? firm.hashCode() : 0;
         result = 31 * result + price;
-        result = 31 * result + size.hashCode();
+        result = 31 * result + (size != null ? size.hashCode() : 0);
         result = 31 * result + countImg;
-        result = 31 * result + ruText.hashCode();
-        result = 31 * result + uaText.hashCode();
+        result = 31 * result + status;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Good{" +
+                "id=" + id +
+                ", firm='" + firm + '\'' +
+                ", color=" + color +
+                ", category=" + category +
+                ", price=" + price +
+                ", size='" + size + '\'' +
+                ", countImg=" + countImg +
+                ", status=" + status +
+                ", data=" + data +
+                '}';
     }
 }

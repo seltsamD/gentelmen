@@ -1,7 +1,6 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 <%--
   Created by IntelliJ IDEA.
   User: daria
@@ -10,7 +9,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -29,6 +28,9 @@
 <div class="container">
     <jsp:include page="header.jsp"/>
     <div class="mainContent">
+        <div class="menu">
+
+        </div>
         <section>
             <div class="goodCatalogue">
                 <h1><spring:message code="page.catalogue"/></h1>
@@ -41,6 +43,7 @@
 <jsp:include page="footer.jsp"/>
 <script src="<c:url value="/resources/js/catalogue.js" />" type="text/javascript"></script>
 </body>
+</html>
 <%--<body>--%>
 <%--<div class="container">--%>
 <%--<jsp:include page="header.jsp" />--%>

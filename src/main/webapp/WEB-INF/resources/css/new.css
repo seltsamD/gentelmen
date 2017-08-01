@@ -5,6 +5,7 @@
 
 body {
     font-family: celticFont, serif;
+    font-size: 14pt;
 }
 
 .mainImg {
@@ -252,4 +253,15 @@ body {
 
 #loader {
     border: none;
+}
+
+.div404 {
+    margin-top: 100px;
+    min-height: 700px;
+    background: url("404.jpg");
+    background-size: contain;
+}
+
+.carousel-inner > .item > img {
+    width: 100%;
 }
