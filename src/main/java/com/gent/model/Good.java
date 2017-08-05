@@ -50,11 +50,11 @@ public class Good implements Serializable {
     private int status;
 
     @Size(min = 2, max = 70)
-    @Column(name = "nameUa", unique = true)
+    @Column(name = "nameUa")
     private String nameUa;
 
     @Size(min = 2, max = 70)
-    @Column(name = "nameRu", unique = true)
+    @Column(name = "nameRu")
     private String nameRu;
 
     @Column

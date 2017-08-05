@@ -67,8 +67,8 @@ public class GoodService implements IGoodService {
     }
 
     @Override
-    public List<Good> getGoodsByCategorie(int catId) {
-        return goodDAO.getGoodsByCategorie(catId);
+    public List<GoodDTO> getGoodsByCategorie(int catId, int page) {
+        return convertListToMiniDTO(goodDAO.getGoodsByCategorie(catId, page));
     }
 
     @Override

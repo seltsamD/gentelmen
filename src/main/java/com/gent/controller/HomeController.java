@@ -12,14 +12,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import static com.gent.config.ChangeLang.redirectWithLang;
@@ -83,28 +81,6 @@ public class HomeController {
             altURL = ur.substring(0, ur.indexOf("/", 10))+"/uk";
 
         return redirectWithLang(request, "index", model, altURL); //call function for redirect
-    }
-
-    @RequestMapping(value = "/{lang}/каталог", method = RequestMethod.GET)
-    public String fullCatalogue(ModelMap model, HttpServletRequest request,
-                                @PathVariable("lang") String lang) throws UnsupportedEncodingException {
-//        model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
-//        StringBuffer ur = request.getRequestURL();
-//        String altURL = "";
-//        String description = "";
-//        if (lang.equals(UK_LANG)) {
-//            model.addAttribute("title", "Купити одяг та аксесуари, краватки та костюми у інтернет-магазині джентльмен.in.ua");
-//            altURL = "каталог";
-//            description = "Великий вибір одягу, аксесуарів та костюмів. Швидка доставка та низькі ціни у нашому інтернет-магазині.";
-//        } else if (lang.equals(RU_LANG)) {
-//            model.addAttribute("title", "Купить одежду и аксессуары, галстуки и пиджаки в интернет-магазине джентльмен.in.ua");
-//            altURL = "каталог";
-//            description = "Большой выбор одежды, аксессуаров и костюмов. Быстрая доставка и низкие цены в нашем интернет-магазине.";
-//        }
-//
-//        model.addAttribute("description", description);
-//        return redirectWithLang(request, URLEncoder.encode("каталог", "UTF-8"), model, altURL);
-        return redirectWithLang(request, "catalogue", model, "catalogue"); //call function for redirect
     }
 
     // for all admin-page

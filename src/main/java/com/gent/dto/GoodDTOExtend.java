@@ -35,8 +35,6 @@ public class GoodDTOExtend extends GoodDTO implements Serializable {
         goodDTOExtend.setSize(good.getSize());
         goodDTOExtend.setCountImg(good.getCountImg());
         goodDTOExtend.setStatus(good.getStatus());
-        goodDTOExtend.href = DOMAIN + LocaleContextHolder.getLocale().getLanguage() + SLASH + "good" + SLASH +
-                goodDTOExtend.getName().replaceAll(" ", "-") + SLASH + goodDTOExtend.id;
         if (LocaleContextHolder.getLocale().getLanguage().equals(UK_LANG)) {
             goodDTOExtend.setColorName(good.getColor().getUaText());
             goodDTOExtend.setCategoryName(good.getCategory().getUaText());
@@ -48,6 +46,8 @@ public class GoodDTOExtend extends GoodDTO implements Serializable {
             goodDTOExtend.setDescription(good.getDescription().getRuText());
             goodDTOExtend.setName(good.getNameRu());
         }
+        goodDTOExtend.href = DOMAIN + LocaleContextHolder.getLocale().getLanguage() + SLASH + "good" + SLASH +
+                goodDTOExtend.getName().replaceAll(" ", "-") + SLASH + goodDTOExtend.id;
         return goodDTOExtend;
     }
 

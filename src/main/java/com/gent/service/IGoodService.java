@@ -21,7 +21,8 @@ public interface IGoodService {
     List<GoodDTO> getRandomGoods();
     List<Good> getListGoods(List<Integer> list);
     void changeStatus(int id, int status);
-    List<Good> getGoodsByCategorie(int catId);
+
+    List<GoodDTO> getGoodsByCategorie(int catId, int page);
     List<Good> getGoodsByColor(int colorId);
     int getMinPrice();
     int getMaxPrice();
@@ -29,4 +30,5 @@ public interface IGoodService {
     List<Good> getGoodsBySize(String size);
 
     List<GoodDTO> getGoodsWithLimit(int page);
+
 }

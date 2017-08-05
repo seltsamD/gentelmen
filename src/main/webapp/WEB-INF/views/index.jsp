@@ -63,7 +63,12 @@
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 marginImg">
                         <div class="ih-item circle colored effect17">
-                            <a href="#">
+                            <c:if test="${lang == 'uk'}">
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/новогодний-свитер/38"/>
+                            </c:if>
+                            <c:if test="${lang == 'ru'}">
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/новорічний-светр/38"/>
+                            </c:if>
                                 <div class="img"><img src="<c:url value="/images/images/1_mini.jpg"/>" alt="img"></div>
                                 <div class="info">
                                     <h3><spring:message code="sweaters"/></h3>
@@ -73,7 +78,12 @@
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 marginImg">
                         <div class="ih-item circle colored effect17">
-                            <a href="#">
+                            <c:if test="${lang == 'uk'}">
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/пиджак/5"/>
+                            </c:if>
+                            <c:if test="${lang == 'ru'}">
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/піджак/5"/>
+                            </c:if>
                                 <div class="img"><img src="<c:url value="/images/images/2_mini.jpg"/>" alt="img"></div>
                                 <div class="info">
                                     <h3><spring:message code="jacket"/></h3>
@@ -83,7 +93,12 @@
                     </div>
                     <div class="col-lg-2 col-md-3  col-sm-4 col-xs-6  marginImg">
                         <div class="ih-item circle colored effect17">
-                            <a href="#">
+                            <c:if test="${lang == 'uk'}">
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/рубашка/3"/>
+                            </c:if>
+                            <c:if test="${lang == 'ru'}">
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/сорочка/3"/>
+                            </c:if>
                                 <div class="img"><img src="<c:url value="/images/images/3_mini.jpg"/>" alt="img"></div>
                                 <div class="info">
                                     <h3><spring:message code="shirts"/></h3>
@@ -93,7 +108,12 @@
                     </div>
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 marginImg">
                         <div class="ih-item circle colored effect17">
-                            <a href="#">
+                            <c:if test="${lang == 'uk'}">
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/детская-пижама/35"/>
+                            </c:if>
+                            <c:if test="${lang == 'ru'}">
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/дитяча-піжама/35"/>
+                            </c:if>
                                 <div class="img"><img src="<c:url value="/images/images/4_mini.jpg"/>" alt="img"></div>
                                 <div class="info">
                                     <h3><spring:message code="pajamas"/></h3>
@@ -112,13 +132,13 @@
             </div>
         </section>
     </div>
-
+        <link href="<c:url value="/resources/css/hover.css" />" rel="stylesheet">
     <jsp:include page="footer.jsp"/>
 
 </body>
 <%--<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">--%>
 
-<link href="<c:url value="/resources/css/hover.css" />" rel="stylesheet">
+
 <script src="<c:url value="/resources/js/index.js" />" type="text/javascript"></script>
 
 </html>

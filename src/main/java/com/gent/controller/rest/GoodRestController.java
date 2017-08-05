@@ -36,4 +36,9 @@ public class GoodRestController {
     public List<GoodDTO> findByPage(@PathVariable int page) {
         return goodService.getGoodsWithLimit(page);
     }
+
+    @GetMapping("/category/{category}/{page}")
+    public List<GoodDTO> findByCategory(@PathVariable int category, @PathVariable int page) {
+        return goodService.getGoodsByCategorie(category, page);
+    }
 }

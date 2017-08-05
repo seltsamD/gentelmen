@@ -94,13 +94,12 @@ public class GoodDAO implements IGoodDAO {
     }
 
     @Override
-    public List<Good> getGoodsByCategorie(int catId) {
-
-        List<Good> list = sessionFactory.getCurrentSession().createQuery("FROM Good  p where p.status = 1 and p.category.id = :id ORDER BY p.id ")
-                .setParameter("id", catId)
-                .list();
-
-        return list;
+    public List<Good> getGoodsByCategorie(int catId, int page) {
+        Query q = entityManager.createQuery("FROM Good p where p.status = 1 and p.category.id = :cat_id");
+        q.setParameter("cat_id", catId);
+        q.setFirstResult(page);
+        q.setMaxResults(10);
+        return q.getResultList();
     }
 
     @Override

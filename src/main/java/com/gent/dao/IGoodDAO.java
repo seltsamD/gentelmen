@@ -25,7 +25,7 @@ public interface IGoodDAO {
 
     void changeStatus(int id, int status);
 
-    List<Good> getGoodsByCategorie(int catId);
+    List<Good> getGoodsByCategorie(int catId, int page);
 
     List<Good> getGoodsByColor(int colorId);
 
