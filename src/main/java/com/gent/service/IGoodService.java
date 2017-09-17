@@ -11,6 +11,7 @@ import java.util.List;
 public interface IGoodService {
 
 //    List<Integer> listGood = new ArrayList<Integer>();
+List<GoodDTO> getAllGoodsDTO();
     List<Good> getAllGoods();
 
     Good getGoodById(int id);
@@ -31,4 +32,13 @@ public interface IGoodService {
 
     List<GoodDTO> getGoodsWithLimit(int page);
 
+    List<GoodDTO> getListGoodsByCategories(List<Integer> categories, int page);
+
+    GoodDTO convertToMiniDTO(Good good);
+
+    GoodDTO convertToMiniDTO(Good good, String lang);
+
+    List<GoodDTO> convertListToMiniDTO(List<Good> goodList);
+
+    List<GoodDTO> convertListToMiniDTO(List<Good> goodList, String lang);
 }

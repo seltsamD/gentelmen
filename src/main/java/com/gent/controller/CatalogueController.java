@@ -10,8 +10,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import static com.gent.config.ChangeLang.redirectWithLang;
-import static com.gent.util.Constants.RU_LANG;
-import static com.gent.util.Constants.UK_LANG;
+import static com.gent.util.Constants.*;
 
 /**
  * Created by daria on 22.10.2016.
@@ -122,16 +125,96 @@ public class CatalogueController {
 //        return listGood;
 //    }
 
-    @RequestMapping(value = {"/{lang}/каталог/{category}/{id}", "/{lang}/каталог"}, method = RequestMethod.GET)
-    public String show(HttpServletRequest request, ModelMap model, HttpServletResponse response) {
 
-        model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage()); //get locale language
+    @RequestMapping(value = {"/{lang}/catalogue", "/{lang}/каталог"}, method = RequestMethod.GET)
+    public String show(HttpServletRequest request, ModelMap model, HttpServletResponse response, @PathVariable String lang) {
+        LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+        localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
+        model.addAttribute("lang", lang); //get locale language
         StringBuffer ur = request.getRequestURL();
         String altURL = "";
         if (LocaleContextHolder.getLocale().getLanguage().equals(UK_LANG))
-            altURL = ur.substring(0, ur.indexOf("/", 10)) + "/ru/";
+            altURL = ur.substring(0, ur.indexOf("/", 10)) + "/ru/каталог";
         else if (LocaleContextHolder.getLocale().getLanguage().equals(RU_LANG))
-            altURL = ur.substring(0, ur.indexOf("/", 10)) + "/uk";
+            altURL = ur.substring(0, ur.indexOf("/", 10)) + "/uk/каталог";
+
+        return redirectWithLang(request, "catalogue", model, altURL); //call function for redirect
+    }
+
+    @RequestMapping(value = {"/{lang}/каталог/{parent}/{category}/{id}"}, method = RequestMethod.GET)
+    public String show(HttpServletRequest request, ModelMap model, HttpServletResponse response,
+                       @PathVariable String lang, @PathVariable Integer id) {
+        LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+        localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
+        model.addAttribute("lang", lang); //get locale language
+        StringBuffer ur = request.getRequestURL();
+        String altURL = "";
+        Category category = categoryService.getCategoryById(id);
+        Category parentCategory = categoryService.getCategoryById(category.getParent());
+        String url = "";
+        String description = "";
+        boolean flag = false;
+        if (request.getParameter("lang") != null)
+            if (request.getParameter("lang").equals(UK_LANG)) {
+                lang = UK_LANG;
+                flag = true;
+            } else if (request.getParameter("lang").equals(RU_LANG)) {
+                lang = RU_LANG;
+                flag = true;
+            }
+
+        if (lang.equals(UK_LANG)) {
+            if (flag) {
+                url = "каталог/" + parentCategory.getUaText() + SLASH + category.getUaText()
+                        + SLASH + category.getId();
+            } else {
+                url = "catalogue";
+            }
+            description = "Великий вибір " + category.getUaText() + " для " + parentCategory.getUaText() + " відомих брендів за низькими цінами. " +
+                    " Кольори та фасони на будь-який смак та розмір.";
+            altURL = ur.substring(0, ur.indexOf("/", 10)) + "/ru/каталог/" + parentCategory.getRuText() + SLASH + category.getRuText()
+                    + SLASH + category.getId();
+        } else if (lang.equals(RU_LANG)) {
+            if (flag) {
+                url = "каталог/" + parentCategory.getRuText() + SLASH + category.getRuText()
+                        + SLASH + category.getId();
+
+            } else {
+                url = "catalogue";
+            }
+            description = "Большой выбор " + category.getRuText() + " для " + parentCategory.getRuText() + " известных брендов по низким ценам. " +
+                    " Цвета и фасоны на любой вкус и размер.";
+            altURL = ur.substring(0, ur.indexOf("/", 10)) + "/uk/каталог/" + parentCategory.getUaText() + SLASH + category.getUaText()
+                    + SLASH + category.getId();
+        }
+
+        model.addAttribute("description", description);
+        return redirectWithLang(request, url, model, altURL); //call function for redirect
+    }
+
+    @RequestMapping(value = {"/{lang}/каталог/{category}/{id}"}, method = RequestMethod.GET)
+    public String showParent(HttpServletRequest request, ModelMap model, HttpServletResponse response,
+                             @PathVariable String lang, @PathVariable Integer id) {
+        LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+        localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
+
+        model.addAttribute("lang", lang); //get locale language
+        StringBuffer ur = request.getRequestURL();
+        boolean flag = false;
+        if (request.getParameter("lang") != null)
+            if (request.getParameter("lang").equals(UK_LANG)) {
+                lang = UK_LANG;
+                flag = true;
+            } else if (request.getParameter("lang").equals(RU_LANG)) {
+                lang = RU_LANG;
+                flag = true;
+            }
+        String altURL = "";
+        Category category = categoryService.getCategoryById(id);
+        if (lang.equals(UK_LANG)) {
+            altURL = ur.substring(0, ur.indexOf("/", 10)) + "/ru/каталог/" + category.getRuText() + SLASH + category.getId();
+        } else if (LocaleContextHolder.getLocale().getLanguage().equals(RU_LANG))
+            altURL = ur.substring(0, ur.indexOf("/", 10)) + "/uk/каталог/" + category.getUaText() + SLASH + category.getId();
 
         return redirectWithLang(request, "catalogue", model, altURL); //call function for redirect
     }

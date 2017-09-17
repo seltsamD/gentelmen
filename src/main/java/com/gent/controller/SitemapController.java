@@ -1,6 +1,7 @@
 package com.gent.controller;
 
-import com.gent.model.Category;
+import com.gent.dto.CategoryDTO;
+import com.gent.dto.GoodDTO;
 import com.gent.model.Good;
 import com.gent.service.ICategoryService;
 import com.gent.service.IGoodService;
@@ -31,7 +32,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.gent.config.AppConfiguration.urlWriteImages;
-import static com.gent.util.Constants.RU_LANG;
+import static com.gent.util.Constants.*;
 
 /**
  * Created by daria on 05.12.2016.
@@ -42,6 +43,7 @@ import static com.gent.util.Constants.RU_LANG;
 public class SitemapController {
     @Autowired
     private ICategoryService categoryService;
+
     @Autowired
     private IGoodService goodService;
 
@@ -93,7 +95,7 @@ public class SitemapController {
             Element xhtml = doc.createElement("xhtml:link");
             xhtml.setAttribute("rel", "alternate");
             xhtml.setAttribute("hreflang", RU_LANG);
-            xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/uk/good/" + item.getCategory().getRuText() + "-" + item.getFirm().replaceAll(" ", "-") + "-" + item.getColor().getRuText() + "/" + item.getId());
+            xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/ru/good/" + item.getCategory().getRuText() + "-" + item.getFirm().replaceAll(" ", "-") + "-" + item.getColor().getRuText() + "/" + item.getId());
             url.appendChild(xhtml);
         }
 
@@ -135,54 +137,15 @@ public class SitemapController {
         rootElement.setAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
         doc.appendChild(rootElement);
 
-        List<Category> listCategory = categoryService.getSecondLevel();
-        for (Category item : listCategory) {
-            Element url = doc.createElement("url");
-            rootElement.appendChild(url);
-
-            Element loc = doc.createElement("loc");
-            loc.appendChild(doc.createTextNode("http://xn--d1acac0agfd5bxg.in.ua/uk/" + URLEncoder.encode("каталог", "UTF-8") + "/" + URLEncoder.encode(item.getUaText().replaceAll(" ", "-"), "UTF-8") + "/" + item.getId()));
-            url.appendChild(loc);
-
-            Element priority = doc.createElement("priority");
-            priority.appendChild(doc.createTextNode("0.7"));
-            url.appendChild(priority);
-
-            Element lastmod = doc.createElement("lastmod");
-            lastmod.appendChild(doc.createTextNode(w3cDateTime(item.getData())));
-            url.appendChild(lastmod);
-
-            Element xhtml = doc.createElement("xhtml:link");
-            xhtml.setAttribute("rel", "alternate");
-            xhtml.setAttribute("hreflang", RU_LANG);
-            xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/ru/" + URLEncoder.encode("каталог", "UTF-8") + "/" + URLEncoder.encode(item.getRuText().replaceAll(" ", "-"), "UTF-8") + "/" + item.getId());
-            url.appendChild(xhtml);
+        List<CategoryDTO> listCategory = categoryService.convertListToDTO(categoryService.getSecondLevel(), UK_LANG);
+        for (CategoryDTO item : listCategory) {
+            setCategory(doc, rootElement, item);
         }
 
 
-        List<Good> listGood = goodService.getAllGoods();
-        for (Good item : listGood) {
-            Element url = doc.createElement("url");
-            rootElement.appendChild(url);
-
-            Element loc = doc.createElement("loc");
-            loc.appendChild(doc.createTextNode("http://xn--d1acac0agfd5bxg.in.ua/uk/good/" + URLEncoder.encode(item.getCategory().getUaText().replaceAll(" ", "-"), "UTF-8") + "-" + item.getFirm().replaceAll(" ", "-") + "-" + URLEncoder.encode(item.getColor().getUaText(), "UTF-8") + "/" + item.getId()));
-            url.appendChild(loc);
-
-            Element priority = doc.createElement("priority");
-            priority.appendChild(doc.createTextNode("0.9"));
-            url.appendChild(priority);
-
-            Element lastmod = doc.createElement("lastmod");
-            lastmod.appendChild(doc.createTextNode(w3cDateTime(item.getData())));
-            url.appendChild(lastmod);
-
-            Element xhtml = doc.createElement("xhtml:link");
-            xhtml.setAttribute("rel", "alternate");
-            xhtml.setAttribute("hreflang", RU_LANG);
-            xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/ru/good/" + URLEncoder.encode(item.getCategory().getRuText().replaceAll(" ", "-"), "UTF-8") + "-" + item.getFirm().replaceAll(" ", "-") + "-" + URLEncoder.encode(item.getColor().getRuText(), "UTF-8") + "/" + item.getId());
-
-            url.appendChild(xhtml);
+        List<GoodDTO> goodDTOList = goodService.convertListToMiniDTO(goodService.getAllGoods(), UK_LANG);
+        for (GoodDTO item : goodDTOList) {
+            setGood(doc, rootElement, item);
         }
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -203,7 +166,7 @@ public class SitemapController {
 
     }
 
-    public static boolean addCategoryToSitemap(Category item) {
+    public static boolean addCategoryToSitemap(CategoryDTO item) {
         File f = new File(urlWriteImages + "/sitemap.xml");
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
@@ -216,7 +179,7 @@ public class SitemapController {
 
 
             Element loc = doc.createElement("loc");
-            loc.appendChild(doc.createTextNode("http://xn--d1acac0agfd5bxg.in.ua/uk/" + URLEncoder.encode("каталог", "UTF-8") + "/" + URLEncoder.encode(item.getUaText().replaceAll(" ", "-"), "UTF-8") + "/" + item.getId()));
+            loc.appendChild(doc.createTextNode(PROTOCOL + item.getHref()));
             url.appendChild(loc);
 
             Element priority = doc.createElement("priority");
@@ -224,13 +187,13 @@ public class SitemapController {
             url.appendChild(priority);
 
             Element lastmod = doc.createElement("lastmod");
-            lastmod.appendChild(doc.createTextNode(w3cDateTime(item.getData())));
+            lastmod.appendChild(doc.createTextNode(w3cDateTime(item.getDate())));
             url.appendChild(lastmod);
 
             Element xhtml = doc.createElement("xhtml:link");
             xhtml.setAttribute("rel", "alternate");
             xhtml.setAttribute("hreflang", RU_LANG);
-            xhtml.setAttribute("href", "http://xn--d1acac0agfd5bxg.in.ua/ru/" + URLEncoder.encode("каталог", "UTF-8") + "/" + URLEncoder.encode(item.getRuText().replaceAll(" ", "-"), "UTF-8") + "/" + item.getId());
+            xhtml.setAttribute("href", item.getAltHref());
             url.appendChild(xhtml);
 
 
@@ -264,7 +227,7 @@ public class SitemapController {
         return true;
     }
 
-   public static boolean addGoodToSitemap(Good item) {
+    public static boolean addGoodToSitemap(Good item) {
         File f = new File(urlWriteImages + "/sitemap.xml");
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
@@ -324,5 +287,52 @@ public class SitemapController {
         return true;
     }
 
+    private void setCategory(Document doc, Element rootElement, CategoryDTO item) {
+        Element url = doc.createElement("url");
+        rootElement.appendChild(url);
 
+        Element loc = doc.createElement("loc");
+        loc.appendChild(doc.createTextNode(PROTOCOL + item.getHref()));
+
+        url.appendChild(loc);
+
+        Element priority = doc.createElement("priority");
+        priority.appendChild(doc.createTextNode("0.7"));
+        url.appendChild(priority);
+
+        Element lastmod = doc.createElement("lastmod");
+        lastmod.appendChild(doc.createTextNode(w3cDateTime(item.getDate())));
+        url.appendChild(lastmod);
+
+        Element xhtml = doc.createElement("xhtml:link");
+        xhtml.setAttribute("rel", "alternate");
+        xhtml.setAttribute("hreflang", RU_LANG);
+        xhtml.setAttribute("href", PROTOCOL + item.getAltHref());
+        url.appendChild(xhtml);
+    }
+
+
+    private void setGood(Document doc, Element rootElement, GoodDTO item) {
+        Element url = doc.createElement("url");
+        rootElement.appendChild(url);
+
+        Element loc = doc.createElement("loc");
+        loc.appendChild(doc.createTextNode(PROTOCOL + item.getHref()));
+        url.appendChild(loc);
+
+        Element priority = doc.createElement("priority");
+        priority.appendChild(doc.createTextNode("0.9"));
+        url.appendChild(priority);
+
+        Element lastmod = doc.createElement("lastmod");
+        lastmod.appendChild(doc.createTextNode(w3cDateTime(item.getDate())));
+        url.appendChild(lastmod);
+
+        Element xhtml = doc.createElement("xhtml:link");
+        xhtml.setAttribute("rel", "alternate");
+        xhtml.setAttribute("hreflang", RU_LANG);
+        xhtml.setAttribute("href", PROTOCOL + item.getAltHref());
+
+        url.appendChild(xhtml);
+    }
 }

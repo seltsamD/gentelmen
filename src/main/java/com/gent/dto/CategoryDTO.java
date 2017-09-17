@@ -1,16 +1,18 @@
 package com.gent.dto;
 
 import java.util.Date;
+import java.util.List;
 
 /**
- * Created by daria on 25.07.2017.
+ * Created by daria on 06.08.2017.
  */
-public class GoodDTO {
-    protected int id;
-    protected String href;
-    protected String name;
-    protected String altHref;
-    protected Date date;
+public class CategoryDTO {
+    private int id;
+    private String name;
+    private String href;
+    private List<CategoryDTO> child;
+    private String altHref;
+    private Date date;
 
     public int getId() {
         return id;
@@ -20,6 +22,13 @@ public class GoodDTO {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getHref() {
         return href;
@@ -29,12 +38,12 @@ public class GoodDTO {
         this.href = href;
     }
 
-    public String getName() {
-        return name;
+    public List<CategoryDTO> getChild() {
+        return child;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setChild(List<CategoryDTO> child) {
+        this.child = child;
     }
 
     public String getAltHref() {

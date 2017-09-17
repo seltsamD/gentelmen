@@ -11,13 +11,16 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -94,12 +97,14 @@ public class GoodController {
 //    }
 //
 @RequestMapping(value = "/{lang}/good/{category}-{firm}-{color}/{id}", method = RequestMethod.GET)
-public String getInfoGood(ModelMap model, HttpServletRequest request, @PathVariable("lang") String lang
+public String getInfoGood(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable String lang
         , @PathVariable("category") String category, @PathVariable("firm") String firm,
                           @PathVariable("color") String color, @PathVariable("id") int id) {
 
     Good good = goodService.getGoodById(id);
-    model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
+    LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+    localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
+    model.addAttribute("lang", lang);
     model.addAttribute("info", GoodDTOExtend.convertToDTO(good));
     StringBuilder url2 = new StringBuilder();
     StringBuilder altUrl = new StringBuilder();

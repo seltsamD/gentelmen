@@ -26,10 +26,13 @@
                         <li class="active"><a
                                 href="<c:url value="//xn--d1acac0agfd5bxg.in.ua/${lang}/index"/>"><spring:message
                                 code="page.title"/></a></li>
-                        <li class="active"><a
-                                href="<c:url value="//xn--d1acac0agfd5bxg.in.ua//${lang}/каталог"/>"><spring:message
-                                code="page.catalogue"/></a></li>
+                        <%--<li class="active"><a--%>
+                        <%--href="<c:url value="//xn--d1acac0agfd5bxg.in.ua/${lang}/каталог"/>"><spring:message--%>
+                        <%--code="page.catalogue"/></a></li>--%>
 
+                        <li class="active"><a
+                                href="<c:url value="${pageContext.request.contextPath}/${lang}/каталог"/>"><spring:message
+                                code="page.catalogue"/></a></li>
 
                         <%--<c:if test="${pageContext.request.userPrincipal.name != null}">--%>
                         <%--<li class="active"><a href="<c:url value="${pageContext.request.contextPath}/admin/goodform"/>"><spring:message code="page.good"/></a></li>--%>

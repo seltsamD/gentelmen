@@ -28,16 +28,33 @@
 <div class="container">
     <jsp:include page="header.jsp"/>
     <div class="mainContent">
-        <div class="menu">
+        <div class="row">
+            <div class="menu col-lg-2 col-sm-4 col-xs-12">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class='panel panel-default'>
+                        <div class='panel-heading'>
+                            <h3 class='panel-title' onclick="getAll()">
+                                <spring:message code="catalogue.getAll"/>
+                            </h3>
+                        </div>
+                    </div>
 
+                </div>
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+                </div>
+            </div>
+            <div class="menu col-lg-10 col-sm-8 col-xs-12">
+                <section>
+                    <div class="goodCatalogue">
+                        <h1><spring:message code="page.catalogue"/></h1>
+                    </div>
+                    <div class="row centerDisplay" id="goods">
+                    </div>
+                </section>
+            </div>
         </div>
-        <section>
-            <div class="goodCatalogue">
-                <h1><spring:message code="page.catalogue"/></h1>
-            </div>
-            <div class="row centerDisplay" id="goods">
-            </div>
-        </section>
+
     </div>
 </div>
 <jsp:include page="footer.jsp"/>

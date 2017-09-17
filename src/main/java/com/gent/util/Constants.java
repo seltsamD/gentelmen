@@ -11,4 +11,5 @@ public class Constants {
     public static String SLASH = "/";
     public static String GOOD = "good";
     public static String DASH = "-";
+    public static String PROTOCOL = "http:";
 }

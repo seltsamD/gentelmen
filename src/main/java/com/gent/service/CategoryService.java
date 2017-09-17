@@ -3,11 +3,19 @@ package com.gent.service;
 
 import com.gent.controller.SitemapController;
 import com.gent.dao.ICategoryDAO;
+import com.gent.dto.CategoryDTO;
 import com.gent.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.gent.util.Constants.*;
 
 /**
  * Created by daria on 05.10.2016.
@@ -26,14 +34,13 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public Category getCategoryById(int id) {
-        Category text = categoryDAO.getCategoryById(id);
-        return text;
+        return categoryDAO.getCategoryById(id);
     }
 
     @Override
     public boolean addCategory(Category item) {
         categoryDAO.addCategory(item);
-        SitemapController.addCategoryToSitemap(item);
+        SitemapController.addCategoryToSitemap(convertToDTO(item, UK_LANG));
         return true;
     }
 
@@ -67,5 +74,88 @@ public class CategoryService implements ICategoryService {
         return categoryDAO.getCategoryByName(lang, text);
     }
 
+    @Override
+    public List<CategoryDTO> getCategoryTree() {
+        List<CategoryDTO> resultList = new ArrayList<CategoryDTO>();
+        for (Category category : categoryDAO.getFirstLevel()) {
+            CategoryDTO categoryDTO = convertToDTO(category);
+            List<CategoryDTO> childList = categoryDAO.getChild(category.getId()).stream()
+                    .map(childCategory -> convertToDTO(childCategory))
+                    .collect(Collectors.toList());
+            categoryDTO.setChild(childList);
+            resultList.add(categoryDTO);
+        }
+        return resultList;
+    }
 
+    @Override
+    public CategoryDTO convertToDTO(Category category, String lang) {
+        CategoryDTO categoryDTO = new CategoryDTO();
+        categoryDTO.setId(category.getId());
+        categoryDTO.setDate(category.getData());
+        if (lang.equals(UK_LANG)) {
+            categoryDTO.setName(category.getUaText());
+            if (category.getLevel() == 0) {
+                categoryDTO.setHref(DOMAIN + lang + SLASH + encode("каталог") + SLASH +
+                        encode(category.getUaText().replaceAll(" ", "-")) + SLASH + category.getId());
+                categoryDTO.setAltHref(DOMAIN + RU_LANG + SLASH + encode("каталог") + SLASH +
+                        encode(category.getRuText().replaceAll(" ", "-")) + SLASH + category.getId());
+
+            } else {
+                Category parent = getCategoryById(category.getParent());
+                categoryDTO.setHref(DOMAIN + lang + SLASH + encode("каталог") + SLASH +
+                        encode(parent.getUaText().replaceAll(" ", "-")) + SLASH +
+                        encode(category.getUaText().replaceAll(" ", "-")) + SLASH + category.getId());
+                categoryDTO.setAltHref(DOMAIN + RU_LANG + SLASH + encode("каталог") + SLASH +
+                        encode(parent.getRuText().replaceAll(" ", "-")) + SLASH +
+                        encode(category.getRuText().replaceAll(" ", "-")) + SLASH + category.getId());
+
+            }
+        } else {
+            categoryDTO.setName(category.getRuText());
+            if (category.getLevel() == 0) {
+                categoryDTO.setHref(DOMAIN + lang + SLASH + encode("каталог") + SLASH +
+                        encode(category.getRuText().replaceAll(" ", "-")) + SLASH + category.getId());
+                categoryDTO.setAltHref(DOMAIN + UK_LANG + SLASH + encode("каталог") + SLASH +
+                        encode(category.getUaText().replaceAll(" ", "-")) + SLASH + category.getId());
+
+            } else {
+                Category parent = getCategoryById(category.getParent());
+                categoryDTO.setHref(DOMAIN + lang + SLASH + encode("каталог") + SLASH +
+                        encode(parent.getRuText().replaceAll(" ", "-")) + SLASH +
+                        encode(category.getRuText().replaceAll(" ", "-")) + SLASH + category.getId());
+                categoryDTO.setAltHref(DOMAIN + UK_LANG + SLASH + encode("каталог") + SLASH +
+                        encode(parent.getUaText().replaceAll(" ", "-")) + SLASH +
+                        encode(category.getUaText().replaceAll(" ", "-")) + SLASH + category.getId());
+            }
+        }
+
+        return categoryDTO;
+    }
+
+    @Override
+    public CategoryDTO convertToDTO(Category category) {
+        String lang = LocaleContextHolder.getLocale().getLanguage();
+        return convertToDTO(category, lang);
+    }
+
+    @Override
+    public List<CategoryDTO> convertListToDTO(List<Category> categories) {
+        String lang = LocaleContextHolder.getLocale().getLanguage();
+        return categories.stream().map(item -> convertToDTO(item, lang)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CategoryDTO> convertListToDTO(List<Category> categories, String lang) {
+        return categories.stream().map(item -> convertToDTO(item, lang)).collect(Collectors.toList());
+    }
+
+    private String encode(String str) {
+        try {
+            return URLEncoder.encode(str, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
