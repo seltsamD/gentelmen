@@ -5,6 +5,7 @@ import com.gent.model.Good;
 import com.gent.service.ICategoryService;
 import com.gent.service.IColorService;
 import com.gent.service.IGoodService;
+import com.gent.util.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import static com.gent.config.ChangeLang.redirectWithLang;
+import static com.gent.service.CategoryService.encode;
 import static com.gent.util.Constants.*;
 
 /**
@@ -40,6 +42,7 @@ public class CatalogueController {
     private IGoodService goodService;
     @Autowired
     ServletContext servletContext;
+
     private List<Good> replaceGoodInfo(List<Good> goodList) {
         for (Good good : goodList) {
             good.setFirm(good.getFirm().replace(' ', '-'));
@@ -143,7 +146,7 @@ public class CatalogueController {
 
     @RequestMapping(value = {"/{lang}/каталог/{parent}/{category}/{id}"}, method = RequestMethod.GET)
     public String show(HttpServletRequest request, ModelMap model, HttpServletResponse response,
-                       @PathVariable String lang, @PathVariable Integer id) {
+                       @PathVariable String lang, @PathVariable Integer id) throws NotFoundException {
         LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
         localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
         model.addAttribute("lang", lang); //get locale language
@@ -165,18 +168,18 @@ public class CatalogueController {
 
         if (lang.equals(UK_LANG)) {
             if (flag) {
-                url = "каталог/" + parentCategory.getUaText() + SLASH + category.getUaText()
+                url = encode("каталог") + SLASH + encode(parentCategory.getUaText().replaceAll(" ", "-")) + SLASH + encode(category.getUaText().replaceAll(" ", "-"))
                         + SLASH + category.getId();
             } else {
                 url = "catalogue";
             }
             description = "Великий вибір " + category.getUaText() + " для " + parentCategory.getUaText() + " відомих брендів за низькими цінами. " +
                     " Кольори та фасони на будь-який смак та розмір.";
-            altURL = ur.substring(0, ur.indexOf("/", 10)) + "/ru/каталог/" + parentCategory.getRuText() + SLASH + category.getRuText()
+            altURL = ur.substring(0, ur.indexOf("/", 10)) + "/ru/" + encode("каталог") + SLASH + encode(parentCategory.getRuText().replaceAll(" ", "-")) + SLASH + encode(category.getRuText().replaceAll(" ", "-"))
                     + SLASH + category.getId();
         } else if (lang.equals(RU_LANG)) {
             if (flag) {
-                url = "каталог/" + parentCategory.getRuText() + SLASH + category.getRuText()
+                url = encode("каталог") + SLASH + encode(parentCategory.getRuText().replaceAll(" ", "-")) + SLASH + encode(category.getRuText().replaceAll(" ", "-"))
                         + SLASH + category.getId();
 
             } else {
@@ -184,7 +187,7 @@ public class CatalogueController {
             }
             description = "Большой выбор " + category.getRuText() + " для " + parentCategory.getRuText() + " известных брендов по низким ценам. " +
                     " Цвета и фасоны на любой вкус и размер.";
-            altURL = ur.substring(0, ur.indexOf("/", 10)) + "/uk/каталог/" + parentCategory.getUaText() + SLASH + category.getUaText()
+            altURL = ur.substring(0, ur.indexOf("/", 10)) + "/uk/" + encode("каталог") + SLASH + encode(parentCategory.getUaText().replaceAll(" ", "-")) + SLASH + encode(category.getUaText().replaceAll(" ", "-"))
                     + SLASH + category.getId();
         }
 
@@ -194,7 +197,7 @@ public class CatalogueController {
 
     @RequestMapping(value = {"/{lang}/каталог/{category}/{id}"}, method = RequestMethod.GET)
     public String showParent(HttpServletRequest request, ModelMap model, HttpServletResponse response,
-                             @PathVariable String lang, @PathVariable Integer id) {
+                             @PathVariable String lang, @PathVariable Integer id) throws NotFoundException {
         LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
         localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
 

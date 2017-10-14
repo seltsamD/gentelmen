@@ -1,7 +1,6 @@
 package com.gent.dao;
 
 
-
 import com.gent.model.Category;
 
 import java.util.List;
@@ -15,7 +14,8 @@ public interface ICategoryDAO {
     Category getCategoryById(int id);
     boolean addCategory(Category text);
     void updateCategory(Category text);
-    void deleteCategory(int id);
+
+    void deleteCategory(Long id);
 
     List<Category> getFirstLevel();
     List<Category> getChild(int id);

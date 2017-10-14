@@ -34,14 +34,23 @@
                                 href="<c:url value="${pageContext.request.contextPath}/${lang}/каталог"/>"><spring:message
                                 code="page.catalogue"/></a></li>
 
-                        <%--<c:if test="${pageContext.request.userPrincipal.name != null}">--%>
-                        <%--<li class="active"><a href="<c:url value="${pageContext.request.contextPath}/admin/goodform"/>"><spring:message code="page.good"/></a></li>--%>
-                        <%--<li class="active"><a href="<c:url value="${pageContext.request.contextPath}/admin/colors"/>"><spring:message code="text.color"/></a></li>--%>
-                        <%--<li class="active"><a href="<c:url value="${pageContext.request.contextPath}/admin/categories"/>"><spring:message code="text.category"/></a></li>--%>
-                        <%--<li class="active"><a href="<c:url value="${pageContext.request.contextPath}/admin/orders"/>"><spring:message code="text.orders"/></a></li>--%>
-                        <%--<li class="active"><a href="<c:url value="${pageContext.request.contextPath}/admin/sitemap"/>">sitemap</a></li>--%>
-
-                        <%--</c:if>--%>
+                        <c:if test="${pageContext.request.userPrincipal.name != null}">
+                            <li class="active"><a
+                                    href="<c:url value="${pageContext.request.contextPath}/admin/goodform"/>"><spring:message
+                                    code="page.good"/></a></li>
+                            <li class="active"><a
+                                    href="<c:url value="${pageContext.request.contextPath}/admin/colors"/>"><spring:message
+                                    code="text.color"/></a></li>
+                            <li class="active"><a
+                                    href="<c:url value="${pageContext.request.contextPath}/admin/categories"/>"><spring:message
+                                    code="text.category"/></a></li>
+                            <li class="active"><a
+                                    href="<c:url value="${pageContext.request.contextPath}/admin/orders"/>"><spring:message
+                                    code="text.orders"/></a></li>
+                            <li class="active"><a
+                                    href="<c:url value="${pageContext.request.contextPath}/admin/sitemap"/>">sitemap</a>
+                            </li>
+                        </c:if>
 
                         <c:if test="${pageContext.request.userPrincipal.name == null}">
                             <li class="active"><a

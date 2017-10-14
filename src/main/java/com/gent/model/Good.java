@@ -30,7 +30,7 @@ public class Good implements Serializable {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "description_id", nullable = false)
     private Description description;
 

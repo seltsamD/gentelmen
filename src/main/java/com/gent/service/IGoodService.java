@@ -2,6 +2,7 @@ package com.gent.service;
 
 import com.gent.dto.GoodDTO;
 import com.gent.model.Good;
+import com.gent.util.NotFoundException;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface IGoodService {
 List<GoodDTO> getAllGoodsDTO();
     List<Good> getAllGoods();
 
-    Good getGoodById(int id);
+    Good getGoodById(int id) throws NotFoundException;
     boolean addGood(Good good);
     void updateGood(Good good);
     void deleteGood(int id);

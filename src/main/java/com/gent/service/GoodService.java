@@ -5,6 +5,7 @@ import com.gent.dao.ICategoryDAO;
 import com.gent.dao.IGoodDAO;
 import com.gent.dto.GoodDTO;
 import com.gent.model.Good;
+import com.gent.util.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
@@ -40,8 +41,12 @@ public class GoodService implements IGoodService {
 
 
     @Override
-    public Good getGoodById(int id) {
-        return goodDAO.getGoodById(id);
+    public Good getGoodById(int id) throws NotFoundException {
+        Good good = goodDAO.getGoodById(id);
+        if (null == good) {
+            throw new NotFoundException("Not found good with id " + id);
+        }
+        return good;
     }
 
     @Override

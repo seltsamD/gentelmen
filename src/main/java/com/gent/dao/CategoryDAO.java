@@ -21,12 +21,9 @@ public class CategoryDAO implements ICategoryDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-
-
     @SuppressWarnings("unchecked")
     @Override
     public List<Category> getAllCategory() {
-
         return sessionFactory.getCurrentSession().createQuery("from Category o order by o.uaText").list();
     }
 
@@ -55,7 +52,7 @@ public class CategoryDAO implements ICategoryDAO {
     }
 
     @Override
-    public void deleteCategory(int id) {
+    public void deleteCategory(Long id) {
         sessionFactory.getCurrentSession().createQuery("delete from Category  where id = :id")
                 .setParameter("id", id).executeUpdate();
     }

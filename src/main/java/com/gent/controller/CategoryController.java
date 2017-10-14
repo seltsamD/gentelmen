@@ -2,6 +2,7 @@ package com.gent.controller;
 
 import com.gent.model.Category;
 import com.gent.service.ICategoryService;
+import com.gent.util.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,9 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
-
-import static com.gent.config.ChangeLang.redirectWithLang;
 
 /**
  * Created by daria on 08.10.2016.
@@ -53,7 +51,7 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "/admin/categoryById")
-    public String getCategoryById(ModelMap model, HttpServletRequest request) {
+    public String getCategoryById(ModelMap model, HttpServletRequest request) throws NotFoundException {
         int pid = Integer.parseInt(request.getParameter("id"));
         Category category = categoryService.getCategoryById(pid);
         setPageData(model);
@@ -75,7 +73,7 @@ public class CategoryController {
 
     @RequestMapping(value = "/admin/deleteCategory")
     public String deleteCategory(ModelMap model, HttpServletRequest request) {
-        int pid = Integer.parseInt(request.getParameter("id"));
+        Long pid = Long.parseLong(request.getParameter("id"));
         try {
             categoryService.deleteCategory(pid);
             model.addAttribute("msg", getMsg("deleted", request));

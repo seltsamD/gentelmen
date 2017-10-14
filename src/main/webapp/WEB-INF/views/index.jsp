@@ -39,20 +39,14 @@
     <div class="mainContent">
         <div class="container">
             <div class="row">
-                <%--<div class="col-md-9 col-sm-12 mainImg">--%>
-                <%--<img src="<c:url value="/images/images/top.jpg"/>" class="img-responsive">--%>
-                <%--</div>--%>
-                <div class="col-md-12 col-sm-12">
-                    <div class="img"><img class="mainImg" src="<c:url value="/images/images/top.jpg"/>" alt="img"></div>
-                </div>
                 <div class="centerDisplay topIndex">
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6  marginImg">
                         <div class="ih-item circle colored effect17">
                             <c:if test="${lang == 'uk'}">
-                                <a href="${pageContext.request.contextPath}/${lang}/каталог/краватка/4"/>
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/чоловікам/краватка/4"/>
                             </c:if>
                             <c:if test="${lang == 'ru'}">
-                                <a href="${pageContext.request.contextPath}/${lang}/каталог/галстук/4"/>
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/мужчинам/галстук/4"/>
                             </c:if>
                             <div class="img"><img src="<c:url value="/images/images/0_mini.jpg"/>" alt="img"></div>
                             <div class="info">
@@ -64,10 +58,10 @@
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 marginImg">
                         <div class="ih-item circle colored effect17">
                             <c:if test="${lang == 'uk'}">
-                                <a href="${pageContext.request.contextPath}/${lang}/каталог/новорічний-светр/38"/>
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/чоловікам/новорічний-светр/38"/>
                             </c:if>
                             <c:if test="${lang == 'ru'}">
-                                <a href="${pageContext.request.contextPath}/${lang}/каталог/новогодний-свитер/38"/>
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/мужчинам/новогодний-свитер/38"/>
                             </c:if>
                                 <div class="img"><img src="<c:url value="/images/images/1_mini.jpg"/>" alt="img"></div>
                                 <div class="info">
@@ -79,10 +73,10 @@
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 marginImg">
                         <div class="ih-item circle colored effect17">
                             <c:if test="${lang == 'uk'}">
-                                <a href="${pageContext.request.contextPath}/${lang}/каталог/піджак/5"/>
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/чоловікам/піджак/5"/>
                             </c:if>
                             <c:if test="${lang == 'ru'}">
-                                <a href="${pageContext.request.contextPath}/${lang}/каталог/пиджак/5"/>
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/мужчинам/пиджак/5"/>
                             </c:if>
                                 <div class="img"><img src="<c:url value="/images/images/2_mini.jpg"/>" alt="img"></div>
                                 <div class="info">
@@ -94,10 +88,10 @@
                     <div class="col-lg-2 col-md-3  col-sm-4 col-xs-6  marginImg">
                         <div class="ih-item circle colored effect17">
                             <c:if test="${lang == 'uk'}">
-                                <a href="${pageContext.request.contextPath}/${lang}/каталог/сорочка/3"/>
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/чоловікам/сорочка/3"/>
                             </c:if>
                             <c:if test="${lang == 'ru'}">
-                                <a href="${pageContext.request.contextPath}/${lang}/каталог/рубашка/3"/>
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/мужчинам/рубашка/3"/>
                             </c:if>
                                 <div class="img"><img src="<c:url value="/images/images/3_mini.jpg"/>" alt="img"></div>
                                 <div class="info">
@@ -109,15 +103,45 @@
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 marginImg">
                         <div class="ih-item circle colored effect17">
                             <c:if test="${lang == 'uk'}">
-                                <a href="${pageContext.request.contextPath}/${lang}/каталог/дитяча-піжама/35"/>
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/дітям/дитяча-піжама/35"/>
                             </c:if>
                             <c:if test="${lang == 'ru'}">
-                                <a href="${pageContext.request.contextPath}/${lang}/каталог/детская-пижама/35"/>
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/детям/детская-пижама/35"/>
                             </c:if>
                                 <div class="img"><img src="<c:url value="/images/images/4_mini.jpg"/>" alt="img"></div>
                                 <div class="info">
                                     <h3><spring:message code="pajamas"/></h3>
                                 </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 marginImg">
+                        <div class="ih-item circle colored effect17">
+                            <c:if test="${lang == 'uk'}">
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/жінкам/жіночий-новорічний-светр/44"/>
+                            </c:if>
+                            <c:if test="${lang == 'ru'}">
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/для-женщин/женский-новогодний-свитер/44"/>
+                            </c:if>
+                            <div class="img"><img src="<c:url value="/images/images/5_mini.jpg"/>" alt="img"></div>
+                            <div class="info">
+                                <h3><spring:message code="womenSweaters"/></h3>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 marginImg">
+                        <div class="ih-item circle colored effect17">
+                            <c:if test="${lang == 'uk'}">
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/жінкам/піжами/34"/>
+                            </c:if>
+                            <c:if test="${lang == 'ru'}">
+                                <a href="${pageContext.request.contextPath}/${lang}/каталог/для-женщин/пижамы/34"/>
+                            </c:if>
+                            <div class="img"><img src="<c:url value="/images/images/6_mini.jpg"/>" alt="img"></div>
+                            <div class="info">
+                                <h3><spring:message code="womenPajamas"/></h3>
+                            </div>
                             </a>
                         </div>
                     </div>

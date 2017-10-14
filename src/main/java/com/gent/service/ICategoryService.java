@@ -2,6 +2,7 @@ package com.gent.service;
 
 import com.gent.dto.CategoryDTO;
 import com.gent.model.Category;
+import com.gent.util.NotFoundException;
 
 import java.util.List;
 
@@ -11,10 +12,12 @@ import java.util.List;
 public interface ICategoryService {
 
     List<Category> getAllCategory();
-    Category getCategoryById(int id);
+
+    Category getCategoryById(int id) throws NotFoundException;
     boolean addCategory(Category text);
     void updateCategory(Category text);
-    void deleteCategory(int id);
+
+    void deleteCategory(Long id);
     List<Category> getFirstLevel();
     List<Category> getChild(int id);
     List<Category> getSecondLevel();
@@ -23,9 +26,9 @@ public interface ICategoryService {
     List<CategoryDTO> getCategoryTree();
 
     //mapper
-    CategoryDTO convertToDTO(Category category, String lang);
+    CategoryDTO convertToDTO(Category category, String lang) throws NotFoundException;
 
-    CategoryDTO convertToDTO(Category category);
+    CategoryDTO convertToDTO(Category category) throws NotFoundException;
 
     List<CategoryDTO> convertListToDTO(List<Category> categories);
 

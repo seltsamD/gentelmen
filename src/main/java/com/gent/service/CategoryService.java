@@ -5,10 +5,12 @@ import com.gent.controller.SitemapController;
 import com.gent.dao.ICategoryDAO;
 import com.gent.dto.CategoryDTO;
 import com.gent.model.Category;
+import com.gent.util.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -33,8 +35,12 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public Category getCategoryById(int id) {
-        return categoryDAO.getCategoryById(id);
+    public Category getCategoryById(int id) throws NotFoundException {
+        Category category = categoryDAO.getCategoryById(id);
+        if (null == category) {
+            throw new NotFoundException("Not found category with id " + id);
+        }
+        return category;
     }
 
     @Override
@@ -45,12 +51,13 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
+    @Transactional
     public void updateCategory(Category text) {
         categoryDAO.updateCategory(text);
     }
 
     @Override
-    public void deleteCategory(int id) {
+    public void deleteCategory(Long id) {
         categoryDAO.deleteCategory(id);
     }
 
@@ -102,13 +109,18 @@ public class CategoryService implements ICategoryService {
                         encode(category.getRuText().replaceAll(" ", "-")) + SLASH + category.getId());
 
             } else {
-                Category parent = getCategoryById(category.getParent());
-                categoryDTO.setHref(DOMAIN + lang + SLASH + encode("каталог") + SLASH +
-                        encode(parent.getUaText().replaceAll(" ", "-")) + SLASH +
-                        encode(category.getUaText().replaceAll(" ", "-")) + SLASH + category.getId());
-                categoryDTO.setAltHref(DOMAIN + RU_LANG + SLASH + encode("каталог") + SLASH +
-                        encode(parent.getRuText().replaceAll(" ", "-")) + SLASH +
-                        encode(category.getRuText().replaceAll(" ", "-")) + SLASH + category.getId());
+                Category parent = null;
+                try {
+                    parent = getCategoryById(category.getParent());
+                    categoryDTO.setHref(DOMAIN + lang + SLASH + encode("каталог") + SLASH +
+                            encode(parent.getUaText().replaceAll(" ", "-")) + SLASH +
+                            encode(category.getUaText().replaceAll(" ", "-")) + SLASH + category.getId());
+                    categoryDTO.setAltHref(DOMAIN + RU_LANG + SLASH + encode("каталог") + SLASH +
+                            encode(parent.getRuText().replaceAll(" ", "-")) + SLASH +
+                            encode(category.getRuText().replaceAll(" ", "-")) + SLASH + category.getId());
+                } catch (NotFoundException e) {
+                    e.printStackTrace();
+                }
 
             }
         } else {
@@ -120,13 +132,18 @@ public class CategoryService implements ICategoryService {
                         encode(category.getUaText().replaceAll(" ", "-")) + SLASH + category.getId());
 
             } else {
-                Category parent = getCategoryById(category.getParent());
-                categoryDTO.setHref(DOMAIN + lang + SLASH + encode("каталог") + SLASH +
-                        encode(parent.getRuText().replaceAll(" ", "-")) + SLASH +
-                        encode(category.getRuText().replaceAll(" ", "-")) + SLASH + category.getId());
-                categoryDTO.setAltHref(DOMAIN + UK_LANG + SLASH + encode("каталог") + SLASH +
-                        encode(parent.getUaText().replaceAll(" ", "-")) + SLASH +
-                        encode(category.getUaText().replaceAll(" ", "-")) + SLASH + category.getId());
+                Category parent = null;
+                try {
+                    parent = getCategoryById(category.getParent());
+                    categoryDTO.setHref(DOMAIN + lang + SLASH + encode("каталог") + SLASH +
+                            encode(parent.getRuText().replaceAll(" ", "-")) + SLASH +
+                            encode(category.getRuText().replaceAll(" ", "-")) + SLASH + category.getId());
+                    categoryDTO.setAltHref(DOMAIN + UK_LANG + SLASH + encode("каталог") + SLASH +
+                            encode(parent.getUaText().replaceAll(" ", "-")) + SLASH +
+                            encode(category.getUaText().replaceAll(" ", "-")) + SLASH + category.getId());
+                } catch (NotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -150,7 +167,7 @@ public class CategoryService implements ICategoryService {
         return categories.stream().map(item -> convertToDTO(item, lang)).collect(Collectors.toList());
     }
 
-    private String encode(String str) {
+    public static String encode(String str) {
         try {
             return URLEncoder.encode(str, "UTF-8");
         } catch (UnsupportedEncodingException e) {
