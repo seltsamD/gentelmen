@@ -21,7 +21,10 @@ List<GoodDTO> getAllGoodsDTO();
     void deleteGood(int id);
 
     List<GoodDTO> getRandomGoods();
+
+    List<GoodDTO> getListGoodsDTO(List<Integer> list);
     List<Good> getListGoods(List<Integer> list);
+
     void changeStatus(int id, int status);
 
     List<GoodDTO> getGoodsByCategorie(int catId, int page);

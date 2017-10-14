@@ -59,7 +59,7 @@
                     <tr>
                         <td><a class="single_image" href="<c:url value="/images/${info.id}_0.jpg"/>"><img
                                 class="miniImg" src="<c:url value="/images/${info.id}_0_mini.jpg"/>"
-                                alt="${info.firm} ${info.category.uaText} "${info.color.uaText}"/></a>
+                                alt="${info.firm} ${info.categoryName} "${info.colorName}"/></a>
                         </td>
                         <td>
                             <ul type="none">
@@ -67,20 +67,10 @@
                                 <li><span class="spanTh"><spring:message code="good.price"/>:</span><span><c:out value="${info.price}"/>грн</span></li>
                                 <li><span class="spanTh"><spring:message code="good.firm"/>:</span><span><c:out value="${info.firm}"/></span></li>
                                 <li><span class="spanTh"><spring:message code="good.color"/>: </span>
-                                    <c:if test="${lang == 'uk'}">
-                                        <span><c:out value="${info.color.uaText}"/></span>
-                                        </c:if>
-                                        <c:if test="${lang == 'ru'}">
-                                            <span><c:out value="${info.color.ruText}"/></span>
-                                        </c:if>
+                                    <span><c:out value="${info.colorName}"/></span>
                                 </li>
                                 <li><span class="spanTh"><spring:message code="good.type"/>: </span>
-                                    <c:if test="${lang == 'uk'}">
-                                        <span><c:out value="${info.category.uaText}"/></span>
-                                    </c:if>
-                                    <c:if test="${lang == 'ru'}">
-                                        <span><c:out value="${info.category.ruText}"/></span>
-                                    </c:if>
+                                    <span><c:out value="${info.categoryName}"/></span>
                                 </li>
                                 <li><span class="spanTh"><spring:message code="good.size"/>:</span><span><c:out value="${info.size}"/></span></li>
 
@@ -99,22 +89,11 @@
                     </tr>
 
                     <tr>
-
-                        <c:if test="${lang == 'uk'}">
                             <td colspan="2" id="text-info" class="bottomTd">
                                 <p>
-                                    <xml><c:out value="${info.uaText}"/></xml>
+                                    <xml><c:out value="${info.description}"/></xml>
                                 </p>
                             </td>
-                        </c:if>
-                        <c:if test="${lang == 'ru'}">
-
-                                <td colspan="2" id="text-info" class="bottomTd">
-                            <p>
-                                <xml><c:out value="${info.ruText}"/></xml>
-                            </p>
-                            </td>
-                        </c:if>
                     </tr>
                 </table>
                     </div>

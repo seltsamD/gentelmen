@@ -142,7 +142,7 @@ public String getInfoGood(ModelMap model, HttpServletRequest request, HttpServle
                         .append(URLEncoder.encode(good.getColor().getUaText(), "UTF-8")).append(SLASH).append(good.getId());
             else url2.append("goodInfo");
             title.append("Купити ").append(good.getCategory().getUaText()).append(" ").append(good.getFirm())
-                    .append(" ").append(good.getColor().getUaText()).append(" колір у інтернет-магазині джентльмен.in.ua");
+                    .append(" колір у інтернет-магазині джентльмен.in.ua");
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -167,7 +167,7 @@ public String getInfoGood(ModelMap model, HttpServletRequest request, HttpServle
                         .append(URLEncoder.encode(good.getColor().getRuText(), "UTF-8")).append(SLASH).append(good.getId());
             else url2.append("goodInfo");
             title.append("Купить ").append(good.getCategory().getUaText()).append(" ").append(good.getFirm())
-                    .append(" ").append(good.getColor().getUaText()).append(" цвет в интернет-магазине джентльмен.in.ua");
+                    .append(" цвет в интернет-магазине джентльмен.in.ua");
 
 
         } catch (UnsupportedEncodingException e) {

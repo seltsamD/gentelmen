@@ -73,9 +73,15 @@ public class GoodService implements IGoodService {
     }
 
     @Override
+    public List<GoodDTO> getListGoodsDTO(List<Integer> list) {
+        return convertListToMiniDTO(goodDAO.getListGoods(list));
+    }
+
+    @Override
     public List<Good> getListGoods(List<Integer> list) {
         return goodDAO.getListGoods(list);
     }
+
 
     @Override
     public void changeStatus(int id, int status) {

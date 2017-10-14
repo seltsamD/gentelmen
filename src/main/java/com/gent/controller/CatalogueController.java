@@ -136,10 +136,14 @@ public class CatalogueController {
         model.addAttribute("lang", lang); //get locale language
         StringBuffer ur = request.getRequestURL();
         String altURL = "";
-        if (LocaleContextHolder.getLocale().getLanguage().equals(UK_LANG))
+        if (LocaleContextHolder.getLocale().getLanguage().equals(UK_LANG)) {
+            model.addAttribute("title", "Каталог товарів інтернет-магазину джентльмен.in.ua");
             altURL = ur.substring(0, ur.indexOf("/", 10)) + "/ru/каталог";
-        else if (LocaleContextHolder.getLocale().getLanguage().equals(RU_LANG))
+        } else if (LocaleContextHolder.getLocale().getLanguage().equals(RU_LANG)) {
             altURL = ur.substring(0, ur.indexOf("/", 10)) + "/uk/каталог";
+            model.addAttribute("title", "Каталог товаров интернет-магазина джентльмен.in.ua");
+        }
+
 
         return redirectWithLang(request, "catalogue", model, altURL); //call function for redirect
     }
@@ -177,6 +181,7 @@ public class CatalogueController {
                     " Кольори та фасони на будь-який смак та розмір.";
             altURL = ur.substring(0, ur.indexOf("/", 10)) + "/ru/" + encode("каталог") + SLASH + encode(parentCategory.getRuText().replaceAll(" ", "-")) + SLASH + encode(category.getRuText().replaceAll(" ", "-"))
                     + SLASH + category.getId();
+            model.addAttribute("title", "Купити " + category.getUaText() + " " + parentCategory.getUaText() + " у інтернет-магазині джентльмен.in.ua");
         } else if (lang.equals(RU_LANG)) {
             if (flag) {
                 url = encode("каталог") + SLASH + encode(parentCategory.getRuText().replaceAll(" ", "-")) + SLASH + encode(category.getRuText().replaceAll(" ", "-"))
@@ -189,6 +194,7 @@ public class CatalogueController {
                     " Цвета и фасоны на любой вкус и размер.";
             altURL = ur.substring(0, ur.indexOf("/", 10)) + "/uk/" + encode("каталог") + SLASH + encode(parentCategory.getUaText().replaceAll(" ", "-")) + SLASH + encode(category.getUaText().replaceAll(" ", "-"))
                     + SLASH + category.getId();
+            model.addAttribute("title", "Купить " + category.getRuText() + " " + parentCategory.getRuText() + " в интернет-магазине джентльмен.in.ua");
         }
 
         model.addAttribute("description", description);
@@ -216,8 +222,11 @@ public class CatalogueController {
         Category category = categoryService.getCategoryById(id);
         if (lang.equals(UK_LANG)) {
             altURL = ur.substring(0, ur.indexOf("/", 10)) + "/ru/каталог/" + category.getRuText() + SLASH + category.getId();
-        } else if (LocaleContextHolder.getLocale().getLanguage().equals(RU_LANG))
+            model.addAttribute("title", "Купити " + category.getUaText() + " у інтернет-магазині джентльмен.in.ua");
+        } else if (LocaleContextHolder.getLocale().getLanguage().equals(RU_LANG)) {
             altURL = ur.substring(0, ur.indexOf("/", 10)) + "/uk/каталог/" + category.getUaText() + SLASH + category.getId();
+            model.addAttribute("title", "Купить " + category.getRuText() + " в интернет-магазине джентльмен.in.ua");
+        }
 
         return redirectWithLang(request, "catalogue", model, altURL); //call function for redirect
     }

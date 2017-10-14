@@ -1,6 +1,6 @@
 package com.gent.controller;
 
-import com.gent.model.Good;
+import com.gent.dto.GoodDTO;
 import com.gent.model.Orders;
 import com.gent.service.IGoodService;
 import com.gent.service.IOrdersService;
@@ -16,13 +16,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import static com.gent.config.ChangeLang.redirectWithLang;
 
@@ -130,7 +127,7 @@ public class BasketController {
             List<String> listValue = new ArrayList<String>();
             listValue = new ArrayList<String>(Arrays.asList(myCookie.getValue().split("-")));
             if (listValue.size() > 0) {
-                List<Good> outList = null;
+                List<GoodDTO> outList = null;
                 List<Integer> list2 = new ArrayList<Integer>();
                 for (String str : listValue)
                     list2.add(Integer.valueOf(str));
@@ -173,7 +170,7 @@ public class BasketController {
             }
 
             if (listValue.size() > 0) {
-                List<Good> outList = null;
+                List<GoodDTO> outList = null;
                 List<Integer> list2 = new ArrayList<Integer>();
                 for (String str : listValue)
                     list2.add(Integer.valueOf(str));
