@@ -14,7 +14,7 @@ $(document).ready(function () {
                 div = div + "<div class='miniText'><a href='" + value.href + "'>" + value.name + "</a>";
                 div = div + "<div class='btnForm'><form id='baskForm" + value.id + "'  action='addToBasket' method='POST'>";
                 div = div + "<input type='hidden' name='goodId' value=" + value.id + ">";
-                div = div + "<input type='button' class='btn btnCart' onclick='tobasket(" + value.id + ")' value='В корзину' id='btn-basket-add' class='btn btn-success'>";
+                div = div + "<div class='price'>" + value.price + "грн <input type='button' class='btn btnCart' onclick='tobasket(" + value.id + ")' value='В корзину' id='btn-basket-add' class='btn btn-success'/></div>";
                 div = div + " </form> </div></div>"
                 div = div + "</div>";
                 $('#indexGoods').append(div);

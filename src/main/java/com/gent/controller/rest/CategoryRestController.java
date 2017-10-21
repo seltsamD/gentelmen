@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.ws.rs.QueryParam;
 import java.util.List;
 
 /**
@@ -15,14 +16,14 @@ import java.util.List;
  */
 @RestController
 @ComponentScan("com.gent")
-@RequestMapping("/api/category/")
+@RequestMapping("/api/category")
 public class CategoryRestController {
 
     @Autowired
     private ICategoryService categoryService;
 
     @GetMapping
-    public List<CategoryDTO> get() {
-        return categoryService.getCategoryTree();
+    public List<CategoryDTO> get(@QueryParam("id") int id) {
+        return categoryService.convertListToDTO(categoryService.getChild(id));
     }
 }

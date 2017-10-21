@@ -1,6 +1,7 @@
 package com.gent.service;
 
 import com.gent.dto.GoodDTO;
+import com.gent.dto.GoodDTOExtend;
 import com.gent.model.Good;
 import com.gent.util.NotFoundException;
 
@@ -22,7 +23,7 @@ List<GoodDTO> getAllGoodsDTO();
 
     List<GoodDTO> getRandomGoods();
 
-    List<GoodDTO> getListGoodsDTO(List<Integer> list);
+    List<GoodDTOExtend> getListGoodsDTO(List<Integer> list);
     List<Good> getListGoods(List<Integer> list);
 
     void changeStatus(int id, int status);

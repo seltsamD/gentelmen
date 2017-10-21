@@ -1,6 +1,8 @@
 package com.gent.dao;
 
 
+import com.gent.model.Category;
+import com.gent.model.Color;
 import com.gent.model.Description;
 import com.gent.model.Good;
 import org.hibernate.Criteria;
@@ -18,7 +20,7 @@ import java.util.List;
 /**
  * Created by daria on 30.09.2016.
  */
-@Transactional
+
 @Repository
 public class GoodDAO implements IGoodDAO {
 
@@ -31,7 +33,14 @@ public class GoodDAO implements IGoodDAO {
     @Autowired
     private IDescriptionDAO descriptionDAO;
 
+    @Autowired
+    private ICategoryDAO categoryDAO;
+
+    @Autowired
+    private IColorDAO colorDAO;
+
     @SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
     @Override
     public List<Good> getAllGoods() {
 
@@ -40,7 +49,7 @@ public class GoodDAO implements IGoodDAO {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Good getGoodById(int id) {
         List resultList = entityManager.createQuery("FROM Good as p where p.id = :id").setParameter("id", id).getResultList();
         Good good = (Good) resultList.stream().findFirst().orElse(null);
@@ -59,12 +68,20 @@ public class GoodDAO implements IGoodDAO {
     }
 
     @Override
+    @Transactional
     public void updateGood(Good good) {
         Good  g = getGoodById(good.getId());
-        g.setColor(good.getColor());
+        Color color = colorDAO.getColorById(good.getColor().getId());
+        g.setColor(color);
+
         g.setFirm(good.getFirm());
         g.setPrice(good.getPrice());
-        g.setCategory(good.getCategory());
+
+        if (null != good.getCategory()) {
+            Category category = categoryDAO.getCategoryById(good.getCategory().getId());
+            g.setCategory(category);
+        }
+
         g.setCountImg(good.getCountImg());
         g.setSize(good.getSize());
         g.setNameRu(good.getNameRu());
@@ -73,8 +90,10 @@ public class GoodDAO implements IGoodDAO {
         Description description = descriptionDAO.findById(good.getDescription().getId());
         description.setRuText(good.getDescription().getRuText());
         description.setUaText(good.getDescription().getUaText());
+        entityManager.merge(description);
+
         g.setDescription(description);
-        entityManager.persist(g);
+        sessionFactory.getCurrentSession().update(g);
     }
 
     @Override

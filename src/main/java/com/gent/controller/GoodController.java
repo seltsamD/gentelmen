@@ -184,7 +184,7 @@ public String getInfoGood(ModelMap model, HttpServletRequest request, HttpServle
         int pid = Integer.parseInt(request.getParameter("id"));
         Good good = goodService.getGoodById(pid);
 
-        model.addAttribute("info", good);
+        model.addAttribute("info", GoodDTOExtend.convertToDTO(good));
         setPageData(model);
         return "goodInfo";
     }
@@ -259,7 +259,7 @@ public String getInfoGood(ModelMap model, HttpServletRequest request, HttpServle
     private void setPageData(ModelMap model) {
         model.addAttribute("allData", goodService.getAllGoods());
         model.addAttribute("colors", colorService.getAllColor());
-        model.addAttribute("categories", categoryService.getCategoryTree());
+        model.addAttribute("categories", categoryService.getFirstLevel());
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage()); //get locale language
         if (LocaleContextHolder.getLocale().getLanguage().equals(UK_LANG))
             model.addAttribute("lang_code", "uaText");

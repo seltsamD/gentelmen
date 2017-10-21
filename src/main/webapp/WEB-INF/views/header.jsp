@@ -60,7 +60,7 @@
                                     href="<c:url value="//xn--d1acac0agfd5bxg.in.ua/${lang}/about"/>"><spring:message
                                     code="page.about"/></a></li>
                             <li class="active"><a
-                                    href="<c:url value="//xn--d1acac0agfd5bxg.in.ua/${lang}/shopping-cart"/>"><span
+                                    href="<c:url value="${pageContext.request.contextPath}/${lang}/shopping-cart"/>"><span
                                     id="cartDiv" class="glyphicon glyphicon-shopping-cart"
                                     aria-hidden="true"></span></a></li>
                             <li class="active"><a

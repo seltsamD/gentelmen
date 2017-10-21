@@ -15,7 +15,6 @@ import static com.gent.util.Constants.*;
 public class GoodDTOExtend extends GoodDTO implements Serializable {
 
     private String colorName;
-    private int price;
     private String size;
     private int countImg;
     private String description;
@@ -66,14 +65,6 @@ public class GoodDTOExtend extends GoodDTO implements Serializable {
 
     public void setColorName(String colorName) {
         this.colorName = colorName;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 
     public String getSize() {

@@ -4,6 +4,7 @@ import com.gent.controller.SitemapController;
 import com.gent.dao.ICategoryDAO;
 import com.gent.dao.IGoodDAO;
 import com.gent.dto.GoodDTO;
+import com.gent.dto.GoodDTOExtend;
 import com.gent.model.Good;
 import com.gent.util.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.gent.dto.GoodDTOExtend.convertListToDTO;
 import static com.gent.util.Constants.*;
 
 /**
@@ -73,8 +75,8 @@ public class GoodService implements IGoodService {
     }
 
     @Override
-    public List<GoodDTO> getListGoodsDTO(List<Integer> list) {
-        return convertListToMiniDTO(goodDAO.getListGoods(list));
+    public List<GoodDTOExtend> getListGoodsDTO(List<Integer> list) {
+        return convertListToDTO(goodDAO.getListGoods(list));
     }
 
     @Override
@@ -136,6 +138,7 @@ public class GoodService implements IGoodService {
     public GoodDTO convertToMiniDTO(Good good, String lang) {
         GoodDTO goodDTO = new GoodDTO();
         goodDTO.setId(good.getId());
+        goodDTO.setPrice(good.getPrice());
         if (lang.equals(UK_LANG)) {
             goodDTO.setName(good.getNameUa());
             goodDTO.setHref(DOMAIN + lang + SLASH + "good" + SLASH +

@@ -429,3 +429,11 @@ body {
     background: url("404.jpg");
     background-size: contain;
 }
+
+.price {
+    color: #790711;
+}
+
+.price input {
+    color: #040409;
+}

@@ -22,7 +22,7 @@ public class Good implements Serializable {
     @Column(name = "Firm")
     private String firm;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
     @JoinColumn(name = "color_id", nullable = false)
     private Color color;
 

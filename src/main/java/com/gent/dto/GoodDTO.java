@@ -11,6 +11,7 @@ public class GoodDTO {
     protected String name;
     protected String altHref;
     protected Date date;
+    protected int price;
 
     public int getId() {
         return id;
@@ -51,5 +52,13 @@ public class GoodDTO {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

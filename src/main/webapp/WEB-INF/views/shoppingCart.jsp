@@ -59,7 +59,7 @@
                     <tr>
                         <td><a class="single_image" href="<c:url value="/images/${info.id}_0.jpg"/>"><img
                                 class="miniImg" src="<c:url value="/images/${info.id}_0_mini.jpg"/>"
-                                alt="${info.firm} ${info.categoryName} "${info.colorName}"/></a>
+                                alt="${info.firm} ${info.categoryName} ${info.colorName}"/></a>
                         </td>
                         <td>
                             <ul type="none">
