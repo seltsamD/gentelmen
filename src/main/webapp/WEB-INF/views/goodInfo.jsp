@@ -55,14 +55,19 @@
                             </ol>
                             <div class="carousel-inner" role="listbox">
                                 <div class="item active">
-                                    <a class="single_image" href="<c:url value="/images/${info.id}_0.jpg"/>"><img
-                                            class="maxiImg" src="<c:url value="/images/${info.id}_0.jpg"/>"
-                                            alt="${info.name} ${info.firm}"/></a>
+                                    <a class="single_image"
+                                       href="<c:url value="http://xn--d1acac0agfd5bxg.in.ua/images/${info.id}_0.jpg"/>">
+                                        <img itemprop="image"
+                                             class="maxiImg"
+                                             src="<c:url value="http://xn--d1acac0agfd5bxg.in.ua/images/${info.id}_0.jpg"/>"
+                                             alt="${info.name} ${info.firm}"/></a>
                                 </div>
                                 <c:forEach var="i" begin="1" end="${info.countImg -1}">
                                     <div class="item">
-                                        <a class="single_image" href="<c:url value="/images/${info.id}_${i}.jpg"/>"><img
-                                                class="maxiImg" src="<c:url value="/images/${info.id}_${i}.jpg"/>"
+                                        <a class="single_image"
+                                           href="<c:url value="http://xn--d1acac0agfd5bxg.in.ua/images/${info.id}_${i}.jpg"/>"><img
+                                                class="maxiImg"
+                                                src="<c:url value="http://xn--d1acac0agfd5bxg.in.ua/images/${info.id}_${i}.jpg"/>"
                                                 alt="${info.name} ${info.firm}"/></a></td>
                                     </div>
                                 </c:forEach>
@@ -82,18 +87,21 @@
                     </div>
 
 
-                    <div class="col-xs-12 col-md-5 col-lg-6 ">
+                    <div class="col-xs-12 col-md-5 col-lg-6">
 
                         <table id="table-info">
                             <tr class="form-inline">
-                                <td id="infoTab" class="price" colspan="2"><h3 itemprop="offers" itemscope
-                                                                               itemtype="http://schema.org/Offer">
-                                    <spring:message code="good.price"/>:
+                                <td id="infoTab" class="price" colspan="2">
+                                    <h3 itemprop="offers" itemscope
+                                        itemtype="http://schema.org/Offer">
+                                        <spring:message code="good.price"/>:
 
                         <span itemprop="price" content="<c:out value="${info.price}"/>"><c:out
                                 value="${info.price}"/></span>
-                                    <span itemprop="priceCurrency" content="UAH">грн</span>
-                                </h3></td>
+                                        <span itemprop="priceCurrency" content="UAH">грн</span>
+                                        <link itemprop="availability" href="http://schema.org/InStock">
+                                    </h3>
+                                </td>
                             </tr>
                             <c:if test="${info.status == 1}">
                                 <tr class="form-inline">
@@ -120,9 +128,9 @@
                                     <hr>
                                 </td>
                             </tr>
-                            <tr itemprop="brand" itemscope itemtype="http://schema.org/Brand">
+                            <tr>
                                 <th><spring:message code="good.firm"/></th>
-                                <td itemprop="name"><c:out value="${info.firm}"/></td>
+                                <td itemprop="brand"><c:out value="${info.firm}"/></td>
                             </tr>
                             <tr>
                                 <th> Код:</th>
@@ -149,10 +157,10 @@
                             </tr>
                             <tr>
                                 <td colspan="2" id="text-info" class="bottomTd">
-                                    <p itemprop="description">
-                                    <p style="white-space: pre-line;">
+                                    <p>
+                                    <p itemprop="description" style="white-space: pre-line;">
                                         <c:out value="${info.description}"/>
-                                        </p>
+                                    </p>
                                     </p>
                                 </td>
                             </tr>
