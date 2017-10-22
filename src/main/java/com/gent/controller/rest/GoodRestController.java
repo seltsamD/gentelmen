@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @ComponentScan("com.gent")
-@RequestMapping("/api/good/")
+@RequestMapping("/api/good")
 public class GoodRestController {
 
     @Autowired
@@ -54,8 +54,14 @@ public class GoodRestController {
         return goodService.getListGoodsByCategories(catList, page);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<GoodDTO> findAll() {
         return goodService.getAllGoodsDTO();
     }
+
+    @GetMapping("/same")
+    public List<GoodDTO> findTheSame(@QueryParam("id") int id) {
+        return goodService.findTheSame(id);
+    }
+
 }

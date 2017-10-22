@@ -21,6 +21,8 @@ public interface IGoodDAO {
 
     List<Good> getRandomGoods();
 
+    List<Good> getRandomGoodsByCategory(int goodId, int categoryId, int count);
+
     List<Good> getListGoods(List<Integer> list);
 
     void changeStatus(int id, int status);

@@ -1,7 +1,6 @@
 package com.gent.controller;
 
 import com.gent.dto.GoodDTOExtend;
-import com.gent.model.Good;
 import com.gent.model.Orders;
 import com.gent.service.IGoodService;
 import com.gent.service.IOrdersService;
@@ -171,12 +170,12 @@ public class BasketController {
             }
 
             if (listValue.size() > 0) {
-                List<Good> outList = null;
+                List<GoodDTOExtend> outList = null;
                 List<Integer> list2 = new ArrayList<Integer>();
                 for (String str : listValue)
                     list2.add(Integer.valueOf(str));
 
-                outList = goodService.getListGoods(list2);
+                outList = goodService.getListGoodsDTO(list2);
                 model.addAttribute("listBasket", outList);
                 count = listValue.size();
             } else count = 0;

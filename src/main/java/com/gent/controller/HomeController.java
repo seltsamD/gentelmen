@@ -49,7 +49,7 @@ public class HomeController {
         return "allImages";
     }
 
-    @RequestMapping(value = {"index", "/{lang}/index", "/", ""}, method = RequestMethod.GET)
+    @RequestMapping(value = {"index", "/{lang}/index", "/", "", "/{lang}", "/{lang}/"}, method = RequestMethod.GET)
     public String show (HttpServletRequest request, ModelMap model, HttpServletResponse response){
 //
 //        List<Good> list =goodService.getRandomGoods();

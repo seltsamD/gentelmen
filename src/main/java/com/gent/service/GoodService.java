@@ -180,6 +180,14 @@ public class GoodService implements IGoodService {
         return goodDTOList;
     }
 
+    @Override
+    public List<GoodDTO> findTheSame(int id) {
+        Good good = goodDAO.getGoodById(id);
+        int categoryId = good.getCategory().getId();
+        List<Good> goods = goodDAO.getRandomGoodsByCategory(good.getId(), categoryId, 5);
+        return convertListToMiniDTO(goods);
+    }
+
     private String encode(String str) {
         try {
             return URLEncoder.encode(str, "UTF-8");

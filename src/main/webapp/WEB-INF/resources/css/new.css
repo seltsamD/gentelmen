@@ -390,28 +390,28 @@ body {
     border-bottom: 1px solid #2f0311;
     background-color: #ffffff;
     padding: 20px;
-    font-size: 10pt;
+    font-size: 12pt;
     word-wrap: normal;
 }
 
 #box-table-b th {
     text-align: center;
-    font-size: 10pt;
+    font-size: 12pt;
     font-weight: normal;
-    padding: 8px;
-    background: #F4D8B9;
-    border-right: 1px solid #6e3400;
-    border-left: 1px solid #6e3400;
+    padding: 10px;
+    background: #c3e381;
+    border-right: 1px solid #405e01;
+    border-left: 1px solid #405e01;
     color: #2f0311;
-    border-bottom: 1px solid #6e3400;
-
+    border-bottom: 1px solid #405e01;
 }
 
 #box-table-b td {
     /*background-color: #F4D8B9;;*/
-    border-right: 1px solid #6e3400;
-    border-left: 1px solid #6e3400;
+    border-right: 1px solid #405e01;
+    border-left: 1px solid #405e01;
     color: #2f0311;
+    padding: 10px;
 }
 
 #box-table-b img {
@@ -436,4 +436,27 @@ body {
 
 .price input {
     color: #040409;
+}
+
+.topBox {
+    background-color: #ffffff;
+    opacity: 0.9;
+    margin-top: 50px;
+    width: 100%;
+    padding: 25px;
+
+}
+
+.topBox .btn-success, .btn-warning {
+    width: 100%;
+    font-family: 'Pattaya', sans-serif;
+    color: #2e1e15;
+    font-size: 14px;
+
+}
+
+#sameGoods h3 {
+    font-size: 18pt;
+    text-align: center;
+    color: #2c3756;
 }

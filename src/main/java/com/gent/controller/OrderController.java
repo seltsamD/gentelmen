@@ -45,7 +45,7 @@ public class OrderController {
 
     }
 
-    @RequestMapping(value = "/{lang}/newOrder", method = RequestMethod.POST)
+    @RequestMapping(value = "/{lang}/shopping-cart/newOrder", method = RequestMethod.POST)
     public String addColor(@ModelAttribute("order") @Valid Orders newOrder, BindingResult result,
                            @CookieValue(value = "cart", required = false) Cookie myCookie,
                            ModelMap model, HttpServletRequest request, HttpServletResponse response) {
@@ -90,8 +90,6 @@ public class OrderController {
         }
 
 
-
-
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
         return "myorders";
     }
@@ -133,12 +131,8 @@ public class OrderController {
 
     @RequestMapping(value = "/{lang}/getByPhone", method = RequestMethod.POST)
     public String orderByPhone(ModelMap model, HttpServletRequest request) {
-
-
         String phone = request.getParameter("phone");
         List<Orders> listOrders = orderService.getOrdersByPhone(phone);
-
-
         model.addAttribute("count", listOrders.size());
         model.addAttribute("ordersData", listOrders);
         Locale locale = LocaleContextHolder.getLocale();

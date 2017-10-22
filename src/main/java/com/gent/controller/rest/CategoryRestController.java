@@ -26,4 +26,10 @@ public class CategoryRestController {
     public List<CategoryDTO> get(@QueryParam("id") int id) {
         return categoryService.convertListToDTO(categoryService.getChild(id));
     }
+
+    @GetMapping("/tree")
+    public List<CategoryDTO> getTree() {
+        return categoryService.getCategoryTree();
+    }
+
 }

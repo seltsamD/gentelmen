@@ -57,13 +57,14 @@ public class GoodDAO implements IGoodDAO {
     }
 
     @Override
+    @Transactional
     public boolean addGood(Good good) {
         Description description = new Description();
         description.setRuText(good.getDescription().getRuText());
         description.setUaText(good.getDescription().getUaText());
         entityManager.persist(description);
         good.setDescription(description);
-        entityManager.merge(good);
+        sessionFactory.getCurrentSession().save(good);
         return true;
     }
 
@@ -97,6 +98,7 @@ public class GoodDAO implements IGoodDAO {
     }
 
     @Override
+    @Transactional
     public void deleteGood(int id) {
         sessionFactory.getCurrentSession().delete(getGoodById(id));
     }
@@ -104,11 +106,20 @@ public class GoodDAO implements IGoodDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<Good> getRandomGoods() {
-        List<Good> list = entityManager.createQuery("from Good o where o.status = 1 order by rand()")
+        return entityManager.createQuery("from Good o where o.status = 1 order by rand()")
                 .setMaxResults(10)
                 .getResultList();
-        return list;
 
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Good> getRandomGoodsByCategory(int goodId, int categoryId, int count) {
+        return entityManager.createQuery("from Good o where o.status = 1  and o.id != :goodId and o.category.id = :categoryId order by rand()")
+                .setParameter("goodId", goodId)
+                .setParameter("categoryId", categoryId)
+                .setMaxResults(count)
+                .getResultList();
     }
 
     @Override
@@ -120,6 +131,7 @@ public class GoodDAO implements IGoodDAO {
     }
 
     @Override
+    @Transactional
     public void changeStatus(int id, int status) {
         Good g = getGoodById(id);
         g.setStatus(status);

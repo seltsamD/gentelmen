@@ -11,15 +11,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
-    <link href="<c:url value="/resources/css/jquery.fancybox.css" />" rel="stylesheet">
-    <script  src="<c:url value="/resources/js/jquery-2.1.4.min.js" />" type="text/javascript"></script>
-
-    <script   src="<c:url value="/resources/js/bootstrap.min.js" />" type="text/javascript"></script>
-
-    <script   src="<c:url value="/resources/js/jquery.fancybox.pack.js" />" type="text/javascript"></script>
-    <script   src="<c:url value="/resources/js/jquery-ui.js" />" type="text/javascript"></script>
-    <script   src="<c:url value="/resources/js/app.js" />" type="text/javascript"></script>
 </head>
 
 <body>
@@ -132,6 +123,6 @@
     }
 
 </script>
-
+<jsp:include page="footer.jsp"/>
 </body>
 </html>

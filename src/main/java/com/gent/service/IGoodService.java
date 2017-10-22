@@ -46,4 +46,6 @@ List<GoodDTO> getAllGoodsDTO();
     List<GoodDTO> convertListToMiniDTO(List<Good> goodList);
 
     List<GoodDTO> convertListToMiniDTO(List<Good> goodList, String lang);
+
+    List<GoodDTO> findTheSame(int id);
 }

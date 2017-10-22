@@ -77,19 +77,21 @@ function setData(data) {
 
     });
     page = 10 + page;
+
     var divLoad = "<div class='col-lg-2 col-md-3 col-sm-4 col-xs-6 marginImg miniGood' id='loader'>";
     divLoad = divLoad + "<img src='/images/images/load.png'/>";
     divLoad = divLoad + "</div>";
-    if (data.length > 0) {
+    if (data.length == 10) {
         $('#goods').append(divLoad);
     }
+
 }
 
 function loadMenu() {
     $.ajax({
         contentType: 'application/json; charset=utf-8',
         type: "GET",
-        url: "/api/category/",
+        url: "/api/category/tree",
         dataType: 'json',
         success: function (data) {
             var obj = jQuery.parseJSON(JSON.stringify(data));
@@ -165,12 +167,13 @@ function getAll() {
     $.ajax({
         contentType: 'application/json; charset=utf-8',
         type: "GET",
-        url: "/api/good/category/all",
+        url: "/api/good/all",
         dataType: 'json',
         beforeSend: function () {
             inProgress = true;
         },
         success: function (data) {
+            $('#goods').empty();
             setData(data);
         },
         done: function () {

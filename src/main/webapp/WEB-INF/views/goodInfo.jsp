@@ -99,7 +99,7 @@
                                 <tr class="form-inline">
                                     <td id="infoTab">
                                         <form:form id="baskForm${info.id}" action="addToBasket" method="POST">
-                                            <input type="hidden" name="goodId" value="${info.id}">
+                                            <input type="hidden" id="goodId" name="goodId" value="${info.id}">
                                             <input type="button" onclick="tobasket(${info.id})"
                                                    value="<spring:message code="basket.add"/>" id="btn-basket-add"
                                                    class="btn btn-success">
@@ -161,15 +161,17 @@
                 </div>
             </div>
         </article>
+        <div id="sameGoods">
+            <h3><spring:message code="sameGoods"/></h3>
+        </div>
     </div>
 </div>
 
 </div>
 <jsp:include page="footer.jsp"/>
-
-
+<script src="<c:url value="/resources/js/goodInfo.js" />" type="text/javascript"></script>
 </body>
-<script src="<c:url value="/resources/js/app.js" />" type="text/javascript"></script>
+
 <script>
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
