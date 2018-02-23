@@ -45,7 +45,7 @@ public class OrderController {
 
     }
 
-    @RequestMapping(value = "/{lang}/shopping-cart/newOrder", method = RequestMethod.POST)
+    @RequestMapping(value = {"/{lang}/shopping-cart/newOrder", "/{lang}/newOrder"}, method = RequestMethod.POST)
     public String addColor(@ModelAttribute("order") @Valid Orders newOrder, BindingResult result,
                            @CookieValue(value = "cart", required = false) Cookie myCookie,
                            ModelMap model, HttpServletRequest request, HttpServletResponse response) {
@@ -111,12 +111,6 @@ public class OrderController {
         cookie.setMaxAge(-1);
         cookie.setPath("/");
         response.addCookie(cookie);
-
-        for (Orders orders : listOrders)
-            for (Good good : orders.getListGood()) {
-                goodService.changeStatus(good.getId(), 0);
-            }
-
         return "orders";
 
     }

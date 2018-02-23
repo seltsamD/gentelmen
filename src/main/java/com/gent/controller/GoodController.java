@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 
 import static com.gent.config.AppConfiguration.urlWriteImages;
 import static com.gent.config.ChangeLang.redirectWithLang;
@@ -134,14 +135,14 @@ public String getInfoGood(ModelMap model, HttpServletRequest request, HttpServle
 
             description.append(good.getCategory().getUaText()).append(" фірми ").append(good.getFirm())
                     .append(" придбати за низькою ціною з доставкою. ").append(good.getColor().getUaText())
-                    .append(" колір, розмір ")
+                    .append(" кольору, розмір ")
                     .append(good.getSize());
             if (flag)
                 url2.append(GOOD).append(SLASH).append(URLEncoder.encode(good.getCategory().getUaText().replaceAll(" ", "-"), "UTF-8"))
                         .append(DASH).append(good.getFirm().replaceAll(" ", "-")).append(DASH)
                         .append(URLEncoder.encode(good.getColor().getUaText(), "UTF-8")).append(SLASH).append(good.getId());
             else url2.append("goodInfo");
-            title.append("Купити ").append(good.getCategory().getUaText()).append(" ").append(good.getFirm())
+            title.append("Купити ").append(good.getNameUa()).append(" ").append(good.getColor().getUaText())
                     .append(" колір у інтернет-магазині джентльмен.in.ua");
 
         } catch (UnsupportedEncodingException e) {
@@ -158,7 +159,7 @@ public String getInfoGood(ModelMap model, HttpServletRequest request, HttpServle
 
             description.append(good.getCategory().getRuText()).append(" фирмы ").append(good.getFirm())
                     .append(" купить по низкой цене. ").append(good.getColor().getUaText())
-                    .append(" цвет, размер ")
+                    .append(" цвета, размер ")
                     .append(good.getSize());
 
             if (flag)
@@ -166,7 +167,7 @@ public String getInfoGood(ModelMap model, HttpServletRequest request, HttpServle
                         .append(DASH).append(good.getFirm().replaceAll(" ", "-")).append(DASH)
                         .append(URLEncoder.encode(good.getColor().getRuText(), "UTF-8")).append(SLASH).append(good.getId());
             else url2.append("goodInfo");
-            title.append("Купить ").append(good.getCategory().getUaText()).append(" ").append(good.getFirm())
+            title.append("Купить ").append(good.getNameRu()).append(" ").append(good.getColor().getRuText())
                     .append(" цвет в интернет-магазине джентльмен.in.ua");
 
 
@@ -179,6 +180,18 @@ public String getInfoGood(ModelMap model, HttpServletRequest request, HttpServle
     return redirectWithLang(request, url2.toString(), model, altUrl.toString()); //call function for redirect
 }
 
+    @RequestMapping(value = "/{lang}/good/all", method = RequestMethod.GET)
+    public String getAllGoods(ModelMap model, HttpServletRequest request, HttpServletResponse response, @PathVariable String lang) throws NotFoundException {
+
+        List<Good> goods = goodService.getAllGoods();
+        LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+        localeResolver.setLocale(request, response, StringUtils.parseLocaleString(lang));
+        model.addAttribute("lang", lang);
+        model.addAttribute("allData", GoodDTOExtend.convertListToDTO(goods));
+        model.addAttribute("description", "Повний асортимент інтернет-магазину джентльмен.in.ua");
+        model.addAttribute("title", "Повний каталог товарів інтернет-магазину джентльмен.in.ua");
+        return "allgoods";
+    }
     @RequestMapping(value = "/admin/goodInfo")
     public String getInfo(ModelMap model, HttpServletRequest request) throws NotFoundException {
         int pid = Integer.parseInt(request.getParameter("id"));

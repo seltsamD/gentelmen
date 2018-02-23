@@ -4,20 +4,27 @@ import com.gent.model.Good;
 import com.gent.service.ICategoryService;
 import com.gent.service.IColorService;
 import com.gent.service.IGoodService;
+import com.gent.util.UtilsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.xml.sax.SAXException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.List;
 
 import static com.gent.config.ChangeLang.redirectWithLang;
@@ -30,7 +37,6 @@ import static com.gent.util.Constants.UK_LANG;
  */
 @Controller
 @ComponentScan("com.gent")
-@RequestMapping("/")
 public class HomeController {
     @Autowired
     private IGoodService goodService;
@@ -40,8 +46,11 @@ public class HomeController {
     @Autowired
     private ICategoryService categoryService;
 
+    @Autowired
+    private UtilsService utilsService;
+
     @RequestMapping(value = {"allImages"}, method = RequestMethod.GET)
-    public String showImg (HttpServletRequest request, ModelMap model, HttpServletResponse response) {
+    public String showImg(HttpServletRequest request, ModelMap model, HttpServletResponse response) {
 
 
         List<Good> list = goodService.getAllGoods();
@@ -49,8 +58,8 @@ public class HomeController {
         return "allImages";
     }
 
-    @RequestMapping(value = {"index", "/{lang}/index", "/", "", "/{lang}", "/{lang}/"}, method = RequestMethod.GET)
-    public String show (HttpServletRequest request, ModelMap model, HttpServletResponse response){
+    @RequestMapping(value = {"index", "/{lang}/index", "/", "/{lang}", "/{lang}/"}, method = RequestMethod.GET)
+    public String show(HttpServletRequest request, ModelMap model, HttpServletResponse response) {
 //
 //        List<Good> list =goodService.getRandomGoods();
 //        for (Good good : list) {
@@ -76,9 +85,9 @@ public class HomeController {
 
         String altURL = "";
         if (LocaleContextHolder.getLocale().getLanguage().equals(UK_LANG))
-            altURL = ur.substring(0, ur.indexOf("/", 10))+"/ru/";
-       else if (LocaleContextHolder.getLocale().getLanguage().equals(RU_LANG))
-            altURL = ur.substring(0, ur.indexOf("/", 10))+"/uk";
+            altURL = ur.substring(0, ur.indexOf("/", 10)) + "/ru/";
+        else if (LocaleContextHolder.getLocale().getLanguage().equals(RU_LANG))
+            altURL = ur.substring(0, ur.indexOf("/", 10)) + "/uk";
 
         return redirectWithLang(request, "index", model, altURL); //call function for redirect
     }
@@ -105,24 +114,40 @@ public class HomeController {
 
     }
 
-    @RequestMapping(value="logout", method = RequestMethod.GET)
-    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
+        if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/login?logout";
     }
 
     @RequestMapping(value = "/{lang}/about", method = RequestMethod.GET)
-    public String aboutPageLang (HttpServletRequest request, ModelMap model) {
+    public String aboutPageLang(HttpServletRequest request, ModelMap model) {
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
         return redirectWithLang(request, "about", model, "about");
     }
+
     @RequestMapping(value = "/{lang}/comments", method = RequestMethod.GET)
-    public String aboutComments (HttpServletRequest request, ModelMap model) {
+    public String aboutComments(HttpServletRequest request, ModelMap model) {
         model.addAttribute("lang", LocaleContextHolder.getLocale().getLanguage());
 
         return redirectWithLang(request, "comments", model, "comments");
     }
+
+    @GetMapping(path = "/sitemap.xml", produces = MediaType.APPLICATION_XML_VALUE)
+    public
+    @ResponseBody
+    String getSitemap() throws IOException, ParserConfigurationException, SAXException {
+        return utilsService.getSitemap();
+    }
+
+    @GetMapping(path = "/robots.txt", produces = MediaType.TEXT_PLAIN_VALUE)
+    public
+    @ResponseBody
+    String getRobots() throws IOException, ParserConfigurationException, SAXException {
+        return utilsService.getRobotsTxt();
+    }
 }
+

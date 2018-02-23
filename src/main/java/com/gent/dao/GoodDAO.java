@@ -124,7 +124,7 @@ public class GoodDAO implements IGoodDAO {
 
     @Override
     public List<Good> getListGoods(List<Integer> inList) {
-        List<Good> outList = entityManager.createQuery("from Good o where o.id in (:lis)")
+        List<Good> outList = entityManager.createQuery("from Good o where  o.status = 1 and o.id in (:lis)")
                 .setParameter("lis", inList)
                 .getResultList();
         return outList;
@@ -135,7 +135,7 @@ public class GoodDAO implements IGoodDAO {
     public void changeStatus(int id, int status) {
         Good g = getGoodById(id);
         g.setStatus(status);
-        entityManager.persist(g);
+        sessionFactory.getCurrentSession().update(g);
     }
 
     @Override
